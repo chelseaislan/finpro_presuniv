@@ -106,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage>
       // "Your stories will be displayed on your profile details.",
       "View and edit your profile details here.",
       "View your submitted KTP and the additional document.",
-      "This will reset all your taaruf data.",
+      "This will reset all your taaruf properties, such as marriage dates and who you did it with.",
       "Give us your stars and precious feedback!",
       "View the author and licenses of this Flutter application.",
       "You will need to log back in.",

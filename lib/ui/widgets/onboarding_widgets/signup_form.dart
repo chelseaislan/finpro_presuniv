@@ -31,7 +31,9 @@ class _SignUpFormState extends State<SignUpForm> {
   //UserRepository get _userRepository => widget._userRepository;
 
   bool get isPopulated =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+      _emailController.text.isNotEmpty &&
+      !_emailController.text.contains("@mm.id") &&
+      _passwordController.text.isNotEmpty;
 
   bool isSignUpButtonEnabled(SignUpState state) {
     return isPopulated && !state.isSubmitting;

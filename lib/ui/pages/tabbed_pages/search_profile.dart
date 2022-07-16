@@ -1284,7 +1284,23 @@ class _SearchProfileState extends State<SearchProfile>
                                     description:
                                         "Looks like there is no one around. Please reset or refine your filter.",
                                     buttonText: "Reset Filter",
-                                    onPressed: () => _onReset(),
+                                    onPressed: () {
+                                      _onReset();
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation1,
+                                                  animation2) =>
+                                              HomeTabs(
+                                                  userId: widget.userId,
+                                                  selectedPage: 1),
+                                          transitionDuration: Duration.zero,
+                                          reverseTransitionDuration:
+                                              Duration.zero,
+                                        ),
+                                        ((route) => false),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -1608,7 +1624,16 @@ class _SearchProfileState extends State<SearchProfile>
       labelText: "Reset Search",
       onPressedTo: () {
         _onReset();
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) =>
+                HomeTabs(userId: widget.userId, selectedPage: 1),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+          ((route) => false),
+        );
       },
       textColor: white,
       btnColor: primary1,
