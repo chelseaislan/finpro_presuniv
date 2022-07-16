@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "512895263724",
+    "project_id": "finpro-max",
+    "storage_bucket": "finpro-max.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512895263724:android:0cde05de10212e534396c9",
+        "android_client_info": {
+          "package_name": "com.finpro.app.max"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512895263724-0m7fpjngs9c7hfsbi3vlj2go1kj49nnv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyColNgNetAUfUtRYLfnDaO5gU3791w-fzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512895263724-0m7fpjngs9c7hfsbi3vlj2go1kj49nnv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512895263724:android:534c4deb936f7c124396c9",
+        "android_client_info": {
+          "package_name": "com.presuniv.computing.finpro.max"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512895263724-0m7fpjngs9c7hfsbi3vlj2go1kj49nnv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyColNgNetAUfUtRYLfnDaO5gU3791w-fzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512895263724-0m7fpjngs9c7hfsbi3vlj2go1kj49nnv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
