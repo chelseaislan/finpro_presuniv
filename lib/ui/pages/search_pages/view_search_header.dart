@@ -15,7 +15,6 @@ import 'package:finpro_max/ui/pages/tabbed_pages/search_profile.dart';
 import 'package:finpro_max/ui/widgets/matches_widgets/profile_match_header_container.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ViewSearchHeader extends StatelessWidget {
   final User _user;

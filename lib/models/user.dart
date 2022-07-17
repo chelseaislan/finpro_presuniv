@@ -77,6 +77,8 @@ class User {
       zSmoke,
       zTattoo,
       zTarget;
+  String story;
+  List<dynamic> highlights;
 
   User({
     // 34 props - 13 main 1 uid
@@ -151,6 +153,9 @@ class User {
     this.zSmoke,
     this.zTattoo,
     this.zTarget,
+    // story
+    this.story,
+    this.highlights,
   });
 }
 
