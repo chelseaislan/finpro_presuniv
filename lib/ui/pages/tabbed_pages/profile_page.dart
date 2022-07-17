@@ -20,12 +20,12 @@ import 'package:finpro_max/repositories/user_repository.dart';
 import 'package:finpro_max/ui/pages/home.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/account_status_upgrade.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/profile_details_page.dart';
+import 'package:finpro_max/ui/pages/profile_tab_pages/story_upload_page.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userId;
@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final List titles = [
-      // "Upload a Story",
+      "Upload a Story",
       "Profile Details",
       "My Legal Documents",
       "Reset Taaruf Properties",
@@ -103,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List subtitles = [
-      // "Your stories will be displayed on your profile details.",
+      "Your stories will be displayed on your profile details.",
       "View and edit your profile details here.",
       "View your submitted KTP and the additional document.",
       "This will reset all your taaruf properties, such as marriage dates and who you did it with.",
@@ -113,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List icons = [
-      // Icons.self_improvement_outlined,
+      Icons.self_improvement_outlined,
       Icons.account_circle_outlined,
       Icons.domain_verification_outlined,
       Icons.clear_all_outlined,
@@ -123,121 +123,58 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List onTap = [
-      // () {
-      //   showModalBottomSheet(
-      //     context: context,
-      //     shape: const RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.only(
-      //         topLeft: Radius.circular(10),
-      //         topRight: Radius.circular(10),
-      //       ),
-      //     ),
-      //     isScrollControlled: true,
-      //     builder: (context) {
-      //       return SingleChildScrollView(
-      //         child: ModalPopupTwoButton(
-      //           size: size,
-      //           title: "How do you want to upload?",
-      //           image: "assets/images/story.png",
-      //           description:
-      //               "You can share anything you like, but remember not to be inappropriate.",
-      //           labelTop: "Open Camera",
-      //           labelBottom: "Upload via Gallery",
-      //           textColorTop: white,
-      //           btnTop: primary1,
-      //           textColorBottom: white,
-      //           btnBottom: primary1,
-      //           onPressedTop: () async {
-      //             PickedFile captureStory = await ImagePicker().getImage(
-      //               source: ImageSource.camera,
-      //               maxWidth: 1800,
-      //               maxHeight: 1800,
-      //             );
-      //             if (captureStory != null) {
-      //               Fluttertoast.showToast(
-      //                 msg: "Uploading story...",
-      //                 toastLength: Toast.LENGTH_LONG,
-      //               );
-      //               setState(() {
-      //                 story = File(captureStory.path);
-      //                 counter++;
-      //               });
-      //               _profileBloc.add(
-      //                 UploadStoryEvent(
-      //                   userId: widget.userId,
-      //                   counter: counter,
-      //                   story: story,
-      //                 ),
-      //               );
-      //             }
-      //             Navigator.pushAndRemoveUntil(
-      //               context,
-      //               PageRouteBuilder(
-      //                 pageBuilder: (context, animation1, animation2) =>
-      //                     HomeTabs(userId: widget.userId, selectedPage: 4),
-      //                 transitionDuration: Duration.zero,
-      //                 reverseTransitionDuration: Duration.zero,
-      //               ),
-      //               ((route) => false),
-      //             );
-      //           },
-      //           onPressedBottom: () async {
-      //             try {
-      //               File uploadStory =
-      //                   await FilePicker.getFile(type: FileType.image);
-      //               if (uploadStory != null) {
-      //                 setState(() {
-      //                   story = uploadStory;
-      //                   counter++;
-      //                   Fluttertoast.showToast(
-      //                       msg: "Uploading story...",
-      //                       toastLength: Toast.LENGTH_LONG);
-      //                   _profileBloc.add(
-      //                     UploadStoryEvent(
-      //                       userId: widget.userId,
-      //                       counter: counter,
-      //                       story: story,
-      //                     ),
-      //                   );
-      //                 });
-      //               }
-      //               Navigator.pushAndRemoveUntil(
-      //                 context,
-      //                 PageRouteBuilder(
-      //                   pageBuilder: (context, animation1, animation2) =>
-      //                       HomeTabs(userId: widget.userId, selectedPage: 4),
-      //                   transitionDuration: Duration.zero,
-      //                   reverseTransitionDuration: Duration.zero,
-      //                 ),
-      //                 ((route) => false),
-      //               );
-      //             } catch (e) {
-      //               showModalBottomSheet(
-      //                 context: context,
-      //                 shape: const RoundedRectangleBorder(
-      //                   borderRadius: BorderRadius.only(
-      //                     topLeft: Radius.circular(10),
-      //                     topRight: Radius.circular(10),
-      //                   ),
-      //                 ),
-      //                 builder: (context) {
-      //                   return ModalPopupOneButton(
-      //                     size: size,
-      //                     title: "Storage Permission Denied",
-      //                     image: "assets/images/404.png",
-      //                     description:
-      //                         "To upload pictures and documents, please enable permission to read external storage.",
-      //                     onPressed: () => Navigator.pop(context),
-      //                   );
-      //                 },
-      //               );
-      //             }
-      //           },
-      //         ),
-      //       );
-      //     },
-      //   );
-      // },
+      () {
+        showModalBottomSheet(
+          transitionAnimationController: _animationController,
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          isScrollControlled: true,
+          builder: (context) {
+            return SingleChildScrollView(
+              child: ModalPopupTwoButton(
+                size: size,
+                title: "How do you want to upload?",
+                image: "assets/images/story.png",
+                description:
+                    "You can share anything you like, but remember not to be inappropriate.",
+                labelTop: "Open Camera",
+                labelBottom: "Upload via Gallery",
+                textColorTop: white,
+                btnTop: primary1,
+                textColorBottom: white,
+                btnBottom: primary1,
+                onPressedTop: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          StoryUploadPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+                onPressedBottom: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          StoryUploadPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
       () {
         Navigator.push(
           context,

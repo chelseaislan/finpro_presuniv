@@ -19,7 +19,6 @@ import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:swipeable/swipeable.dart';
 
 class DiscoverSwipe extends StatefulWidget {
