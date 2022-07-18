@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:confetti/confetti.dart';
 import 'package:finpro_max/bloc/taaruf/taaruf_bloc.dart';
 import 'package:finpro_max/bloc/taaruf/taaruf_event.dart';
 import 'package:finpro_max/bloc/taaruf/taaruf_state.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/checklist_cards.dart';
+import 'package:finpro_max/custom_widgets/modal_popup.dart';
+import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/repositories/taaruf_repository.dart';
@@ -56,6 +59,23 @@ class _ChecklistFiveState extends State<ChecklistFive>
     _animationController.dispose();
     _controllerBottomCenter.dispose();
     super.dispose();
+  }
+
+  Event buildEvent({Recurrence recurrence}) {
+    return Event(
+      title:
+          'The Wedding Ceremony of ${_currentUser.nickname} and ${_selectedUser.nickname}',
+      description:
+          'You (${_currentUser.nickname}) and your partner (${_selectedUser.nickname}) will do the wedding ceremony, the best event of both of your lives.',
+      location: 'MusliMatch app',
+      startDate: dateD,
+      endDate: dateD,
+      allDay: true,
+      androidParams: AndroidParams(
+        emailInvites: [_currentUser.nickname, _selectedUser.nickname],
+      ),
+      recurrence: recurrence,
+    );
   }
 
   @override
@@ -292,10 +312,46 @@ class _ChecklistFiveState extends State<ChecklistFive>
                           },
                           onTapBottom: () {
                             dateD != null
-                                ? setState(() {
-                                    visibleD = !visibleD;
-                                    visibleE = !visibleE;
-                                  })
+                                ? showModalBottomSheet(
+                                    transitionAnimationController:
+                                        _animationController,
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
+                                      ),
+                                    ),
+                                    isScrollControlled: true,
+                                    builder: (context) {
+                                      return SingleChildScrollView(
+                                        child: ModalPopupTwoButton(
+                                          size: size,
+                                          title: "Confirmation",
+                                          image: "assets/images/addtocal.png",
+                                          description:
+                                              "To keep track on the event date, please add this event to your calendar.",
+                                          labelTop: "Add to Calendar",
+                                          labelBottom: "Continue",
+                                          textColorTop: white,
+                                          btnTop: primary1,
+                                          textColorBottom: white,
+                                          btnBottom: primary1,
+                                          onPressedTop: () {
+                                            Add2Calendar.addEvent2Cal(
+                                                buildEvent());
+                                          },
+                                          onPressedBottom: () {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              visibleD = !visibleD;
+                                              visibleE = !visibleE;
+                                            });
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  )
                                 : Fluttertoast.showToast(
                                     msg: "Please select the date first.");
                           },
@@ -313,9 +369,12 @@ class _ChecklistFiveState extends State<ChecklistFive>
                           bottomDesc: "Best Regards,\nMusliMatch Team",
                           label: "Okay",
                           onTap: () {
-                            Fluttertoast.showToast(
-                              msg: "Please wait...",
-                              toastLength: Toast.LENGTH_LONG,
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              myLoadingSnackbar(
+                                text: "Please wait...",
+                                duration: 5,
+                                background: primaryBlack,
+                              ),
                             );
                             _taarufBloc.add(AddCalendarDEvent(
                               currentUserId: widget.currentUserId,
@@ -324,9 +383,12 @@ class _ChecklistFiveState extends State<ChecklistFive>
                               marriageD: dateD,
                             ));
                             Timer(const Duration(seconds: 5), () {
-                              Fluttertoast.showToast(
-                                msg: "Date has been updated.",
-                                toastLength: Toast.LENGTH_LONG,
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                mySnackbar(
+                                  text: "Date has been updated.",
+                                  duration: 3,
+                                  background: primaryBlack,
+                                ),
                               );
                             });
                             Timer(const Duration(seconds: 5), () {

@@ -6,6 +6,7 @@ import 'package:finpro_max/bloc/taaruf/taaruf_state.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/checklist_cards.dart';
 import 'package:finpro_max/custom_widgets/divider.dart';
+import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/user.dart';
@@ -313,9 +314,12 @@ class _ChecklistThreeState extends State<ChecklistThree>
                         "We hope that it will be awesome.\n\nBest Regards,\nMusliMatch Team",
                     label: "Okay",
                     onTap: () {
-                      Fluttertoast.showToast(
-                        msg: "Please wait...",
-                        toastLength: Toast.LENGTH_LONG,
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        myLoadingSnackbar(
+                          text: "Please wait...",
+                          duration: 5,
+                          background: primaryBlack,
+                        ),
                       );
                       _taarufBloc.add(AddCalendarCEvent(
                         currentUserId: widget.currentUserId,
@@ -323,9 +327,12 @@ class _ChecklistThreeState extends State<ChecklistThree>
                         taarufCheck: 3,
                       ));
                       Timer(const Duration(seconds: 5), () {
-                        Fluttertoast.showToast(
-                          msg: "Value has been saved.",
-                          toastLength: Toast.LENGTH_LONG,
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          mySnackbar(
+                            text: "Progress has been updated.",
+                            duration: 3,
+                            background: primaryBlack,
+                          ),
                         );
                       });
                       Timer(const Duration(seconds: 5), () {

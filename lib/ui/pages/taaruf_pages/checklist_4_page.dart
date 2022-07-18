@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:finpro_max/bloc/taaruf/taaruf_bloc.dart';
 import 'package:finpro_max/bloc/taaruf/taaruf_event.dart';
 import 'package:finpro_max/bloc/taaruf/taaruf_state.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/checklist_cards.dart';
+import 'package:finpro_max/custom_widgets/modal_popup.dart';
+import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/repositories/taaruf_repository.dart';
@@ -24,7 +27,9 @@ class ChecklistFour extends StatefulWidget {
   State<ChecklistFour> createState() => _ChecklistFourState();
 }
 
-class _ChecklistFourState extends State<ChecklistFour> {
+class _ChecklistFourState extends State<ChecklistFour>
+    with TickerProviderStateMixin {
+  AnimationController _animationController;
   final TaarufRepository _taarufRepository = TaarufRepository();
   TaarufBloc _taarufBloc;
   User _selectedUser, _currentUser;
@@ -40,6 +45,30 @@ class _ChecklistFourState extends State<ChecklistFour> {
   void initState() {
     _taarufBloc = TaarufBloc(taarufRepository: _taarufRepository);
     super.initState();
+    _animationController = BottomSheet.createAnimationController(this);
+    _animationController.duration = const Duration(seconds: 0);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  Event buildEvent({Recurrence recurrence}) {
+    return Event(
+      title: 'Marriage Proposal (Khitbah)',
+      description:
+          'You (${_currentUser.nickname}) and your partner (${_selectedUser.nickname}) will do the marriage proposal event with both of your parents and a third party.',
+      location: 'MusliMatch app',
+      startDate: dateC,
+      endDate: dateC,
+      allDay: true,
+      androidParams: AndroidParams(
+        emailInvites: [_currentUser.nickname, _selectedUser.nickname],
+      ),
+      recurrence: recurrence,
+    );
   }
 
   @override
@@ -272,10 +301,45 @@ class _ChecklistFourState extends State<ChecklistFour> {
                       },
                       onTapBottom: () {
                         dateC != null
-                            ? setState(() {
-                                visibleD = !visibleD;
-                                visibleE = !visibleE;
-                              })
+                            ? showModalBottomSheet(
+                                transitionAnimationController:
+                                    _animationController,
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return SingleChildScrollView(
+                                    child: ModalPopupTwoButton(
+                                      size: size,
+                                      title: "Confirmation",
+                                      image: "assets/images/addtocal.png",
+                                      description:
+                                          "To keep track on the event date, please add this event to your calendar.",
+                                      labelTop: "Add to Calendar",
+                                      labelBottom: "Continue",
+                                      textColorTop: white,
+                                      btnTop: primary1,
+                                      textColorBottom: white,
+                                      btnBottom: primary1,
+                                      onPressedTop: () {
+                                        Add2Calendar.addEvent2Cal(buildEvent());
+                                      },
+                                      onPressedBottom: () {
+                                        Navigator.pop(context);
+                                        setState(() {
+                                          visibleD = !visibleD;
+                                          visibleE = !visibleE;
+                                        });
+                                      },
+                                    ),
+                                  );
+                                },
+                              )
                             : Fluttertoast.showToast(
                                 msg: "Please select the date first.");
                       },
@@ -294,9 +358,12 @@ class _ChecklistFourState extends State<ChecklistFour> {
                           "We hope that the event will be awesome.\n\nBest Regards,\nMusliMatch Team",
                       label: "Okay",
                       onTap: () {
-                        Fluttertoast.showToast(
-                          msg: "Please wait...",
-                          toastLength: Toast.LENGTH_LONG,
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          myLoadingSnackbar(
+                            text: "Please wait...",
+                            duration: 5,
+                            background: primaryBlack,
+                          ),
                         );
                         _taarufBloc.add(AddCalendarCEvent(
                           currentUserId: widget.currentUserId,
@@ -305,9 +372,12 @@ class _ChecklistFourState extends State<ChecklistFour> {
                           marriageC: dateC,
                         ));
                         Timer(const Duration(seconds: 5), () {
-                          Fluttertoast.showToast(
-                            msg: "Date has been updated.",
-                            toastLength: Toast.LENGTH_LONG,
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            mySnackbar(
+                              text: "Date has been updated.",
+                              duration: 3,
+                              background: primaryBlack,
+                            ),
                           );
                         });
                         Timer(const Duration(seconds: 5), () {
