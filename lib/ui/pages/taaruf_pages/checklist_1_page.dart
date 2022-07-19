@@ -65,7 +65,10 @@ class _ChecklistOneState extends State<ChecklistOne>
       endDate: dateA,
       allDay: true,
       androidParams: AndroidParams(
-        emailInvites: [_currentUser.nickname, _selectedUser.nickname],
+        emailInvites: [
+          "${_currentUser.nickname}@your-email.com",
+          "${_selectedUser.nickname}@your-email.com",
+        ],
       ),
       recurrence: recurrence,
     );
