@@ -48,6 +48,7 @@ dependencies:
   flutter_rating_bar: 3.2.0+1
   fluttertoast: 7.1.8
   group_button: 4.1.0
+  http: 0.12.2	
   image_picker: 0.6.7+22
   meta: 1.7.0
   pinch_zoom: 1.0.0

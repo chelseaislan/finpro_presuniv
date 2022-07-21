@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/divider.dart';
+import 'package:finpro_max/custom_widgets/empty_content.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/portalblog.dart';
 import 'package:finpro_max/ui/widgets/card_swipe_widgets/card_photo.dart';
+import 'package:finpro_max/ui/widgets/chatroom_widgets/image_pdf_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:http/http.dart' as http;
 
 class BlogPage extends StatefulWidget {
   @override
@@ -13,55 +17,77 @@ class BlogPage extends StatefulWidget {
 }
 
 class _BlogPageState extends State<BlogPage> {
-  List<PortalBlog> portalBlog = getBlog();
-
-  static List<Map<String, dynamic>> data;
-  static List<PortalBlog> getBlog() {
-    data = [
-      {
-        "blogTitle": "Success Story of Fred Waterford and Serena Joy",
-        "imageHeader":
-            "https://www.cheatsheet.com/wp-content/uploads/2021/04/Waterfords-Handmaids-Tale-1024x683.jpg",
-        "author": "Fabrizio Romano",
-        "postDate": "30 June 2022",
-        "blogP1": lorem(paragraphs: 1, words: 50),
-        "blogP2": lorem(paragraphs: 1, words: 40),
-        "imageContent":
-            "https://4.bp.blogspot.com/-y2R5PJHTRxE/WTg1hknfWKI/AAAAAAAAqos/DEPszVpMi9UMem128ExBN6uNTbe__YrpgCEw/s1600/4n.jpg",
-        "blogP3": lorem(paragraphs: 1, words: 30),
-      },
-      {
-        "blogTitle": "Marriage in the 22nd Century",
-        "imageHeader":
-            "https://imgix.bustle.com/uploads/image/2018/5/1/6d1fda71-dbf9-48b1-9ce1-397489358f17-tht_202_gk_0191rt.jpg?w=970&h=582&fit=crop&crop=faces&auto=format&q=70",
-        "author": "Elisabeth Moss",
-        "postDate": "28 June 2022",
-        "blogP1": lorem(paragraphs: 1, words: 50),
-        "blogP2": lorem(paragraphs: 1, words: 40),
-        "imageContent":
-            "https://imgix.bustle.com/uploads/image/2018/4/17/b8d3007b-4d0d-487c-8cd0-4c13ddd5acf9-handmaidstaleta.jpg?w=1020&h=574&fit=crop&crop=faces&auto=format&q=70",
-        "blogP3": lorem(paragraphs: 1, words: 30),
-      },
-    ];
-
-    return data.map<PortalBlog>(PortalBlog.fromJson).toList();
+  Future<List<PortalBlog>> portalBlogFuture = getBlog();
+  static Future<List<PortalBlog>> getBlog() async {
+    const url =
+        'https://raw.githubusercontent.com/chelseaislan/chelseaislan.github.io/main/portalblog.json';
+    final response = await http.get(Uri.parse(url));
+    final body = jsonDecode(response.body);
+    return body.map<PortalBlog>(PortalBlog.fromJson).toList();
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: financialTimes,
-        appBar: AppBarSideButton(
-          appBarTitle: HeaderThreeText(
-            text: "Portal Blog",
-            color: white,
-          ),
-          appBarColor: primary5,
+      backgroundColor: financialTimes,
+      appBar: AppBarSideButton(
+        appBarTitle: HeaderThreeText(
+          text: "Portal Blog",
+          color: white,
         ),
-        body: buildBlog(portalBlog),
-      );
+        appBarColor: primary5,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => BlogPage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+        },
+        child: FutureBuilder<List<PortalBlog>>(
+          future: portalBlogFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: CircularProgressIndicator(color: secondBlack));
+            } else if (snapshot.hasData) {
+              final portalBlogLists = snapshot.data;
+              return buildBlog(portalBlogLists);
+            } else {
+              return EmptyContent(
+                size: MediaQuery.of(context).size,
+                asset: "assets/images/discover-tab.png",
+                header: "Uh-oh...",
+                description:
+                    "Looks like there is no one around. Please come back later.",
+                buttonText: "Refresh",
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          BlogPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ));
 
-  buildBlog(List<PortalBlog> portalBlog) => ListView.builder(
+  buildBlog(List<PortalBlog> portalBlog) {
+    return LimitedBox(
+      maxHeight: 1375,
+      child: ListView.builder(
         itemCount: portalBlog.length,
+        shrinkWrap: true,
+        // itemExtent: 1375,
         itemBuilder: (context, index) {
           final blog = portalBlog[index];
           return Padding(
@@ -76,18 +102,44 @@ class _BlogPageState extends State<BlogPage> {
                     color: thirdBlack),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: CardPhotoWidget(photoLink: blog.imageHeader)),
+                  child: GestureDetector(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CardPhotoWidget(photoLink: blog.imageHeader)),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              DetailScreen(photoLink: blog.imageHeader),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 DescText(text: blog.blogP1, color: primaryBlack),
                 const SizedBox(height: 15),
                 DescText(text: blog.blogP2, color: primaryBlack),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: CardPhotoWidget(photoLink: blog.imageContent)),
+                  child: GestureDetector(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CardPhotoWidget(photoLink: blog.imageContent)),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              DetailScreen(photoLink: blog.imageContent),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 DescText(text: blog.blogP3, color: primaryBlack),
                 const SizedBox(height: 20),
@@ -98,5 +150,7 @@ class _BlogPageState extends State<BlogPage> {
             ),
           );
         },
-      );
+      ),
+    );
+  }
 }

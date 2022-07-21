@@ -607,7 +607,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         text: "Introducing...", color: white),
                                     const SizedBox(height: 5),
                                     HeaderThreeText(
-                                        text: "Portal Blog", color: white),
+                                        text: "Portal Blog 🎉", color: white),
                                     const SizedBox(height: 5),
                                     ChatText(
                                       text:
