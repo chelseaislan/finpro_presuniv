@@ -25,7 +25,7 @@ class HomeTabs extends StatelessWidget {
     return DefaultTabController(
       initialIndex: selectedPage,
       animationDuration: Duration.zero,
-      length: 5,
+      length: pages.length,
       child: Scaffold(
         body: TabBarView(
           children: pages,
@@ -53,6 +53,7 @@ class HomeTabs extends StatelessWidget {
         ],
       ),
       child: TabBar(
+        isScrollable: false,
         indicatorColor: Colors.amber,
         labelColor: Colors.amber,
         unselectedLabelColor: white,

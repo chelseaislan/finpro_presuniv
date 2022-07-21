@@ -15,5 +15,6 @@ var lightGrey2 = const Color.fromARGB(255, 231, 231, 231);
 var lightGrey3 = const Color.fromARGB(255, 199, 199, 199);
 var appBarColor = const Color(0xff365782);
 var gold = Colors.amber;
+var financialTimes = const Color(0xfffff1e5);
 
 // C9DFB0 for storyset images

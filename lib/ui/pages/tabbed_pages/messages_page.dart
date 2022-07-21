@@ -8,6 +8,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:finpro_max/bloc/message/bloc.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/empty_content.dart';
+import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/repositories/message_repository.dart';
 import 'package:finpro_max/ui/widgets/message_widgets/message_widget.dart';
@@ -72,7 +73,10 @@ class _MessagesPageState extends State<MessagesPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Messages"),
+        appBarTitle: HeaderThreeText(
+          text: "Messages",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: RefreshIndicator(

@@ -23,11 +23,13 @@ import 'package:finpro_max/ui/pages/home.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/account_status_upgrade.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/profile_details_page.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/story_upload_page.dart';
+import 'package:finpro_max/ui/pages/tabbed_pages/blog_page.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -128,107 +130,107 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List onTap = [
-      () {
-        // showModalBottomSheet(
-        //   transitionAnimationController: _animationController,
-        //   context: context,
-        //   shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.only(
-        //       topLeft: Radius.circular(10),
-        //       topRight: Radius.circular(10),
-        //     ),
-        //   ),
-        //   isScrollControlled: true,
-        //   builder: (context) {
-        //     return SingleChildScrollView(
-        //       child: ModalPopupTwoButton(
-        //         size: size,
-        //         title: "How do you want to upload?",
-        //         image: "assets/images/story.png",
-        //         description:
-        //             "You can share anything you like, but remember not to be inappropriate.",
-        //         labelTop: "Open Camera",
-        //         labelBottom: "Upload via Gallery",
-        //         textColorTop: white,
-        //         btnTop: primary1,
-        //         textColorBottom: white,
-        //         btnBottom: primary1,
-        //         onPressedTop: () async {
-        //           PickedFile captureStory = await ImagePicker().getImage(
-        //             source: ImageSource.camera,
-        //             imageQuality: 75,
-        //             maxWidth: 1800,
-        //             maxHeight: 1800,
-        //           );
-        //           if (captureStory != null) {
-        //             setState(() => story = File(captureStory.path));
-        //           }
-        //           Navigator.push(
-        //             context,
-        //             PageRouteBuilder(
-        //               pageBuilder: (context, animation1, animation2) =>
-        //                   StoryUploadPage(
-        //                 currentUser: _currentUser,
-        //                 profileBloc: _profileBloc,
-        //                 capturedStory: story,
-        //               ),
-        //               transitionDuration: Duration.zero,
-        //               reverseTransitionDuration: Duration.zero,
-        //             ),
-        //           );
-        //         },
-        //         onPressedBottom: () async {
-        //           try {
-        //             PickedFile getStory = await ImagePicker().getImage(
-        //               source: ImageSource.gallery,
-        //               imageQuality: 75,
-        //               maxWidth: 1800,
-        //               maxHeight: 1800,
-        //             );
-        //             if (getStory != null) {
-        //               setState(() => story = File(getStory.path));
-        //             }
-        //             Navigator.push(
-        //               context,
-        //               PageRouteBuilder(
-        //                 pageBuilder: (context, animation1, animation2) =>
-        //                     StoryUploadPage(
-        //                   currentUser: _currentUser,
-        //                   profileBloc: _profileBloc,
-        //                   capturedStory: story,
-        //                 ),
-        //                 transitionDuration: Duration.zero,
-        //                 reverseTransitionDuration: Duration.zero,
-        //               ),
-        //             );
-        //           } catch (e) {
-        //             showModalBottomSheet(
-        //               transitionAnimationController: _animationController,
-        //               context: context,
-        //               shape: const RoundedRectangleBorder(
-        //                 borderRadius: BorderRadius.only(
-        //                   topLeft: Radius.circular(10),
-        //                   topRight: Radius.circular(10),
-        //                 ),
-        //               ),
-        //               builder: (context) {
-        //                 return ModalPopupOneButton(
-        //                   size: size,
-        //                   title: "Storage Permission Denied",
-        //                   image: "assets/images/404.png",
-        //                   description:
-        //                       "To upload pictures, please enable permission to read external storage.",
-        //                   onPressed: () => AppSettings.openAppSettings(),
-        //                 );
-        //               },
-        //             );
-        //           }
-        //         },
-        //       ),
-        //     );
-        //   },
-        // );
-      },
+      // () {
+      // showModalBottomSheet(
+      //   transitionAnimationController: _animationController,
+      //   context: context,
+      //   shape: const RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(10),
+      //       topRight: Radius.circular(10),
+      //     ),
+      //   ),
+      //   isScrollControlled: true,
+      //   builder: (context) {
+      //     return SingleChildScrollView(
+      //       child: ModalPopupTwoButton(
+      //         size: size,
+      //         title: "How do you want to upload?",
+      //         image: "assets/images/story.png",
+      //         description:
+      //             "You can share anything you like, but remember not to be inappropriate.",
+      //         labelTop: "Open Camera",
+      //         labelBottom: "Upload via Gallery",
+      //         textColorTop: white,
+      //         btnTop: primary1,
+      //         textColorBottom: white,
+      //         btnBottom: primary1,
+      //         onPressedTop: () async {
+      //           PickedFile captureStory = await ImagePicker().getImage(
+      //             source: ImageSource.camera,
+      //             imageQuality: 75,
+      //             maxWidth: 1800,
+      //             maxHeight: 1800,
+      //           );
+      //           if (captureStory != null) {
+      //             setState(() => story = File(captureStory.path));
+      //           }
+      //           Navigator.push(
+      //             context,
+      //             PageRouteBuilder(
+      //               pageBuilder: (context, animation1, animation2) =>
+      //                   StoryUploadPage(
+      //                 currentUser: _currentUser,
+      //                 profileBloc: _profileBloc,
+      //                 capturedStory: story,
+      //               ),
+      //               transitionDuration: Duration.zero,
+      //               reverseTransitionDuration: Duration.zero,
+      //             ),
+      //           );
+      //         },
+      //         onPressedBottom: () async {
+      //           try {
+      //             PickedFile getStory = await ImagePicker().getImage(
+      //               source: ImageSource.gallery,
+      //               imageQuality: 75,
+      //               maxWidth: 1800,
+      //               maxHeight: 1800,
+      //             );
+      //             if (getStory != null) {
+      //               setState(() => story = File(getStory.path));
+      //             }
+      //             Navigator.push(
+      //               context,
+      //               PageRouteBuilder(
+      //                 pageBuilder: (context, animation1, animation2) =>
+      //                     StoryUploadPage(
+      //                   currentUser: _currentUser,
+      //                   profileBloc: _profileBloc,
+      //                   capturedStory: story,
+      //                 ),
+      //                 transitionDuration: Duration.zero,
+      //                 reverseTransitionDuration: Duration.zero,
+      //               ),
+      //             );
+      //           } catch (e) {
+      //             showModalBottomSheet(
+      //               transitionAnimationController: _animationController,
+      //               context: context,
+      //               shape: const RoundedRectangleBorder(
+      //                 borderRadius: BorderRadius.only(
+      //                   topLeft: Radius.circular(10),
+      //                   topRight: Radius.circular(10),
+      //                 ),
+      //               ),
+      //               builder: (context) {
+      //                 return ModalPopupOneButton(
+      //                   size: size,
+      //                   title: "Storage Permission Denied",
+      //                   image: "assets/images/404.png",
+      //                   description:
+      //                       "To upload pictures, please enable permission to read external storage.",
+      //                   onPressed: () => AppSettings.openAppSettings(),
+      //                 );
+      //               },
+      //             );
+      //           }
+      //         },
+      //       ),
+      //     );
+      //   },
+      // );
+      // },
       () {
         Navigator.push(
           context,
@@ -535,7 +537,10 @@ class _ProfilePageState extends State<ProfilePage>
 
     return Scaffold(
       appBar: AppBarSideButton(
-        appBarTitle: const Text("My Profile"),
+        appBarTitle: HeaderThreeText(
+          text: "My Profile",
+          color: white,
+        ),
         appBarColor: appBarColor,
       ),
       body: RefreshIndicator(
@@ -582,6 +587,55 @@ class _ProfilePageState extends State<ProfilePage>
                         taarufWith: _currentUser.taarufWith != null
                             ? "Taaruf: Active"
                             : "Taaruf: Inactive",
+                      ),
+                      GestureDetector(
+                        child: Container(
+                          margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          padding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
+                          decoration: BoxDecoration(
+                            color: primary1,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SmallText(
+                                        text: "Introducing...", color: white),
+                                    const SizedBox(height: 5),
+                                    HeaderThreeText(
+                                        text: "Portal Blog", color: white),
+                                    const SizedBox(height: 5),
+                                    ChatText(
+                                      text:
+                                          "This contains meaningful blogs, success stories, tips and tricks, and so on. Check it out!",
+                                      color: white,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Image.asset(
+                                "assets/images/portal.png",
+                                height: size.width * 0.35,
+                                width: size.width * 0.35,
+                              ),
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  BlogPage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
