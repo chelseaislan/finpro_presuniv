@@ -49,7 +49,10 @@ class _AccountStatusUpgradeState extends State<AccountStatusUpgrade> {
     return Scaffold(
       backgroundColor: primary5,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("My Legal Documents"),
+        appBarTitle: HeaderThreeText(
+          text: "My Legal Documents",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(

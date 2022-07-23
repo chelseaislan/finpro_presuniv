@@ -388,7 +388,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
 
     // comment all the presets
     final List headerPreset = [
-      "Use preset A", // Yvonne, Putin, Will Smith, Bill
+      "Use preset A", // Yvonne, Putin, Will Smith
       "Use preset B", // Dasha, Waterford, Donald
       "Use preset C", // Adele, Ronaldo, Obama
       "Use preset D", // Offred, Musk, Fred MU

@@ -133,7 +133,10 @@ class ViewSearchHeader extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Search User Details"),
+        appBarTitle: HeaderThreeText(
+          text: "Filtered User Details",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: Stack(

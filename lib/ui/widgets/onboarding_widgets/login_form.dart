@@ -28,6 +28,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   LoginBloc _loginBloc;
+  DateTime currentBackPressTime;
 
   UserRepository get _userRepository => widget._userRepository;
 
@@ -115,116 +116,136 @@ class _LoginFormState extends State<LoginForm> {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
         }
       },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      "assets/images/logo_login.png",
-                      width: size.width * 0.7,
-                      height: size.width * 0.7,
+      child: WillPopScope(
+        onWillPop: () {
+          DateTime now = DateTime.now();
+          if (currentBackPressTime == null ||
+              now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+            currentBackPressTime = now;
+            ScaffoldMessenger.of(context).showSnackBar(
+              mySnackbar(
+                text: "Press back again to exit.",
+                duration: 3,
+                background: primaryBlack,
+              ),
+            );
+            return Future.value(false);
+          }
+          return Future.value(true);
+        },
+        child: BlocBuilder<LoginBloc, LoginState>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        "assets/images/logo_login.png",
+                        width: size.width * 0.7,
+                        height: size.width * 0.7,
+                      ),
                     ),
-                  ),
-                  HeaderTwoText(
-                    text: "Welcome back!",
-                    color: white,
-                    align: TextAlign.left,
-                  ),
-                  const SizedBox(height: 15),
-                  DescText(
-                    text:
-                        "“You don't know what you're capable of until you have to do it.” - June Osborne",
-                    color: white,
-                    align: TextAlign.left,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: size.width * 0.04),
-                    child: Divider(
+                    HeaderTwoText(
+                      text: "Welcome back!",
+                      color: white,
+                      align: TextAlign.left,
+                    ),
+                    const SizedBox(height: 15),
+                    DescText(
+                      text:
+                          "“You don't know what you're capable of until you have to do it.” - June Osborne",
+                      color: white,
+                      align: TextAlign.left,
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.width * 0.04),
+                      child: Divider(
+                        color: white,
+                        height: 1,
+                        thickness: 0.2,
+                      ),
+                    ),
+                    LoginTextFieldWidget(
+                      textCapitalization: TextCapitalization.none,
+                      textAction: TextInputAction.next,
+                      text: "Email Address",
+                      controller: _emailController,
+                      color: white,
+                      obscureText: false,
+                      prefixIcon: const Icon(Icons.email_outlined),
+                      textInputType: TextInputType.emailAddress,
+                      textValidator: (_) {
+                        return !state.isEmailValid ? "Invalid Email" : null;
+                      },
+                      maxLines: 1,
+                    ),
+                    LoginTextFieldWidget(
+                      textCapitalization: TextCapitalization.none,
+                      textAction: TextInputAction.done,
+                      text: "Password",
+                      controller: _passwordController,
+                      color: white,
+                      obscureText: true,
+                      prefixIcon: const Icon(Icons.vpn_key_outlined),
+                      textInputType: TextInputType.visiblePassword,
+                      textValidator: (_) {
+                        return !state.isPasswordValid
+                            ? "Password must be at least 6 characters with a number."
+                            : null;
+                      },
+                      maxLines: 1,
+                    ),
+                    Divider(
                       color: white,
                       height: 1,
                       thickness: 0.2,
                     ),
-                  ),
-                  LoginTextFieldWidget(
-                    textCapitalization: TextCapitalization.none,
-                    textAction: TextInputAction.next,
-                    text: "Email Address",
-                    controller: _emailController,
-                    color: white,
-                    obscureText: false,
-                    prefixIcon: const Icon(Icons.email_outlined),
-                    textInputType: TextInputType.emailAddress,
-                    textValidator: (_) {
-                      return !state.isEmailValid ? "Invalid Email" : null;
-                    },
-                    maxLines: 1,
-                  ),
-                  LoginTextFieldWidget(
-                    textCapitalization: TextCapitalization.none,
-                    textAction: TextInputAction.done,
-                    text: "Password",
-                    controller: _passwordController,
-                    color: white,
-                    obscureText: true,
-                    prefixIcon: const Icon(Icons.vpn_key_outlined),
-                    textInputType: TextInputType.visiblePassword,
-                    textValidator: (_) {
-                      return !state.isPasswordValid
-                          ? "Password must be at least 6 characters with a number."
-                          : null;
-                    },
-                    maxLines: 1,
-                  ),
-                  Divider(
-                    color: white,
-                    height: 1,
-                    thickness: 0.2,
-                  ),
-                  const SizedBox(height: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 10),
-                      BigWideButton(
-                        labelText: "Log In",
-                        onPressedTo: isLoginButtonEnabled(state)
-                            ? _onFormSubmitted
-                            : null,
-                        textColor:
-                            isLoginButtonEnabled(state) ? secondBlack : white,
-                        btnColor: isLoginButtonEnabled(state)
-                            ? Colors.amber
-                            : Colors.black54,
-                      ),
-                      const SizedBox(height: 15),
-                      BigTextButton(
-                        labelText: "Create a new account",
-                        labelColor: white,
-                        onPressedTo: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) =>
-                                  SignUpPage(userRepository: _userRepository),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 25),
-                    ],
-                  ),
-                ],
+                    const SizedBox(height: 15),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 10),
+                        BigWideButton(
+                          labelText: "Log In",
+                          onPressedTo: isLoginButtonEnabled(state)
+                              ? _onFormSubmitted
+                              : null,
+                          textColor:
+                              isLoginButtonEnabled(state) ? secondBlack : white,
+                          btnColor: isLoginButtonEnabled(state)
+                              ? Colors.amber
+                              : Colors.black54,
+                        ),
+                        const SizedBox(height: 15),
+                        BigTextButton(
+                          labelText: "Create a new account",
+                          labelColor: white,
+                          onPressedTo: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation1,
+                                        animation2) =>
+                                    SignUpPage(userRepository: _userRepository),
+                                transitionDuration: Duration.zero,
+                                reverseTransitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 25),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

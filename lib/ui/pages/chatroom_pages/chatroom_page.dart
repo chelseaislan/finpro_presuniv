@@ -21,7 +21,6 @@ import 'package:finpro_max/ui/widgets/card_swipe_widgets/card_photo.dart';
 import 'package:finpro_max/ui/widgets/chatroom_widgets/chatroom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ChatroomPage extends StatefulWidget {
   final User currentUser, selectedUser;
@@ -36,9 +35,9 @@ class ChatroomPage extends StatefulWidget {
 class _ChatroomPageState extends State<ChatroomPage>
     with TickerProviderStateMixin {
   AnimationController _animationController;
-  ChatroomRepository _chatroomRepository = ChatroomRepository();
+  final ChatroomRepository _chatroomRepository = ChatroomRepository();
   ChatroomBloc _chatroomBloc;
-  TextEditingController _messageController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   bool isValid = false; // for text controller
 
   @override

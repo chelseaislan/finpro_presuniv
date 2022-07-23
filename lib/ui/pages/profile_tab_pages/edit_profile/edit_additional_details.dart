@@ -16,7 +16,6 @@ import 'package:finpro_max/ui/pages/profile_tab_pages/edit_profile/edit_profile_
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class EditAdditionals extends StatefulWidget {
   final String userId;
@@ -256,7 +255,10 @@ class _EditAdditionalsState extends State<EditAdditionals> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBarSideButton(
-          appBarTitle: const Text("Additional Details"),
+          appBarTitle: HeaderThreeText(
+            text: "Additional Details",
+            color: white,
+          ),
           appBarColor: primary1,
         ),
         body: BlocBuilder<ProfileBloc, ProfileState>(

@@ -7,7 +7,6 @@ import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/repositories/user_repository.dart';
-import 'package:finpro_max/ui/pages/profile_tab_pages/edit_profile/edit_profile_page.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/edit_profile/edit_profile_tabs.dart';
 import 'package:finpro_max/ui/widgets/matches_widgets/profile_match_header_container.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     return Scaffold(
       backgroundColor: lightGrey1,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Your Profile Details"),
+        appBarTitle: HeaderThreeText(
+          text: "Your Profile Details",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: RefreshIndicator(

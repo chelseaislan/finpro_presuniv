@@ -6,6 +6,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:finpro_max/bloc/search_profile/bloc.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/buttons/big_wide_button.dart';
+import 'package:finpro_max/custom_widgets/buttons/text_button.dart';
 import 'package:finpro_max/custom_widgets/empty_content.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
@@ -43,6 +44,7 @@ class _SearchProfileState extends State<SearchProfile>
   int rTotal;
   int pTotal;
   double similarity;
+  DateTime currentBackPressTime;
   // check internet connection
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
@@ -915,446 +917,482 @@ class _SearchProfileState extends State<SearchProfile>
     return Scaffold(
       backgroundColor: white,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Manual Search"),
+        appBarTitle: HeaderThreeText(
+          text: "Search and Filter",
+          color: white,
+        ),
         appBarColor: primary5,
       ),
-      body: BlocBuilder<SearchProfileBloc, SearchProfileState>(
-        bloc: _searchProfileBloc,
-        builder: (context, state) {
-          // check connection after builder
-          if (_connectionStatus == ConnectivityResult.mobile ||
-              _connectionStatus == ConnectivityResult.wifi) {
-            if (state is SearchInitialState) {
-              _searchProfileBloc
-                  .add(SearchLoadUserEvent(userId: widget.userId));
-              return Center(
-                child: CircularProgressIndicator(color: primary1),
-              );
-            } else if (state is SearchLoadingState) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(primary1),
-                ),
-              );
-            } else if (state is SearchLoadUserState) {
-              _currentUser = state.currentUser;
-              if (_currentUser.accountType == "verified" ||
-                  _currentUser.accountType == "married") {
-                return Stack(
-                  children: [
-                    StreamBuilder<QuerySnapshot>(
-                      stream: state.userList,
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Center(
-                              child:
-                                  CircularProgressIndicator(color: primary1));
-                        }
-                        if (snapshot.data.documents.isNotEmpty) {
-                          final user = snapshot.data.documents;
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: SingleChildScrollView(
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: size.height * 0.103),
-                                      GridView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio:
-                                              itemWidth / itemHeight,
-                                        ),
-                                        itemCount: user.length,
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () async {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                myLoadingSnackbar(
-                                                  text: "Please wait...",
-                                                  duration: 1,
-                                                  background: primaryBlack,
-                                                ),
-                                              );
-                                              User selectedUser =
-                                                  await _searchRepository
-                                                      .getUserDetails(
-                                                          user[index]
-                                                              .documentID);
-                                              User currentUser =
-                                                  await _searchRepository
-                                                      .getUserDetails(
-                                                          widget.userId);
-                                              // here
-                                              if (_currentUser.zSholat ==
-                                                  user[index].data['zSholat']) {
-                                                setState(() => r01 = 1);
-                                                debugPrint("$r01 r01 same");
-                                              } else {
-                                                setState(() => r01 = 0);
-                                              }
-                                              if (_currentUser.zSSunnah ==
-                                                  user[index]
-                                                      .data['zSSunnah']) {
-                                                setState(() => r02 = 1);
-                                                debugPrint("$r02 r02 same");
-                                              } else {
-                                                setState(() => r02 = 0);
-                                              }
-                                              if (_currentUser.zFasting ==
-                                                  user[index]
-                                                      .data['zFasting']) {
-                                                setState(() => r03 = 1);
-                                                debugPrint("$r03 r03 same");
-                                              } else {
-                                                setState(() => r03 = 0);
-                                              }
-                                              if (_currentUser.zFSunnah ==
-                                                  user[index]
-                                                      .data['zFSunnah']) {
-                                                setState(() => r04 = 1);
-                                                debugPrint("$r04 r04 same");
-                                              } else {
-                                                setState(() => r04 = 0);
-                                              }
-                                              if (_currentUser.zPilgrimage ==
-                                                  user[index]
-                                                      .data['zPilgrimage']) {
-                                                setState(() => r05 = 1);
-                                                debugPrint("$r05 r05 same");
-                                              } else {
-                                                setState(() => r05 = 0);
-                                              }
-                                              if (_currentUser.zQuranLevel ==
-                                                  user[index]
-                                                      .data['zQuranLevel']) {
-                                                setState(() => r06 = 1);
-                                                debugPrint("$r06 r06 same");
-                                              } else {
-                                                setState(() => r06 = 0);
-                                              }
-                                              if (_currentUser.zEducation ==
-                                                  user[index]
-                                                      .data['zEducation']) {
-                                                setState(() => p01 = 1);
-                                                debugPrint("$p01 p01 same");
-                                              } else {
-                                                setState(() => p01 = 0);
-                                              }
-                                              if (_currentUser
-                                                      .zMarriageStatus ==
-                                                  user[index].data[
-                                                      'zMarriageStatus']) {
-                                                setState(() => p02 = 1);
-                                                debugPrint("$p02 p02 same");
-                                              } else {
-                                                setState(() => p02 = 0);
-                                              }
-                                              if (_currentUser.zHaveKids ==
-                                                  user[index]
-                                                      .data['zHaveKids']) {
-                                                setState(() => p03 = 1);
-                                                debugPrint("$p03 p03 same");
-                                              } else {
-                                                setState(() => p03 = 0);
-                                              }
-                                              if (_currentUser
-                                                      .zChildPreference ==
-                                                  user[index].data[
-                                                      'zChildPreference']) {
-                                                setState(() => p04 = 1);
-                                                debugPrint("$p04 p04 same");
-                                              } else {
-                                                setState(() => p04 = 0);
-                                              }
-                                              if (_currentUser.zSalaryRange ==
-                                                  user[index]
-                                                      .data['zSalaryRange']) {
-                                                setState(() => p05 = 1);
-                                                debugPrint("$p05 p05 same");
-                                              } else {
-                                                setState(() => p05 = 0);
-                                              }
-                                              if (_currentUser.zFinancials ==
-                                                  user[index]
-                                                      .data['zFinancials']) {
-                                                setState(() => p06 = 1);
-                                                debugPrint("$p06 p06 same");
-                                              } else {
-                                                setState(() => p06 = 0);
-                                              }
-                                              if (_currentUser.zPersonality ==
-                                                  user[index]
-                                                      .data['zPersonality']) {
-                                                setState(() => p07 = 1);
-                                                debugPrint("$p07 p07 same");
-                                              } else {
-                                                setState(() => p07 = 0);
-                                              }
-                                              if (_currentUser.zPets ==
-                                                  user[index].data['zPets']) {
-                                                setState(() => p08 = 1);
-                                                debugPrint("$p08 p08 same");
-                                              } else {
-                                                setState(() => p08 = 0);
-                                              }
-                                              if (_currentUser.zSmoke ==
-                                                  user[index].data['zSmoke']) {
-                                                setState(() => p09 = 1);
-                                                debugPrint("$p09 p09 same");
-                                              } else {
-                                                setState(() => p09 = 0);
-                                              }
-                                              if (_currentUser.zTattoo ==
-                                                  user[index].data['zTattoo']) {
-                                                setState(() => p10 = 1);
-                                                debugPrint("$p10 p10 same");
-                                              } else {
-                                                setState(() => p10 = 0);
-                                              }
-                                              if (_currentUser.zTarget ==
-                                                  user[index].data['zTarget']) {
-                                                setState(() => p11 = 1);
-                                                debugPrint("$p11 p11 same");
-                                              } else {
-                                                setState(() => p11 = 0);
-                                              }
-                                              setState(() {
-                                                rTotal = r01 +
-                                                    r02 +
-                                                    r03 +
-                                                    r04 +
-                                                    r05 +
-                                                    r06;
-                                                debugPrint("rTotal : $rTotal");
-                                                pTotal = p01 +
-                                                    p02 +
-                                                    p03 +
-                                                    p04 +
-                                                    p05 +
-                                                    p06 +
-                                                    p07 +
-                                                    p08 +
-                                                    p09 +
-                                                    p10 +
-                                                    p11;
-                                                debugPrint("pTotal : $pTotal");
-                                                similarity =
-                                                    (rTotal + pTotal) / 17;
-                                                debugPrint(
-                                                    "similarity : $similarity");
-                                              });
-                                              Navigator.push(
-                                                context,
-                                                PageRouteBuilder(
-                                                  pageBuilder: (context,
-                                                          animation1,
-                                                          animation2) =>
-                                                      ViewSearchHeader(
-                                                    user: selectedUser,
-                                                    size: size,
-                                                    searchProfileBloc:
-                                                        _searchProfileBloc,
-                                                    currentUser: currentUser,
-                                                    widget: widget,
-                                                    rTotal: rTotal,
-                                                    pTotal: pTotal,
-                                                    similarity: double.parse(
-                                                        similarity
-                                                            .toStringAsFixed(
-                                                                2)),
-                                                  ),
-                                                  transitionDuration:
-                                                      Duration.zero,
-                                                  reverseTransitionDuration:
-                                                      Duration.zero,
-                                                ),
-                                              );
-                                            },
-                                            child: CardProfileSwipe(
-                                              blur: user[index]
-                                                          .data['blurAvatar'] ==
-                                                      true
-                                                  ? 10
-                                                  : 0,
-                                              overlay: user[index]
-                                                          .data['blurAvatar'] ==
-                                                      true
-                                                  ? Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        SizedBox(
-                                                            height:
-                                                                size.height *
-                                                                    0.022),
-                                                        CircleAvatar(
-                                                          maxRadius: 65,
-                                                          backgroundColor:
-                                                              white,
-                                                          child: Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(15),
-                                                            child: Image.asset(
-                                                                "assets/images/love.png"),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : Container(),
-                                              photo:
-                                                  user[index].data['photoUrl'],
-                                              photoHeight: size.height * 0.3,
-                                              padding: size.height * 0.01,
-                                              photoWidth: size.width * 0.5,
-                                              clipRadius: size.height * 0.01,
-                                              containerWidth: size.width * 0.5,
-                                              containerHeight:
-                                                  size.height * 0.12,
-                                              containerChild: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        15, 15, 15, 0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    HeaderFourText(
-                                                      text:
-                                                          "${user[index].data['nickname']}, ${(DateTime.now().year - user[index].data['dob'].toDate().year).toString()}",
-                                                      color: white,
-                                                    ),
-                                                    SmallText(
-                                                      text: user[index]
-                                                          .data['jobPosition'],
-                                                      color: white,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    SmallText(
-                                                      text: user[index]
-                                                          .data['currentJob'],
-                                                      color: white,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    SmallText(
-                                                      text:
-                                                          "${user[index].data['location']}, ${user[index].data['province']}",
-                                                      color: white,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      SizedBox(height: size.height * 0.01),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else {
-                          return SingleChildScrollView(
-                            child: Padding(
+      body: WillPopScope(
+        onWillPop: () {
+          DateTime now = DateTime.now();
+          if (currentBackPressTime == null ||
+              now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+            currentBackPressTime = now;
+            ScaffoldMessenger.of(context).showSnackBar(
+              mySnackbar(
+                text: "Press back again to exit.",
+                duration: 3,
+                background: primaryBlack,
+              ),
+            );
+            return Future.value(false);
+          }
+          return Future.value(true);
+        },
+        child: BlocBuilder<SearchProfileBloc, SearchProfileState>(
+          bloc: _searchProfileBloc,
+          builder: (context, state) {
+            // check connection after builder
+            if (_connectionStatus == ConnectivityResult.mobile ||
+                _connectionStatus == ConnectivityResult.wifi) {
+              if (state is SearchInitialState) {
+                _searchProfileBloc
+                    .add(SearchLoadUserEvent(userId: widget.userId));
+                return Center(
+                  child: CircularProgressIndicator(color: primary1),
+                );
+              } else if (state is SearchLoadingState) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(primary1),
+                  ),
+                );
+              } else if (state is SearchLoadUserState) {
+                _currentUser = state.currentUser;
+                if (_currentUser.accountType == "verified" ||
+                    _currentUser.accountType == "married") {
+                  return Stack(
+                    children: [
+                      StreamBuilder<QuerySnapshot>(
+                        stream: state.userList,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                                child:
+                                    CircularProgressIndicator(color: primary1));
+                          }
+                          if (snapshot.data.documents.isNotEmpty) {
+                            final user = snapshot.data.documents;
+                            return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: size.height * 0.103),
-                                  EmptyContent(
-                                    size: size,
-                                    asset: "assets/images/questions.png",
-                                    header: "Uh-oh...",
-                                    description:
-                                        "Looks like there is no one around. Please reset or refine your filter.",
-                                    buttonText: "Reset Filter",
-                                    onPressed: () {
-                                      _onReset();
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation1,
-                                                  animation2) =>
-                                              HomeTabs(
-                                                  userId: widget.userId,
-                                                  selectedPage: 1),
-                                          transitionDuration: Duration.zero,
-                                          reverseTransitionDuration:
-                                              Duration.zero,
+                              child: SingleChildScrollView(
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: size.height * 0.103),
+                                        GridView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio:
+                                                itemWidth / itemHeight,
+                                          ),
+                                          itemCount: user.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () async {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  myLoadingSnackbar(
+                                                    text: "Please wait...",
+                                                    duration: 1,
+                                                    background: primaryBlack,
+                                                  ),
+                                                );
+                                                User selectedUser =
+                                                    await _searchRepository
+                                                        .getUserDetails(
+                                                            user[index]
+                                                                .documentID);
+                                                User currentUser =
+                                                    await _searchRepository
+                                                        .getUserDetails(
+                                                            widget.userId);
+                                                // here
+                                                if (_currentUser.zSholat ==
+                                                    user[index]
+                                                        .data['zSholat']) {
+                                                  setState(() => r01 = 1);
+                                                  debugPrint("$r01 r01 same");
+                                                } else {
+                                                  setState(() => r01 = 0);
+                                                }
+                                                if (_currentUser.zSSunnah ==
+                                                    user[index]
+                                                        .data['zSSunnah']) {
+                                                  setState(() => r02 = 1);
+                                                  debugPrint("$r02 r02 same");
+                                                } else {
+                                                  setState(() => r02 = 0);
+                                                }
+                                                if (_currentUser.zFasting ==
+                                                    user[index]
+                                                        .data['zFasting']) {
+                                                  setState(() => r03 = 1);
+                                                  debugPrint("$r03 r03 same");
+                                                } else {
+                                                  setState(() => r03 = 0);
+                                                }
+                                                if (_currentUser.zFSunnah ==
+                                                    user[index]
+                                                        .data['zFSunnah']) {
+                                                  setState(() => r04 = 1);
+                                                  debugPrint("$r04 r04 same");
+                                                } else {
+                                                  setState(() => r04 = 0);
+                                                }
+                                                if (_currentUser.zPilgrimage ==
+                                                    user[index]
+                                                        .data['zPilgrimage']) {
+                                                  setState(() => r05 = 1);
+                                                  debugPrint("$r05 r05 same");
+                                                } else {
+                                                  setState(() => r05 = 0);
+                                                }
+                                                if (_currentUser.zQuranLevel ==
+                                                    user[index]
+                                                        .data['zQuranLevel']) {
+                                                  setState(() => r06 = 1);
+                                                  debugPrint("$r06 r06 same");
+                                                } else {
+                                                  setState(() => r06 = 0);
+                                                }
+                                                if (_currentUser.zEducation ==
+                                                    user[index]
+                                                        .data['zEducation']) {
+                                                  setState(() => p01 = 1);
+                                                  debugPrint("$p01 p01 same");
+                                                } else {
+                                                  setState(() => p01 = 0);
+                                                }
+                                                if (_currentUser
+                                                        .zMarriageStatus ==
+                                                    user[index].data[
+                                                        'zMarriageStatus']) {
+                                                  setState(() => p02 = 1);
+                                                  debugPrint("$p02 p02 same");
+                                                } else {
+                                                  setState(() => p02 = 0);
+                                                }
+                                                if (_currentUser.zHaveKids ==
+                                                    user[index]
+                                                        .data['zHaveKids']) {
+                                                  setState(() => p03 = 1);
+                                                  debugPrint("$p03 p03 same");
+                                                } else {
+                                                  setState(() => p03 = 0);
+                                                }
+                                                if (_currentUser
+                                                        .zChildPreference ==
+                                                    user[index].data[
+                                                        'zChildPreference']) {
+                                                  setState(() => p04 = 1);
+                                                  debugPrint("$p04 p04 same");
+                                                } else {
+                                                  setState(() => p04 = 0);
+                                                }
+                                                if (_currentUser.zSalaryRange ==
+                                                    user[index]
+                                                        .data['zSalaryRange']) {
+                                                  setState(() => p05 = 1);
+                                                  debugPrint("$p05 p05 same");
+                                                } else {
+                                                  setState(() => p05 = 0);
+                                                }
+                                                if (_currentUser.zFinancials ==
+                                                    user[index]
+                                                        .data['zFinancials']) {
+                                                  setState(() => p06 = 1);
+                                                  debugPrint("$p06 p06 same");
+                                                } else {
+                                                  setState(() => p06 = 0);
+                                                }
+                                                if (_currentUser.zPersonality ==
+                                                    user[index]
+                                                        .data['zPersonality']) {
+                                                  setState(() => p07 = 1);
+                                                  debugPrint("$p07 p07 same");
+                                                } else {
+                                                  setState(() => p07 = 0);
+                                                }
+                                                if (_currentUser.zPets ==
+                                                    user[index].data['zPets']) {
+                                                  setState(() => p08 = 1);
+                                                  debugPrint("$p08 p08 same");
+                                                } else {
+                                                  setState(() => p08 = 0);
+                                                }
+                                                if (_currentUser.zSmoke ==
+                                                    user[index]
+                                                        .data['zSmoke']) {
+                                                  setState(() => p09 = 1);
+                                                  debugPrint("$p09 p09 same");
+                                                } else {
+                                                  setState(() => p09 = 0);
+                                                }
+                                                if (_currentUser.zTattoo ==
+                                                    user[index]
+                                                        .data['zTattoo']) {
+                                                  setState(() => p10 = 1);
+                                                  debugPrint("$p10 p10 same");
+                                                } else {
+                                                  setState(() => p10 = 0);
+                                                }
+                                                if (_currentUser.zTarget ==
+                                                    user[index]
+                                                        .data['zTarget']) {
+                                                  setState(() => p11 = 1);
+                                                  debugPrint("$p11 p11 same");
+                                                } else {
+                                                  setState(() => p11 = 0);
+                                                }
+                                                setState(() {
+                                                  rTotal = r01 +
+                                                      r02 +
+                                                      r03 +
+                                                      r04 +
+                                                      r05 +
+                                                      r06;
+                                                  debugPrint(
+                                                      "rTotal : $rTotal");
+                                                  pTotal = p01 +
+                                                      p02 +
+                                                      p03 +
+                                                      p04 +
+                                                      p05 +
+                                                      p06 +
+                                                      p07 +
+                                                      p08 +
+                                                      p09 +
+                                                      p10 +
+                                                      p11;
+                                                  debugPrint(
+                                                      "pTotal : $pTotal");
+                                                  similarity =
+                                                      (rTotal + pTotal) / 17;
+                                                  debugPrint(
+                                                      "similarity : $similarity");
+                                                });
+                                                Navigator.push(
+                                                  context,
+                                                  PageRouteBuilder(
+                                                    pageBuilder: (context,
+                                                            animation1,
+                                                            animation2) =>
+                                                        ViewSearchHeader(
+                                                      user: selectedUser,
+                                                      size: size,
+                                                      searchProfileBloc:
+                                                          _searchProfileBloc,
+                                                      currentUser: currentUser,
+                                                      widget: widget,
+                                                      rTotal: rTotal,
+                                                      pTotal: pTotal,
+                                                      similarity: double.parse(
+                                                          similarity
+                                                              .toStringAsFixed(
+                                                                  2)),
+                                                    ),
+                                                    transitionDuration:
+                                                        Duration.zero,
+                                                    reverseTransitionDuration:
+                                                        Duration.zero,
+                                                  ),
+                                                );
+                                              },
+                                              child: CardProfileSwipe(
+                                                blur: user[index].data[
+                                                            'blurAvatar'] ==
+                                                        true
+                                                    ? 10
+                                                    : 0,
+                                                overlay: user[index].data[
+                                                            'blurAvatar'] ==
+                                                        true
+                                                    ? Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(
+                                                              height:
+                                                                  size.height *
+                                                                      0.022),
+                                                          CircleAvatar(
+                                                            maxRadius: 65,
+                                                            backgroundColor:
+                                                                white,
+                                                            child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(15),
+                                                              child: Image.asset(
+                                                                  "assets/images/love.png"),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : Container(),
+                                                photo: user[index]
+                                                    .data['photoUrl'],
+                                                photoHeight: size.height * 0.3,
+                                                padding: size.height * 0.01,
+                                                photoWidth: size.width * 0.5,
+                                                clipRadius: size.height * 0.01,
+                                                containerWidth:
+                                                    size.width * 0.5,
+                                                containerHeight:
+                                                    size.height * 0.12,
+                                                containerChild: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          15, 15, 15, 0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      HeaderFourText(
+                                                        text:
+                                                            "${user[index].data['nickname']}, ${(DateTime.now().year - user[index].data['dob'].toDate().year).toString()}",
+                                                        color: white,
+                                                      ),
+                                                      SmallText(
+                                                        text: user[index].data[
+                                                            'jobPosition'],
+                                                        color: white,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                      SmallText(
+                                                        text: user[index]
+                                                            .data['currentJob'],
+                                                        color: white,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                      SmallText(
+                                                        text:
+                                                            "${user[index].data['location']}, ${user[index].data['province']}",
+                                                        color: white,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                        ((route) => false),
-                                      );
-                                    },
-                                  ),
-                                ],
+                                        Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: size.height * 0.01,
+                                          ),
+                                          child: resetSearch(context),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: topFilterWidget(
-                        context: context,
-                        size: size,
-                        simpleSearchOnTap: simpleSearchOnTap,
-                        radioTitle: simpleAdvancedTitle,
-                        simpleController: simpleController,
-                        simpleList: simpleList,
-                        simpleOnPressed: simpleOnPressed,
-                        advancedValues: advancedValues,
-                        advancedItems: advancedItems,
-                        advancedOnPressed: advancedOnPressed,
+                            );
+                          } else {
+                            return SingleChildScrollView(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: size.height * 0.103),
+                                    EmptyContent(
+                                      size: size,
+                                      asset: "assets/images/questions.png",
+                                      header: "Uh-oh...",
+                                      description:
+                                          "Looks like there is no one around. Please reset or refine your filter.",
+                                      buttonText: "Reset Filter",
+                                      onPressed: () {
+                                        _onReset();
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation1,
+                                                    animation2) =>
+                                                HomeTabs(
+                                                    userId: widget.userId,
+                                                    selectedPage: 1),
+                                            transitionDuration: Duration.zero,
+                                            reverseTransitionDuration:
+                                                Duration.zero,
+                                          ),
+                                          ((route) => false),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       ),
-                    ),
-                  ],
-                );
-                // }
-              } else {
-                return Unverified(userId: widget.userId);
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: topFilterWidget(
+                          context: context,
+                          size: size,
+                          simpleSearchOnTap: simpleSearchOnTap,
+                          radioTitle: simpleAdvancedTitle,
+                          simpleController: simpleController,
+                          simpleList: simpleList,
+                          simpleOnPressed: simpleOnPressed,
+                          advancedValues: advancedValues,
+                          advancedItems: advancedItems,
+                          advancedOnPressed: advancedOnPressed,
+                        ),
+                      ),
+                    ],
+                  );
+                  // }
+                } else {
+                  return Unverified(userId: widget.userId);
+                }
               }
+              return HeaderFourText(text: "404", color: secondBlack);
+            } else {
+              return EmptyContent(
+                size: size,
+                asset: "assets/images/empty-container.png",
+                header: "Oops...",
+                description:
+                    "Looks like the Internet is down or something else happened. Please try again later.",
+                buttonText: "Refresh",
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          HomeTabs(userId: widget.userId, selectedPage: 1),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                    ((route) => false),
+                  );
+                },
+              );
             }
-            return HeaderFourText(text: "404", color: secondBlack);
-          } else {
-            return EmptyContent(
-              size: size,
-              asset: "assets/images/empty-container.png",
-              header: "Oops...",
-              description:
-                  "Looks like the Internet is down or something else happened. Please try again later.",
-              buttonText: "Refresh",
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        HomeTabs(userId: widget.userId, selectedPage: 1),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                  ((route) => false),
-                );
-              },
-            );
-          }
-        },
+          },
+        ),
       ),
     );
   }
@@ -1588,7 +1626,7 @@ class _SearchProfileState extends State<SearchProfile>
               flex: 6,
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
-                child: SmallText(
+                child: ChatText(
                   text:
                       "Popular near ${_currentUser.location}, ${_currentUser.province}",
                   color: white,
@@ -1619,8 +1657,8 @@ class _SearchProfileState extends State<SearchProfile>
     );
   }
 
-  BigWideButton resetSearch(BuildContext context) {
-    return BigWideButton(
+  BigTextButton resetSearch(BuildContext context) {
+    return BigTextButton(
       labelText: "Reset Search",
       onPressedTo: () {
         _onReset();
@@ -1635,8 +1673,7 @@ class _SearchProfileState extends State<SearchProfile>
           ((route) => false),
         );
       },
-      textColor: white,
-      btnColor: primary1,
+      labelColor: primary1,
     );
   }
 

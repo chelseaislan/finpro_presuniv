@@ -62,7 +62,10 @@ class _ChecklistThreeState extends State<ChecklistThree>
     return Scaffold(
       backgroundColor: primary5,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Taaruf Checklist - 3"),
+        appBarTitle: HeaderThreeText(
+          text: "Taaruf Checklist (3)",
+          color: white,
+        ),
         appBarColor: primary1,
         appBarIcon: Icons.home_outlined,
         onPressed: () {

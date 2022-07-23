@@ -127,7 +127,10 @@ class ViewMatchedDetailHeader extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Matched User Details"),
+        appBarTitle: HeaderThreeText(
+          text: "Matched User Details",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: ListView(

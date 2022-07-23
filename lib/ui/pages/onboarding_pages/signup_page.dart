@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:finpro_max/bloc/signup/bloc.dart';
+import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/repositories/user_repository.dart';
@@ -26,8 +27,11 @@ class SignUpPage extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: const AppBarSideButton(
-          appBarTitle: Text("Create account"),
+        appBar: AppBarSideButton(
+          appBarTitle: HeaderThreeText(
+            text: "Complete Your Profile",
+            color: white,
+          ),
           appBarColor: Colors.transparent,
         ),
         body: BlocProvider<SignUpBloc>(

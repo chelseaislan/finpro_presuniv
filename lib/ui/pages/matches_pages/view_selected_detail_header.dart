@@ -7,12 +7,12 @@ import 'package:finpro_max/custom_widgets/comparison_widget.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/custom_widgets/profile_detail_listview.dart';
 import 'package:finpro_max/custom_widgets/religion_filler.dart';
+import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/ui/pages/discover_pages/view_discover_detail_header.dart';
 import 'package:finpro_max/ui/widgets/matches_widgets/profile_match_header_container.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ViewSelectedDetailHeader extends StatelessWidget {
   final User selectedUser;
@@ -127,7 +127,10 @@ class ViewSelectedDetailHeader extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Selected User Details"),
+        appBarTitle: HeaderThreeText(
+          text: "Selected User Details",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: Stack(

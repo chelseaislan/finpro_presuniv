@@ -80,7 +80,10 @@ class _EditProfileState extends State<EditProfile>
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBarSideButton(
-          appBarTitle: const Text("Basic Details"),
+          appBarTitle: HeaderThreeText(
+            text: "Basic Details",
+            color: white,
+          ),
           appBarColor: primary1,
         ),
         body: BlocBuilder<ProfileBloc, ProfileState>(

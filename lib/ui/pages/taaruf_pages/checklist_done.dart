@@ -57,7 +57,10 @@ class _ChecklistDoneState extends State<ChecklistDone> {
     return Scaffold(
       backgroundColor: primary5,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Congratulations!"),
+        appBarTitle: HeaderThreeText(
+          text: "Congratulations! 🎉",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: BlocBuilder<TaarufBloc, TaarufState>(

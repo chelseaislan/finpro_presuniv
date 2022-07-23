@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 import 'dart:io';
-import 'package:app_settings/app_settings.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:finpro_max/bloc/authentication/authentication_bloc.dart';
 import 'package:finpro_max/bloc/authentication/authentication_event.dart';
@@ -22,7 +21,6 @@ import 'package:finpro_max/repositories/user_repository.dart';
 import 'package:finpro_max/ui/pages/home.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/account_status_upgrade.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/profile_details_page.dart';
-import 'package:finpro_max/ui/pages/profile_tab_pages/story_upload_page.dart';
 import 'package:finpro_max/ui/pages/tabbed_pages/blog_page.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +28,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userId;
@@ -50,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage>
   User _currentUser;
   double expRating, appRating;
   int yExpRating, yAppRating;
+  DateTime currentBackPressTime;
   // int counter = 0;
   // File story;
   // check internet connection
@@ -543,171 +541,192 @@ class _ProfilePageState extends State<ProfilePage>
         ),
         appBarColor: appBarColor,
       ),
-      body: RefreshIndicator(
-        onRefresh: () {
-          return Navigator.pushAndRemoveUntil(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) =>
-                  HomeTabs(userId: widget.userId, selectedPage: 4),
-              transitionDuration: Duration.zero,
-              reverseTransitionDuration: Duration.zero,
-            ),
-            ((route) => false),
-          );
+      body: WillPopScope(
+        onWillPop: () {
+          DateTime now = DateTime.now();
+          if (currentBackPressTime == null ||
+              now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+            currentBackPressTime = now;
+            ScaffoldMessenger.of(context).showSnackBar(
+              mySnackbar(
+                text: "Press back again to exit.",
+                duration: 3,
+                background: primaryBlack,
+              ),
+            );
+            return Future.value(false);
+          }
+          return Future.value(true);
         },
-        child: BlocBuilder<ProfileBloc, ProfileState>(
-          bloc: _profileBloc,
-          builder: (context, state) {
-            // check internet after builder
-            if (_connectionStatus == ConnectivityResult.mobile ||
-                _connectionStatus == ConnectivityResult.wifi) {
-              // check app states
-              if (state is ProfileInitialState) {
-                _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
-              }
-              if (state is ProfileLoadingState) {
-                return Center(
-                    child: CircularProgressIndicator(color: primary1));
-              }
-              if (state is ProfileLoadedState) {
-                _currentUser = state.currentUser;
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ProfileOverviewWidget(
-                        photo: _currentUser.photo,
-                        name: _currentUser.name,
-                        location:
-                            "${_currentUser.location}, ${_currentUser.province}",
-                        accountType: _currentUser.accountType,
-                        currentJob:
-                            "${_currentUser.jobPosition} at ${_currentUser.currentJob}",
-                        taarufWith: _currentUser.taarufWith != null
-                            ? "Taaruf: Active"
-                            : "Taaruf: Inactive",
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                          padding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
-                          decoration: BoxDecoration(
-                            color: primary1,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SmallText(
-                                        text: "Introducing...", color: white),
-                                    const SizedBox(height: 5),
-                                    HeaderThreeText(
-                                        text: "Portal Blog 🎉", color: white),
-                                    const SizedBox(height: 5),
-                                    ChatText(
-                                      text:
-                                          "This contains meaningful blogs, success stories, tips and tricks, and so on. Check it out!",
-                                      color: white,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Image.asset(
-                                "assets/images/portal.png",
-                                height: size.width * 0.35,
-                                width: size.width * 0.35,
-                              ),
-                            ],
-                          ),
+        child: RefreshIndicator(
+          onRefresh: () {
+            return Navigator.pushAndRemoveUntil(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) =>
+                    HomeTabs(userId: widget.userId, selectedPage: 4),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+              ((route) => false),
+            );
+          },
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            bloc: _profileBloc,
+            builder: (context, state) {
+              // check internet after builder
+              if (_connectionStatus == ConnectivityResult.mobile ||
+                  _connectionStatus == ConnectivityResult.wifi) {
+                // check app states
+                if (state is ProfileInitialState) {
+                  _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
+                }
+                if (state is ProfileLoadingState) {
+                  return Center(
+                      child: CircularProgressIndicator(color: primary1));
+                }
+                if (state is ProfileLoadedState) {
+                  _currentUser = state.currentUser;
+                  return SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ProfileOverviewWidget(
+                          photo: _currentUser.photo,
+                          name: _currentUser.name,
+                          location:
+                              "${_currentUser.location}, ${_currentUser.province}",
+                          accountType: _currentUser.accountType,
+                          currentJob:
+                              "${_currentUser.jobPosition} at ${_currentUser.currentJob}",
+                          taarufWith: _currentUser.taarufWith != null
+                              ? "Taaruf: Active"
+                              : "Taaruf: Inactive",
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) =>
-                                  BlogPage(),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
+                        GestureDetector(
+                          child: Container(
+                            margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
+                            decoration: BoxDecoration(
+                              color: primary1,
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: titles.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
-                                leading: SizedBox(
-                                  height: double.infinity,
-                                  child: Icon(icons[index],
-                                      color: primary1, size: 30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SmallText(
+                                          text: "Introducing...", color: white),
+                                      const SizedBox(height: 5),
+                                      HeaderThreeText(
+                                          text: "Portal Blog 🎉", color: white),
+                                      const SizedBox(height: 5),
+                                      ChatText(
+                                        text:
+                                            "This contains meaningful blogs, success stories, tips and tricks, and so on. Check it out!",
+                                        color: white,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                title: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 12, bottom: 2),
-                                  child: HeaderFourText(
-                                      text: titles[index], color: primaryBlack),
+                                Image.asset(
+                                  "assets/images/portal.png",
+                                  height: size.width * 0.35,
+                                  width: size.width * 0.35,
                                 ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: ChatText(
-                                      text: subtitles[index],
-                                      color: secondBlack),
-                                ),
-                                onTap: onTap[index],
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation1, animation2) =>
+                                        BlogPage(),
+                                transitionDuration: Duration.zero,
+                                reverseTransitionDuration: Duration.zero,
                               ),
                             );
                           },
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 15),
-                        child: Center(
-                          child: SmallText(
-                            text: "User ID: ${_currentUser.uid}",
-                            color: thirdBlack,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: titles.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  leading: SizedBox(
+                                    height: double.infinity,
+                                    child: Icon(icons[index],
+                                        color: primary1, size: 30),
+                                  ),
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 12, bottom: 2),
+                                    child: HeaderFourText(
+                                        text: titles[index],
+                                        color: primaryBlack),
+                                  ),
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: ChatText(
+                                        text: subtitles[index],
+                                        color: secondBlack),
+                                  ),
+                                  onTap: onTap[index],
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            } else {
-              return EmptyContent(
-                size: size,
-                asset: "assets/images/empty-container.png",
-                header: "Oops...",
-                description:
-                    "Looks like the Internet is down or something else happened. Please try again later.",
-                buttonText: "Refresh",
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          HomeTabs(userId: widget.userId, selectedPage: 4),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 15),
+                          child: Center(
+                            child: SmallText(
+                              text: "User ID: ${_currentUser.uid}",
+                              color: thirdBlack,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    ((route) => false),
                   );
-                },
-              );
-            }
-          },
+                } else {
+                  return Container();
+                }
+              } else {
+                return EmptyContent(
+                  size: size,
+                  asset: "assets/images/empty-container.png",
+                  header: "Oops...",
+                  description:
+                      "Looks like the Internet is down or something else happened. Please try again later.",
+                  buttonText: "Refresh",
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            HomeTabs(userId: widget.userId, selectedPage: 4),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                      ((route) => false),
+                    );
+                  },
+                );
+              }
+            },
+          ),
         ),
       ),
     );

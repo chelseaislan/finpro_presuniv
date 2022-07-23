@@ -10,7 +10,6 @@ import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpForm extends StatefulWidget {
   final UserRepository _userRepository;

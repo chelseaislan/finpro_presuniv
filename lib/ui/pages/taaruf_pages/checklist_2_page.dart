@@ -8,6 +8,7 @@ import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
 import 'package:finpro_max/custom_widgets/checklist_cards.dart';
 import 'package:finpro_max/custom_widgets/modal_popup.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
+import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/repositories/taaruf_repository.dart';
@@ -82,7 +83,10 @@ class _ChecklistTwoState extends State<ChecklistTwo>
     return Scaffold(
       backgroundColor: primary5,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Taaruf Checklist - 2"),
+        appBarTitle: HeaderThreeText(
+          text: "Taaruf Checklist (2)",
+          color: white,
+        ),
         appBarColor: primary1,
         appBarIcon: Icons.home_outlined,
         onPressed: () {

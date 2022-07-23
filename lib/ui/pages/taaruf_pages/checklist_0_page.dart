@@ -75,7 +75,10 @@ class _ChecklistZeroState extends State<ChecklistZero>
     return Scaffold(
       backgroundColor: primary5,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Taaruf Steps Check"),
+        appBarTitle: HeaderThreeText(
+          text: "Taaruf Steps Check",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: RefreshIndicator(

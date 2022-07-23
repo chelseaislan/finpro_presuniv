@@ -4,7 +4,6 @@
 import 'package:finpro_max/custom_widgets/buttons/text_button.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/ui/pages/chatroom_pages/chatroom_page.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
@@ -169,8 +168,13 @@ class _MessageWidgetState extends State<MessageWidget>
             },
             // The message widget
             child: Container(
-              color: white,
-              padding: EdgeInsets.fromLTRB(
+              decoration: BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: thirdBlack),
+              ),
+              padding: EdgeInsets.all(size.height * 0.02),
+              margin: EdgeInsets.fromLTRB(
                 size.height * 0.02,
                 size.height * 0.02,
                 size.height * 0.02,
@@ -269,12 +273,6 @@ class _MessageWidgetState extends State<MessageWidget>
                         ),
                       ),
                     ],
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Divider(
-                    height: 5,
-                    color: secondBlack,
-                    thickness: 0.1,
                   ),
                 ],
               ),

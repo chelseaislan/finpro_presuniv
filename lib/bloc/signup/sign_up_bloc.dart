@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:finpro_max/repositories/user_repository.dart';
 import 'package:finpro_max/ui/regex_email_pass.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
 import './bloc.dart';
 import 'package:rxdart/rxdart.dart';

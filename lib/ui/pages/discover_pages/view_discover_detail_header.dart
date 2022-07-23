@@ -13,7 +13,6 @@ import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/ui/pages/tabbed_pages/discover_swipe.dart';
 import 'package:finpro_max/ui/widgets/matches_widgets/profile_match_header_container.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ViewDiscoverDetailHeader extends StatelessWidget {
   final User _user;
@@ -109,7 +108,10 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Discover User Details"),
+        appBarTitle: HeaderThreeText(
+          text: "Discover User Details",
+          color: white,
+        ),
         appBarColor: primary1,
       ),
       body: Stack(

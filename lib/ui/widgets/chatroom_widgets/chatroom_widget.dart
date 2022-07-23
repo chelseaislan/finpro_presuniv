@@ -5,7 +5,6 @@ import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/ui/widgets/card_swipe_widgets/card_photo.dart';
 import 'package:finpro_max/ui/widgets/chatroom_widgets/image_pdf_screen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/message_detail.dart';
 import 'package:finpro_max/repositories/chatroom_repository.dart';

@@ -65,7 +65,7 @@ class HomeTabs extends StatelessWidget {
               child: MiniText(text: "For You", color: white)),
           Tab(
             icon: const Icon(Icons.manage_search_outlined),
-            child: MiniText(text: "Search", color: white),
+            child: MiniText(text: "Filter", color: white),
           ),
           Tab(
             icon: const Icon(Icons.stars_outlined),

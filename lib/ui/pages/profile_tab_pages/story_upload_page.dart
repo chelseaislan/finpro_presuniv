@@ -27,7 +27,10 @@ class StoryUploadPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: primary5,
       appBar: AppBarSideButton(
-        appBarTitle: const Text("Upload Story"),
+        appBarTitle: HeaderThreeText(
+          text: "Upload a Story",
+          color: white,
+        ),
         appBarColor: primary5,
       ),
       body: Padding(
