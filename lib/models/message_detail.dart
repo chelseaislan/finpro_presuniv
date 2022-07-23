@@ -2,7 +2,6 @@
 // 32/41 01
 
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageDetail {
