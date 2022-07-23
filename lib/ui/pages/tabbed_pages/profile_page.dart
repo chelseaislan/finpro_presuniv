@@ -22,6 +22,7 @@ import 'package:finpro_max/ui/pages/home.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/account_status_upgrade.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/app_tutorial_page.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/profile_details_page.dart';
+import 'package:finpro_max/ui/pages/profile_tab_pages/taaruf_tutorial_page.dart';
 import 'package:finpro_max/ui/pages/tabbed_pages/blog_page.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
@@ -165,7 +166,17 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   );
                 },
-                onPressedBottom: () {},
+                onPressedBottom: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          TaarufTutorialPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
               ),
             );
           },

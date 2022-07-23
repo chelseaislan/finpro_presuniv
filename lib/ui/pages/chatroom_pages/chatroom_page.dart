@@ -383,6 +383,13 @@ class _ChatroomPageState extends State<ChatroomPage>
                                             }
                                           },
                                         ),
+                                        ChatroomButtons(
+                                          iconData:
+                                              Icons.record_voice_over_outlined,
+                                          title: "New feature?",
+                                          subtitle: "What will it be...?",
+                                          onTap: () {},
+                                        ),
                                       ],
                                     ),
                                   ),
