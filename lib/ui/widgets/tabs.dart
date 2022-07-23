@@ -38,20 +38,7 @@ class HomeTabs extends StatelessWidget {
 
   Widget menu() {
     return Container(
-      decoration: BoxDecoration(
-        color: primary1,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: secondBlack,
-            blurRadius: 3.0,
-            spreadRadius: 0.01,
-          ),
-        ],
-      ),
+      decoration: BoxDecoration(color: primary1),
       child: TabBar(
         isScrollable: false,
         indicatorColor: Colors.amber,
@@ -61,8 +48,9 @@ class HomeTabs extends StatelessWidget {
         indicatorPadding: const EdgeInsets.all(5.0),
         tabs: [
           Tab(
-              icon: const Icon(Icons.charging_station_outlined),
-              child: MiniText(text: "For You", color: white)),
+            icon: const Icon(Icons.charging_station_outlined),
+            child: MiniText(text: "For You", color: white),
+          ),
           Tab(
             icon: const Icon(Icons.manage_search_outlined),
             child: MiniText(text: "Filter", color: white),

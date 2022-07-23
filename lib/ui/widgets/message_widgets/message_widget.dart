@@ -171,7 +171,7 @@ class _MessageWidgetState extends State<MessageWidget>
               decoration: BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: thirdBlack),
+                border: Border.all(color: lightGrey3),
               ),
               padding: EdgeInsets.all(size.height * 0.02),
               margin: EdgeInsets.fromLTRB(

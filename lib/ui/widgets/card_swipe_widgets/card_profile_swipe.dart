@@ -51,18 +51,16 @@ class CardProfileSwipe extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           children: [
             // background profile pic
-            Blur(
-              blur: blur,
-              overlay: overlay,
-              colorOpacity: 0,
-              child: SizedBox(
-                width: photoWidth,
-                height: photoHeight,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(clipRadius),
-                  child: CardPhotoWidget(
-                    photoLink: photo,
-                  ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(clipRadius),
+              child: Blur(
+                blur: blur,
+                overlay: overlay,
+                colorOpacity: 0,
+                child: SizedBox(
+                  width: photoWidth,
+                  height: photoHeight,
+                  child: CardPhotoWidget(photoLink: photo),
                 ),
               ),
             ),

@@ -299,8 +299,7 @@ class _EditProfileState extends State<EditProfile>
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             myLoadingSnackbar(
-                                              text:
-                                                  "Uploading avatar, please wait...",
+                                              text: "Uploading avatar...",
                                               duration: 9,
                                               background: primaryBlack,
                                             ),
