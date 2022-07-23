@@ -376,6 +376,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: primary5,
+        tooltip: "Message ${selectedUser.nickname}",
         child: Icon(Icons.chat_outlined, color: white),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         onPressed: () {

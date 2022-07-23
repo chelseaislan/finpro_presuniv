@@ -20,6 +20,7 @@ import 'package:finpro_max/models/user.dart';
 import 'package:finpro_max/repositories/user_repository.dart';
 import 'package:finpro_max/ui/pages/home.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/account_status_upgrade.dart';
+import 'package:finpro_max/ui/pages/profile_tab_pages/app_tutorial_page.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/profile_details_page.dart';
 import 'package:finpro_max/ui/pages/tabbed_pages/blog_page.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
@@ -98,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final List titles = [
-      // "Upload a Story",
+      "Tutorial and Guidelines",
       "Profile Details",
       "My Legal Documents",
       "Reset Taaruf Properties",
@@ -108,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List subtitles = [
-      // "Your stories will be displayed on your profile details.",
+      "If you wanna know how to use this app and also the information of taaruf itself.",
       "View and edit your profile details here.",
       "View your submitted KTP and the additional document.",
       "This will reset all your taaruf properties, such as marriage dates and who you did it with.",
@@ -118,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List icons = [
-      // Icons.self_improvement_outlined,
+      Icons.book_outlined,
       Icons.account_circle_outlined,
       Icons.domain_verification_outlined,
       Icons.clear_all_outlined,
@@ -128,6 +129,48 @@ class _ProfilePageState extends State<ProfilePage>
     ];
 
     final List onTap = [
+      () {
+        showModalBottomSheet(
+          transitionAnimationController: _animationController,
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          isScrollControlled: true,
+          builder: (context) {
+            return SingleChildScrollView(
+              child: ModalPopupTwoButton(
+                size: size,
+                title: "Which information do you wanna view?",
+                image: "assets/images/upgrayedd.png",
+                description:
+                    "You can use these guides to make sure that you can find a perfect match.",
+                labelTop: "Application Tutorial",
+                labelBottom: "Taaruf Information",
+                textColorTop: white,
+                btnTop: primary1,
+                textColorBottom: white,
+                btnBottom: primary1,
+                onPressedTop: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          AppTutorialPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+                onPressedBottom: () {},
+              ),
+            );
+          },
+        );
+      },
       // () {
       // showModalBottomSheet(
       //   transitionAnimationController: _animationController,
