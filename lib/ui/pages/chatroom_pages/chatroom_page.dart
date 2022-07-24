@@ -284,16 +284,13 @@ class _ChatroomPageState extends State<ChatroomPage>
                           );
                           await record();
                         }
-                        setState(() {
-                          // this
-                        });
                       },
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: DescText(
                         text:
-                            "If you are done, you can double-tap the mic and then upload it.",
+                            "If you are done, tap the microphone again and then upload it.",
                         color: secondBlack,
                         align: TextAlign.center,
                       ),
@@ -301,28 +298,35 @@ class _ChatroomPageState extends State<ChatroomPage>
                     BigWideButton(
                       labelText: "Upload Voicenote",
                       onPressedTo: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          myLoadingSnackbar(
-                            text: "Uploading voicenote...",
-                            duration: 5,
-                            background: primaryBlack,
-                          ),
-                        );
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        _chatroomBloc.add(
-                          SendMessageEvent(
-                            messageDetail: MessageDetail(
-                              text: null,
-                              marriageDoc: null,
-                              senderId: widget.currentUser.uid,
-                              senderNickname: widget.currentUser.nickname,
-                              selectedUserId: widget.selectedUser.uid,
-                              photo: null,
-                              voicenote: recordedAudio,
+                        if (recordedAudio != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            myLoadingSnackbar(
+                              text: "Uploading voicenote...",
+                              duration: 5,
+                              background: primaryBlack,
                             ),
-                          ),
-                        );
+                          );
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          _chatroomBloc.add(
+                            SendMessageEvent(
+                              messageDetail: MessageDetail(
+                                text: null,
+                                marriageDoc: null,
+                                senderId: widget.currentUser.uid,
+                                senderNickname: widget.currentUser.nickname,
+                                selectedUserId: widget.selectedUser.uid,
+                                photo: null,
+                                voicenote: recordedAudio,
+                              ),
+                            ),
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Please record your voice before uploading.",
+                            toastLength: Toast.LENGTH_LONG,
+                          );
+                        }
                       },
                       textColor: pureWhite,
                       btnColor: primary1,
