@@ -46,7 +46,7 @@ class Unverified extends StatelessWidget {
                 ),
               );
             },
-            textColor: white,
+            textColor: pureWhite,
             btnColor: primary1,
           ),
         ],

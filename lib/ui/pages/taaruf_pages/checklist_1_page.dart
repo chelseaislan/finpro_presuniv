@@ -84,7 +84,7 @@ class _ChecklistOneState extends State<ChecklistOne>
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Taaruf Checklist (1)",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
         appBarIcon: Icons.home_outlined,
@@ -313,9 +313,9 @@ class _ChecklistOneState extends State<ChecklistOne>
                                           "To keep track on the visit date, please add this event to your calendar.",
                                       labelTop: "Add to Calendar",
                                       labelBottom: "Continue",
-                                      textColorTop: white,
+                                      textColorTop: pureWhite,
                                       btnTop: primary1,
-                                      textColorBottom: white,
+                                      textColorBottom: pureWhite,
                                       btnBottom: primary1,
                                       onPressedTop: () {
                                         Add2Calendar.addEvent2Cal(buildEvent());

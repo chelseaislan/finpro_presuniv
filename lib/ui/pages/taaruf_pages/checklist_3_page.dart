@@ -64,7 +64,7 @@ class _ChecklistThreeState extends State<ChecklistThree>
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Taaruf Checklist (3)",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
         appBarIcon: Icons.home_outlined,

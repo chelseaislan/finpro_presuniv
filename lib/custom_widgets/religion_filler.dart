@@ -35,18 +35,18 @@ class ReligionQuoteFiller extends StatelessWidget {
         children: [
           DescText(
             text: quote,
-            color: white,
+            color: pureWhite,
             align: TextAlign.left,
           ),
           const SizedBox(height: 10),
           HeaderThreeText(
             text: "- $author",
-            color: white,
+            color: pureWhite,
           ),
           const SizedBox(height: 15),
           Container(
             decoration: BoxDecoration(
-                color: white, borderRadius: BorderRadius.circular(20)),
+                color: pureWhite, borderRadius: BorderRadius.circular(20)),
             child: Image.asset(
               "assets/images/$image.png",
               width: size.width * 0.68,

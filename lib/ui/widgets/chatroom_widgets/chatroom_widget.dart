@@ -1,6 +1,7 @@
 // @dart=2.9
 // 39/41 01
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:finpro_max/ui/widgets/card_swipe_widgets/card_photo.dart';
@@ -9,12 +10,10 @@ import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/message_detail.dart';
 import 'package:finpro_max/repositories/chatroom_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ChatroomWidget extends StatefulWidget {
   final String messageId, currentUserId;
-
   const ChatroomWidget({this.messageId, this.currentUserId});
 
   @override
@@ -24,6 +23,9 @@ class ChatroomWidget extends StatefulWidget {
 class _ChatroomWidgetState extends State<ChatroomWidget> {
   ChatroomRepository _chatroomRepository = ChatroomRepository();
   MessageDetail _messageDetail;
+  AudioPlayer audioPlayer = AudioPlayer();
+  AudioPlayerState audioPlayerState = AudioPlayerState.PAUSED;
+  String url;
 
   // get the message details
   Future getDetails() async {
@@ -31,6 +33,24 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
         await _chatroomRepository.getMessageDetail(messageId: widget.messageId);
     return _messageDetail;
   }
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer.onPlayerStateChanged.listen((event) {
+      setState(() => audioPlayerState = event);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    audioPlayer.release();
+    audioPlayer.dispose();
+  }
+
+  playMusic() async => await audioPlayer.play(_messageDetail.voicenoteUrl);
+  pauseMusic() async => await audioPlayer.pause();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +93,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                   color: _messageDetail.senderId ==
                                           widget.currentUserId
                                       ? primary3
-                                      : white,
+                                      : pureWhite,
                                   borderRadius: BorderRadius.circular(
                                     size.width * 0.03,
                                   ),
@@ -158,7 +178,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                         color: _messageDetail.senderId ==
                                                 widget.currentUserId
                                             ? primary3
-                                            : white,
+                                            : pureWhite,
                                         borderRadius: BorderRadius.circular(
                                           size.width * 0.03,
                                         ),
@@ -223,8 +243,21 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Fluttertoast.showToast(
-                                          msg: "Coming soon!");
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        mySnackbar(
+                                          text: audioPlayerState ==
+                                                  AudioPlayerState.PLAYING
+                                              ? "Audio paused."
+                                              : "Playing audio...",
+                                          duration: 2,
+                                          background: primaryBlack,
+                                        ),
+                                      );
+                                      audioPlayerState ==
+                                              AudioPlayerState.PLAYING
+                                          ? pauseMusic()
+                                          : playMusic();
                                     },
                                     child: Padding(
                                       padding:
@@ -237,7 +270,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                             color: _messageDetail.senderId ==
                                                     widget.currentUserId
                                                 ? primary3
-                                                : white,
+                                                : pureWhite,
                                             borderRadius: BorderRadius.circular(
                                               size.width * 0.03,
                                             ),
@@ -252,13 +285,21 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                           child: Column(
                                             children: [
                                               Icon(
-                                                Icons.play_circle_outlined,
+                                                audioPlayerState ==
+                                                        AudioPlayerState.PLAYING
+                                                    ? Icons
+                                                        .pause_circle_outlined
+                                                    : Icons
+                                                        .play_circle_outlined,
                                                 color: thirdBlack,
                                                 size: size.height * 0.05,
                                               ),
                                               const SizedBox(height: 5),
                                               HeaderFourText(
-                                                text: "Tap to play audio",
+                                                text: audioPlayerState ==
+                                                        AudioPlayerState.PLAYING
+                                                    ? "Tap to pause audio"
+                                                    : "Tap to play audio",
                                                 color: secondBlack,
                                               ),
                                             ],
@@ -330,7 +371,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                               color: _messageDetail.senderId ==
                                                       widget.currentUserId
                                                   ? primary3
-                                                  : white,
+                                                  : pureWhite,
                                             ),
                                             borderRadius: BorderRadius.circular(
                                                 size.height * 0.02),
@@ -407,7 +448,7 @@ class TimeAgoWidget extends StatelessWidget {
       child: MiniText(
         text:
             "${_messageDetail.senderNickname} - ${timeago.format(_messageDetail.timestamp.toDate())}",
-        color: white,
+        color: pureWhite,
         align: TextAlign.center,
       ),
     );

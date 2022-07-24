@@ -23,7 +23,7 @@ class CompleteProfilePage extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Complete Your Profile",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),

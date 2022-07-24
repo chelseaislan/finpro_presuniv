@@ -28,58 +28,74 @@ class _BlogPageState extends State<BlogPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      backgroundColor: financialTimes,
-      appBar: AppBarSideButton(
-        appBarTitle: HeaderThreeText(
-          text: "Portal Blog",
-          color: white,
+        backgroundColor: primary5,
+        appBar: AppBarSideButton(
+          appBarTitle: HeaderThreeText(
+            text: "Portal Blog",
+            color: pureWhite,
+          ),
+          appBarColor: primary5,
         ),
-        appBarColor: primary5,
-      ),
-      body: RefreshIndicator(
-        onRefresh: () {
-          return Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => BlogPage(),
-              transitionDuration: Duration.zero,
-              reverseTransitionDuration: Duration.zero,
-            ),
-          );
-        },
-        child: FutureBuilder<List<PortalBlog>>(
-          future: portalBlogFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                  child: CircularProgressIndicator(color: secondBlack));
-            } else if (snapshot.hasData) {
-              final portalBlogLists = snapshot.data;
-              return buildBlog(portalBlogLists);
-            } else {
-              return EmptyContent(
-                size: MediaQuery.of(context).size,
-                asset: "assets/images/discover-tab.png",
-                header: "Uh-oh...",
-                description:
-                    "Looks like there is no one around. Please come back later.",
-                buttonText: "Refresh",
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          BlogPage(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-                },
-              );
-            }
+        body: RefreshIndicator(
+          onRefresh: () {
+            return Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => BlogPage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+            );
           },
+          child: Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: financialTimes,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+              ),
+              FutureBuilder<List<PortalBlog>>(
+                future: portalBlogFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                        child: CircularProgressIndicator(color: secondBlack));
+                  } else if (snapshot.hasData) {
+                    final portalBlogLists = snapshot.data;
+                    return buildBlog(portalBlogLists);
+                  } else {
+                    return EmptyContent(
+                      size: MediaQuery.of(context).size,
+                      asset: "assets/images/discover-tab.png",
+                      header: "Uh-oh...",
+                      description:
+                          "Looks like there is no one around. Please come back later.",
+                      buttonText: "Refresh",
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                BlogPage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
-      ));
+      );
 
   buildBlog(List<PortalBlog> portalBlog) {
     return LimitedBox(

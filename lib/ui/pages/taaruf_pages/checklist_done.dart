@@ -59,7 +59,7 @@ class _ChecklistDoneState extends State<ChecklistDone> {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Congratulations! 🎉",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -99,14 +99,14 @@ class _ChecklistDoneState extends State<ChecklistDone> {
                         child: DescText(
                           text:
                               "May Allah bless both of you and give success and happiness on your entire life.\n\nOn behalf of the developers, we would like to thank you all for using our service.",
-                          color: white,
+                          color: pureWhite,
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: white,
+                          color: pureWhite,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
@@ -173,7 +173,7 @@ class _ChecklistDoneState extends State<ChecklistDone> {
                         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: white,
+                          color: pureWhite,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
@@ -207,7 +207,7 @@ class _ChecklistDoneState extends State<ChecklistDone> {
                         margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: white,
+                          color: pureWhite,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(

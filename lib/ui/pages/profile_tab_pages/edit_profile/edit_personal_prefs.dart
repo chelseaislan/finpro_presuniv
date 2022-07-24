@@ -198,7 +198,7 @@ class _EditPersonalPrefsState extends State<EditPersonalPrefs> {
         appBar: AppBarSideButton(
           appBarTitle: HeaderThreeText(
             text: "Personal Preferences",
-            color: white,
+            color: pureWhite,
           ),
           appBarColor: primary1,
         ),
@@ -209,7 +209,7 @@ class _EditPersonalPrefsState extends State<EditPersonalPrefs> {
               _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
             }
             if (state is ProfileLoadingState) {
-              return Center(child: CircularProgressIndicator(color: white));
+              return Center(child: CircularProgressIndicator(color: pureWhite));
             }
             if (state is ProfileLoadedState) {
               _currentUser = state.currentUser;
@@ -237,12 +237,12 @@ class _EditPersonalPrefsState extends State<EditPersonalPrefs> {
                         perValues[index],
                         perItems[index],
                         perOnChanged[index],
-                        white,
+                        pureWhite,
                       );
                     },
                   ),
                   Divider(
-                    color: white,
+                    color: pureWhite,
                     height: 1,
                     thickness: 0.2,
                   ),

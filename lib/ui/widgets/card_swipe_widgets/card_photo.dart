@@ -29,8 +29,8 @@ class CardPhotoWidget extends StatelessWidget {
             break;
           case LoadState.failed:
             return GestureDetector(
-              child:
-                  Center(child: DescText(text: "Reload Image", color: white)),
+              child: Center(
+                  child: DescText(text: "Reload Image", color: pureWhite)),
               onTap: () => state.reLoadImage(),
             );
             break;

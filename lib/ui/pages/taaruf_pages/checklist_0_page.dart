@@ -77,7 +77,7 @@ class _ChecklistZeroState extends State<ChecklistZero>
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Taaruf Steps Check",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -316,7 +316,7 @@ class _ChecklistZeroState extends State<ChecklistZero>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Container(
-                                color: white,
+                                color: pureWhite,
                                 width: size.width * 0.9,
                                 height: size.width * 0.6,
                                 child: CardPhotoWidget(
@@ -344,15 +344,15 @@ class _ChecklistZeroState extends State<ChecklistZero>
                               ),
                             ),
                           ),
-                          PaddingDivider(color: white),
+                          PaddingDivider(color: pureWhite),
                           HeaderThreeText(
                             text: "Blessed day, ${_currentUser.nickname}!",
-                            color: white,
+                            color: pureWhite,
                           ),
                           DescText(
                             text:
                                 "Here are the steps you need to take prior to the marriage with ${_selectedUser.nickname}:",
-                            color: white,
+                            color: pureWhite,
                           ),
                           const SizedBox(height: 10),
                           ListView.builder(
@@ -371,28 +371,28 @@ class _ChecklistZeroState extends State<ChecklistZero>
                                   decoration: BoxDecoration(
                                       color: colors[index],
                                       borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(color: white)),
+                                      border: Border.all(color: pureWhite)),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       ChatText(
                                           text: "Step ${stepNumbers[index]}",
-                                          color: white),
+                                          color: pureWhite),
                                       const SizedBox(height: 5),
                                       HeaderTwoText(
                                         text: titles[index],
-                                        color: white,
+                                        color: pureWhite,
                                       ),
                                       const SizedBox(height: 5),
                                       DescText(
                                         text: subtitles[index],
-                                        color: white,
+                                        color: pureWhite,
                                       ),
                                       const SizedBox(height: 10),
                                       SmallText(
                                         text: "Status: ${status[index]}",
-                                        color: white,
+                                        color: pureWhite,
                                       ),
                                     ],
                                   ),
@@ -401,7 +401,7 @@ class _ChecklistZeroState extends State<ChecklistZero>
                             },
                           ),
                           const SizedBox(height: 10),
-                          PaddingDivider(color: white),
+                          PaddingDivider(color: pureWhite),
                           TaarufButtons(
                               size: size,
                               onPressedTop: () => goToMessages(context),
@@ -428,9 +428,9 @@ class _ChecklistZeroState extends State<ChecklistZero>
                                             "If you feel unfit with this user, you may cancel this taaruf and find a new one to begin with.",
                                         labelTop: "No",
                                         labelBottom: "Yes",
-                                        textColorTop: white,
+                                        textColorTop: pureWhite,
                                         btnTop: primary1,
-                                        textColorBottom: white,
+                                        textColorBottom: pureWhite,
                                         btnBottom: primary2,
                                         onPressedTop: () =>
                                             Navigator.pop(context),
@@ -476,7 +476,7 @@ class _ChecklistZeroState extends State<ChecklistZero>
                   );
                 } else {
                   return Container(
-                    color: white,
+                    color: pureWhite,
                     child: EmptyContent(
                       size: size,
                       asset: "assets/images/storm.png",
@@ -490,7 +490,7 @@ class _ChecklistZeroState extends State<ChecklistZero>
                 }
               } else {
                 return Container(
-                  color: white,
+                  color: pureWhite,
                   child: EmptyContent(
                     size: size,
                     asset: "assets/images/stop.png",

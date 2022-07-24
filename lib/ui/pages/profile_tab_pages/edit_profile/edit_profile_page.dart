@@ -82,7 +82,7 @@ class _EditProfileState extends State<EditProfile>
         appBar: AppBarSideButton(
           appBarTitle: HeaderThreeText(
             text: "Basic Details",
-            color: white,
+            color: pureWhite,
           ),
           appBarColor: primary1,
         ),
@@ -93,7 +93,7 @@ class _EditProfileState extends State<EditProfile>
               _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
             }
             if (state is ProfileLoadingState) {
-              return Center(child: CircularProgressIndicator(color: white));
+              return Center(child: CircularProgressIndicator(color: pureWhite));
             }
             if (state is ProfileLoadedState) {
               _currentUser = state.currentUser;
@@ -278,7 +278,7 @@ class _EditProfileState extends State<EditProfile>
                                   borderRadius:
                                       BorderRadius.circular(size.width * 0.03),
                                   child: Container(
-                                    color: white,
+                                    color: pureWhite,
                                     width: size.width * 0.43,
                                     height: size.width * 0.43,
                                     child: CardPhotoWidget(
@@ -383,7 +383,7 @@ class _EditProfileState extends State<EditProfile>
                             width: size.width * 0.43,
                             height: size.width * 0.43,
                             decoration: BoxDecoration(
-                              color: white,
+                              color: pureWhite,
                               borderRadius:
                                   BorderRadius.circular(size.width * 0.03),
                             ),
@@ -423,12 +423,13 @@ class _EditProfileState extends State<EditProfile>
                         ],
                       ),
                       const SizedBox(height: 15),
-                      PaddingDivider(color: white),
+                      PaddingDivider(color: pureWhite),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          HeaderFourText(text: "Full Legal Name", color: white),
-                          DescText(text: _currentUser.name, color: white),
+                          HeaderFourText(
+                              text: "Full Legal Name", color: pureWhite),
+                          DescText(text: _currentUser.name, color: pureWhite),
                           SizedBox(height: size.width * 0.04),
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -446,7 +447,7 @@ class _EditProfileState extends State<EditProfile>
                               );
                             },
                           ),
-                          PaddingDivider(color: white),
+                          PaddingDivider(color: pureWhite),
                           BigWideButton(
                             labelText: "Back to Profile",
                             onPressedTo: () {
@@ -526,10 +527,10 @@ class ProfileEditableColumns extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                HeaderFourText(text: header, color: white),
+                HeaderFourText(text: header, color: pureWhite),
                 DescText(
                   text: descText,
-                  color: white,
+                  color: pureWhite,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -596,7 +597,7 @@ class ProfileEditableColumns extends StatelessWidget {
                                   child: BigWideButton(
                                     labelText: "Save",
                                     onPressedTo: onSaved,
-                                    textColor: white,
+                                    textColor: pureWhite,
                                     btnColor: primary1,
                                   ),
                                 )

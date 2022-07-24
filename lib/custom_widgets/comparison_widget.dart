@@ -47,7 +47,7 @@ class ComparisonWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: MediaQuery.of(context).size.width * 0.1,
-                backgroundColor: white,
+                backgroundColor: pureWhite,
                 child: ClipOval(
                   child: SizedBox(
                     height: size.height * 0.085,
@@ -61,7 +61,7 @@ class ComparisonWidget extends StatelessWidget {
               const SizedBox(width: 10),
               CircleAvatar(
                 radius: MediaQuery.of(context).size.width * 0.1,
-                backgroundColor: white,
+                backgroundColor: pureWhite,
                 child: ClipOval(
                   child: Blur(
                     colorOpacity: 0,
@@ -69,7 +69,7 @@ class ComparisonWidget extends StatelessWidget {
                     overlay: _user.blurAvatar == true
                         ? CircleAvatar(
                             maxRadius: 25,
-                            backgroundColor: white,
+                            backgroundColor: pureWhite,
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               child: Image.asset("assets/images/love.png"),
@@ -90,14 +90,14 @@ class ComparisonWidget extends StatelessWidget {
           const SizedBox(height: 15),
           ChatText(
             text: "According to the data, you and ${_user.nickname} share",
-            color: white,
+            color: pureWhite,
             align: TextAlign.center,
           ),
           HeaderOneText(
             // text: "${similarity * 100}% similarities",
             text:
                 "${double.parse((similarity * 100).toStringAsFixed(2))}% similarities",
-            color: white,
+            color: pureWhite,
             align: TextAlign.center,
           ),
           const SizedBox(height: 15),
@@ -106,11 +106,11 @@ class ComparisonWidget extends StatelessWidget {
             children: [
               DescText(
                 text: "Religion Details",
-                color: white,
+                color: pureWhite,
               ),
               DescText(
                 text: "Personal Details",
-                color: white,
+                color: pureWhite,
               ),
             ],
           ),
@@ -119,11 +119,11 @@ class ComparisonWidget extends StatelessWidget {
             children: [
               HeaderTwoText(
                 text: "$rTotal out of 6",
-                color: white,
+                color: pureWhite,
               ),
               HeaderTwoText(
                 text: "$pTotal out of 11",
-                color: white,
+                color: pureWhite,
               ),
             ],
           ),

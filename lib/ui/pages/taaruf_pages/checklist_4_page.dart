@@ -84,7 +84,7 @@ class _ChecklistFourState extends State<ChecklistFour>
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Taaruf Checklist (4)",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
         appBarIcon: Icons.home_outlined,
@@ -169,7 +169,7 @@ class _ChecklistFourState extends State<ChecklistFour>
                           Padding(
                             padding: EdgeInsets.only(top: size.height * 0.075),
                             child: CircleAvatar(
-                              backgroundColor: white,
+                              backgroundColor: pureWhite,
                               child: Icon(
                                 Icons.change_circle_rounded,
                                 color: appBarColor,
@@ -329,9 +329,9 @@ class _ChecklistFourState extends State<ChecklistFour>
                                           "To keep track on the event date, please add this event to your calendar.",
                                       labelTop: "Add to Calendar",
                                       labelBottom: "Continue",
-                                      textColorTop: white,
+                                      textColorTop: pureWhite,
                                       btnTop: primary1,
-                                      textColorBottom: white,
+                                      textColorBottom: pureWhite,
                                       btnBottom: primary1,
                                       onPressedTop: () {
                                         Add2Calendar.addEvent2Cal(buildEvent());

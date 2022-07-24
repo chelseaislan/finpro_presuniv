@@ -22,7 +22,9 @@ import 'package:finpro_max/ui/widgets/card_swipe_widgets/card_photo.dart';
 import 'package:finpro_max/ui/widgets/chatroom_widgets/chatroom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ChatroomPage extends StatefulWidget {
   final User currentUser, selectedUser;
@@ -41,6 +43,22 @@ class _ChatroomPageState extends State<ChatroomPage>
   ChatroomBloc _chatroomBloc;
   final TextEditingController _messageController = TextEditingController();
   bool isValid = false; // for text controller
+  final recorder = FlutterSoundRecorder();
+  bool isRecorderReady = false;
+  File recordedAudio;
+
+  Future record() async {
+    if (!isRecorderReady) return;
+    await recorder.startRecorder(toFile: 'audio');
+  }
+
+  Future stop() async {
+    if (!isRecorderReady) return;
+    final audioPath = await recorder.stopRecorder();
+    final audioFile = File(audioPath);
+    debugPrint("Recorded audio => $audioFile");
+    setState(() => recordedAudio = audioFile);
+  }
 
   @override
   void initState() {
@@ -59,6 +77,7 @@ class _ChatroomPageState extends State<ChatroomPage>
     _animationController.duration = const Duration(seconds: 0);
     _vnController = BottomSheet.createAnimationController(this);
     _vnController.duration = const Duration(seconds: 0);
+    initRecorder();
   }
 
   // dispose the text controller after sending a text msg
@@ -67,7 +86,35 @@ class _ChatroomPageState extends State<ChatroomPage>
     _messageController.dispose();
     _animationController.dispose();
     _vnController.dispose();
+    recorder.closeAudioSession(); // closeRecorder
     super.dispose();
+  }
+
+  // Ask permission for microphone
+  Future initRecorder() async {
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted) {
+      return showModalBottomSheet(
+        transitionAnimationController: _animationController,
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        ),
+        builder: (context) {
+          return ModalPopupOneButton(
+            size: MediaQuery.of(context).size,
+            title: "Microphone Permission Denied",
+            image: "assets/images/404.png",
+            description:
+                "To record and upload voicenotes, please enable permission to record audio.",
+            onPressed: () => AppSettings.openAppSettings(),
+          );
+        },
+      );
+    }
+    await recorder.openAudioSession(); // openRecorder
+    isRecorderReady = true;
   }
 
   void _onFormSubmitted() {
@@ -91,6 +138,213 @@ class _ChatroomPageState extends State<ChatroomPage>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final List buttonIcons = [
+      Icons.self_improvement_outlined,
+      Icons.add_photo_alternate_outlined,
+      Icons.note_add_outlined,
+      Icons.record_voice_over_outlined,
+    ];
+    final List buttonTitles = [
+      "Marry ${widget.selectedUser.nickname}?",
+      "Upload a picture",
+      "Upload a document",
+      "Upload a voicenote",
+    ];
+    final List buttonSubs = [
+      "This will bring you both into the Taaruf process.",
+      "Accepted formats are JPG and PNG. Viewable for both users.",
+      "It can be your marriage CV for ${widget.selectedUser.nickname} to view, or any other PDF documents.",
+      "Record your own voice so that it can be heard by ${widget.selectedUser.nickname}!",
+    ];
+    final List buttonTap = [
+      () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) =>
+                // ChecklistOne(
+                ChecklistZero(
+              currentUserId: widget.currentUser.uid,
+              selectedUserId: widget.selectedUser.uid,
+            ),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
+      },
+      () async {
+        try {
+          FilePickerResult photo =
+              await FilePicker.platform.pickFiles(type: FileType.image);
+          if (photo != null) {
+            File file = File(photo.files.single.path);
+            ScaffoldMessenger.of(context).showSnackBar(
+              myLoadingSnackbar(
+                text: "Uploading picture...",
+                duration: 15,
+                background: primaryBlack,
+              ),
+            );
+            Navigator.pop(context);
+            _chatroomBloc.add(
+              SendMessageEvent(
+                messageDetail: MessageDetail(
+                  text: null,
+                  marriageDoc: null,
+                  senderId: widget.currentUser.uid,
+                  senderNickname: widget.currentUser.nickname,
+                  selectedUserId: widget.selectedUser.uid,
+                  photo: file,
+                  voicenote: null,
+                ),
+              ),
+            );
+          }
+        } catch (e) {
+          storageError(context, size);
+        }
+      },
+      () async {
+        try {
+          FilePickerResult marriageDoc = await FilePicker.platform.pickFiles(
+            type: FileType.custom,
+            allowedExtensions: ['pdf'],
+          );
+          if (marriageDoc != null) {
+            File file = File(marriageDoc.files.single.path);
+            ScaffoldMessenger.of(context).showSnackBar(
+              myLoadingSnackbar(
+                text: "Uploading document...",
+                duration: 15,
+                background: primaryBlack,
+              ),
+            );
+            Navigator.pop(context);
+            _chatroomBloc.add(
+              SendMessageEvent(
+                messageDetail: MessageDetail(
+                  text: null,
+                  marriageDoc: file,
+                  senderId: widget.currentUser.uid,
+                  senderNickname: widget.currentUser.nickname,
+                  selectedUserId: widget.selectedUser.uid,
+                  photo: null,
+                  voicenote: null,
+                ),
+              ),
+            );
+          }
+        } catch (e) {
+          storageError(context, size);
+        }
+      },
+      () {
+        showModalBottomSheet(
+          transitionAnimationController: _vnController,
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          ),
+          isScrollControlled: true,
+          builder: (context) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 23, 20, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    HeaderThreeText(
+                      text: "Tap the microphone to record.",
+                      color: secondBlack,
+                      align: TextAlign.center,
+                    ),
+                    const SizedBox(height: 15),
+                    GestureDetector(
+                      child: CircleAvatar(
+                        maxRadius: 50,
+                        backgroundColor: primaryBlack,
+                        child: Icon(
+                          Icons.mic_outlined,
+                          color: pureWhite,
+                          size: 40,
+                        ),
+                      ),
+                      onTap: () async {
+                        if (recorder.isRecording) {
+                          Fluttertoast.showToast(
+                            msg: "Finished recording, you can upload the file.",
+                            toastLength: Toast.LENGTH_LONG,
+                          );
+                          await stop();
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Recording in progress.",
+                            toastLength: Toast.LENGTH_LONG,
+                          );
+                          await record();
+                        }
+                        setState(() {
+                          // this
+                        });
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: DescText(
+                        text:
+                            "If you are done, you can double-tap the mic and then upload it.",
+                        color: secondBlack,
+                        align: TextAlign.center,
+                      ),
+                    ),
+                    BigWideButton(
+                      labelText: "Upload Voicenote",
+                      onPressedTo: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          myLoadingSnackbar(
+                            text: "Uploading voicenote...",
+                            duration: 5,
+                            background: primaryBlack,
+                          ),
+                        );
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        _chatroomBloc.add(
+                          SendMessageEvent(
+                            messageDetail: MessageDetail(
+                              text: null,
+                              marriageDoc: null,
+                              senderId: widget.currentUser.uid,
+                              senderNickname: widget.currentUser.nickname,
+                              selectedUserId: widget.selectedUser.uid,
+                              photo: null,
+                              voicenote: recordedAudio,
+                            ),
+                          ),
+                        );
+                      },
+                      textColor: pureWhite,
+                      btnColor: primary1,
+                    ),
+                    const SizedBox(height: 15),
+                    BigWideButton(
+                      labelText: "Cancel",
+                      onPressedTo: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      textColor: pureWhite,
+                      btnColor: primary2,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    ];
     return Scaffold(
       appBar: AppBarSideButton(
         appBarTitle: Row(
@@ -110,12 +364,12 @@ class _ChatroomPageState extends State<ChatroomPage>
                 HeaderFourText(
                   text:
                       "${widget.selectedUser.nickname}, ${widget.selectedUser.age}",
-                  color: white,
+                  color: pureWhite,
                 ),
                 MiniText(
                   text:
                       "${widget.selectedUser.jobPosition} at ${widget.selectedUser.currentJob}",
-                  color: white,
+                  color: pureWhite,
                   overflow: TextOverflow.ellipsis,
                 )
               ],
@@ -143,7 +397,7 @@ class _ChatroomPageState extends State<ChatroomPage>
               );
             }
             if (state is ChatroomLoadingState) {
-              return Center(child: CircularProgressIndicator(color: white));
+              return Center(child: CircularProgressIndicator(color: pureWhite));
             }
             if (state is ChatroomLoadedState) {
               Stream<QuerySnapshot> messageStream = state.messageStream;
@@ -157,7 +411,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                       if (!snapshot.hasData) {
                         return Center(
                             child: CircularProgressIndicator(
-                          color: white,
+                          color: pureWhite,
                         ));
                       }
                       if (snapshot.data.documents.isNotEmpty) {
@@ -188,7 +442,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                           margin: EdgeInsets.only(top: size.height * 0.05),
                           padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
                           decoration: BoxDecoration(
-                            color: white,
+                            color: pureWhite,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -222,7 +476,6 @@ class _ChatroomPageState extends State<ChatroomPage>
                     ),
                     child: Row(
                       children: [
-                        // upload image, cv, taaruf buttons
                         GestureDetector(
                           child: Padding(
                             padding: EdgeInsets.only(
@@ -231,7 +484,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                             ),
                             child: Icon(
                               Icons.add_circle_outlined,
-                              color: white,
+                              color: pureWhite,
                               size: size.height * 0.04,
                             ),
                           ),
@@ -249,248 +502,20 @@ class _ChatroomPageState extends State<ChatroomPage>
                               builder: (context) {
                                 return Padding(
                                   padding: const EdgeInsets.all(20),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        ChatroomButtons(
-                                          iconData:
-                                              Icons.self_improvement_outlined,
-                                          title:
-                                              "Marry ${widget.selectedUser.nickname}?",
-                                          subtitle:
-                                              "This will bring you both into the Taaruf process.",
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              PageRouteBuilder(
-                                                pageBuilder: (context,
-                                                        animation1,
-                                                        animation2) =>
-                                                    // ChecklistOne(
-                                                    ChecklistZero(
-                                                  currentUserId:
-                                                      widget.currentUser.uid,
-                                                  selectedUserId:
-                                                      widget.selectedUser.uid,
-                                                ),
-                                                transitionDuration:
-                                                    Duration.zero,
-                                                reverseTransitionDuration:
-                                                    Duration.zero,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                        ChatroomButtons(
-                                          iconData: Icons
-                                              .add_photo_alternate_outlined,
-                                          title: "Upload a picture",
-                                          subtitle:
-                                              "Accepted formats are JPG and PNG. Viewable for both users.",
-                                          onTap: () async {
-                                            try {
-                                              // File photo =
-                                              //     await FilePicker.getFile(
-                                              //         type: FileType.image);
-                                              // if (photo != null) {
-
-                                              FilePickerResult photo =
-                                                  await FilePicker.platform
-                                                      .pickFiles(
-                                                          type: FileType.image);
-                                              if (photo != null) {
-                                                File file = File(
-                                                    photo.files.single.path);
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  myLoadingSnackbar(
-                                                    text:
-                                                        "Uploading picture...",
-                                                    duration: 15,
-                                                    background: primaryBlack,
-                                                  ),
-                                                );
-                                                Navigator.pop(context);
-                                                _chatroomBloc.add(
-                                                  SendMessageEvent(
-                                                    messageDetail:
-                                                        MessageDetail(
-                                                      text: null,
-                                                      marriageDoc: null,
-                                                      senderId: widget
-                                                          .currentUser.uid,
-                                                      senderNickname: widget
-                                                          .currentUser.nickname,
-                                                      selectedUserId: widget
-                                                          .selectedUser.uid,
-                                                      photo: file,
-                                                      voicenote: null,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            } catch (e) {
-                                              storageError(context, size);
-                                            }
-                                          },
-                                        ),
-                                        ChatroomButtons(
-                                          iconData: Icons.note_add_outlined,
-                                          title: "Upload a document",
-                                          subtitle:
-                                              "It can be your marriage CV for ${widget.selectedUser.nickname} to view, or any other PDF documents.",
-                                          onTap: () async {
-                                            try {
-                                              // File marriageDoc =
-                                              //     await FilePicker.getFile(
-                                              //         type: FileType.custom,
-                                              //         allowedExtensions: [
-                                              //       'pdf'
-                                              //     ]);
-                                              // if (marriageDoc != null) {
-                                              FilePickerResult marriageDoc =
-                                                  await FilePicker.platform
-                                                      .pickFiles(
-                                                type: FileType.custom,
-                                                allowedExtensions: ['pdf'],
-                                              );
-                                              if (marriageDoc != null) {
-                                                File file = File(marriageDoc
-                                                    .files.single.path);
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  myLoadingSnackbar(
-                                                    text:
-                                                        "Uploading document...",
-                                                    duration: 15,
-                                                    background: primaryBlack,
-                                                  ),
-                                                );
-                                                Navigator.pop(context);
-                                                _chatroomBloc.add(
-                                                  SendMessageEvent(
-                                                    messageDetail:
-                                                        MessageDetail(
-                                                      text: null,
-                                                      marriageDoc: file,
-                                                      senderId: widget
-                                                          .currentUser.uid,
-                                                      senderNickname: widget
-                                                          .currentUser.nickname,
-                                                      selectedUserId: widget
-                                                          .selectedUser.uid,
-                                                      photo: null,
-                                                      voicenote: null,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            } catch (e) {
-                                              storageError(context, size);
-                                            }
-                                          },
-                                        ),
-                                        ChatroomButtons(
-                                          iconData:
-                                              Icons.record_voice_over_outlined,
-                                          title: "Send voicenote",
-                                          subtitle:
-                                              "Record your own voice so that it can be heard by ${widget.selectedUser.nickname}!",
-                                          onTap: () {
-                                            showModalBottomSheet(
-                                              transitionAnimationController:
-                                                  _vnController,
-                                              context: context,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    topRight:
-                                                        Radius.circular(10)),
-                                              ),
-                                              isScrollControlled: true,
-                                              builder: (context) {
-                                                return SingleChildScrollView(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .fromLTRB(
-                                                        20, 23, 20, 20),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
-                                                      children: [
-                                                        HeaderThreeText(
-                                                          text:
-                                                              "Tap the microphone to record.",
-                                                          color: secondBlack,
-                                                          align:
-                                                              TextAlign.center,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 15),
-                                                        CircleAvatar(
-                                                          maxRadius: 50,
-                                                          backgroundColor:
-                                                              primaryBlack,
-                                                          child: Icon(
-                                                            Icons.mic_outlined,
-                                                            color: white,
-                                                            size: 40,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical: 20),
-                                                          child: DescText(
-                                                            text:
-                                                                "If you are done, you can tap the mic once again and then upload it.",
-                                                            color: secondBlack,
-                                                            align: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ),
-                                                        BigWideButton(
-                                                          labelText:
-                                                              "Upload Voicenote",
-                                                          onPressedTo: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            Navigator.pop(
-                                                                context);
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                    "Coming soon!");
-                                                          },
-                                                          textColor: white,
-                                                          btnColor: primary1,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 15),
-                                                        BigWideButton(
-                                                          labelText: "Cancel",
-                                                          onPressedTo: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          textColor: white,
-                                                          btnColor: primary2,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
+                                  child: ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemCount: buttonTitles.length,
+                                    itemBuilder: (context, index) {
+                                      return ChatroomButtons(
+                                        iconData: buttonIcons[index],
+                                        title: buttonTitles[index],
+                                        subtitle: buttonSubs[index],
+                                        onTap: buttonTap[index],
+                                      );
+                                    },
                                   ),
                                 );
                               },
@@ -524,7 +549,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                                   contentPadding:
                                       const EdgeInsets.fromLTRB(16, 4, 6, 4),
                                   hintText: "Input anything here...",
-                                  fillColor: white,
+                                  fillColor: pureWhite,
                                   filled: true,
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -542,7 +567,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                           ),
                         ),
                         // Send text button, if no text then grayed
-                        InkWell(
+                        GestureDetector(
                           onTap: isValid ? _onFormSubmitted : null,
                           child: Padding(
                             padding: EdgeInsets.only(
@@ -551,7 +576,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                             ),
                             child: Icon(
                               Icons.send_outlined,
-                              color: isValid ? white : lightGrey3,
+                              color: isValid ? pureWhite : lightGrey3,
                               size: size.height * 0.03,
                             ),
                           ),

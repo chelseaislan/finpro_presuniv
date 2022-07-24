@@ -110,20 +110,20 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                   HeaderTwoText(
                     text: "Hello there!",
-                    color: white,
+                    color: pureWhite,
                     align: TextAlign.left,
                   ),
                   const SizedBox(height: 15),
                   DescText(
                     text:
                         "“Live in the present, make the most of it, it's all you've got.” - June Osborne",
-                    color: white,
+                    color: pureWhite,
                     align: TextAlign.left,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: size.width * 0.04),
                     child: Divider(
-                      color: white,
+                      color: pureWhite,
                       height: 1,
                       thickness: 0.2,
                     ),
@@ -133,7 +133,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     textAction: TextInputAction.next,
                     text: "Email Address",
                     controller: _emailController,
-                    color: white,
+                    color: pureWhite,
                     obscureText: false,
                     prefixIcon: const Icon(Icons.email_outlined),
                     textInputType: TextInputType.emailAddress,
@@ -147,7 +147,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     textAction: TextInputAction.done,
                     text: "Password",
                     controller: _passwordController,
-                    color: white,
+                    color: pureWhite,
                     obscureText: true,
                     prefixIcon: const Icon(Icons.vpn_key_outlined),
                     textInputType: TextInputType.visiblePassword,
@@ -159,7 +159,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     maxLines: 1,
                   ),
                   Divider(
-                    color: white,
+                    color: pureWhite,
                     height: 1,
                     thickness: 0.2,
                   ),
@@ -167,7 +167,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   SmallText(
                     text:
                         "By signing up, you agree to our Terms of Use and Privacy Policy.",
-                    color: white,
+                    color: pureWhite,
                   ),
                   const SizedBox(height: 15),
                   SizedBox(
@@ -177,8 +177,9 @@ class _SignUpFormState extends State<SignUpForm> {
                       onPressedTo: isSignUpButtonEnabled(state)
                           ? _onFormSubmitted
                           : null,
-                      textColor:
-                          isSignUpButtonEnabled(state) ? secondBlack : white,
+                      textColor: isSignUpButtonEnabled(state)
+                          ? secondBlack
+                          : pureWhite,
                       btnColor: isSignUpButtonEnabled(state)
                           ? Colors.amber
                           : Colors.black54,

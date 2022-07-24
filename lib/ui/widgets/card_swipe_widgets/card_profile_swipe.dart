@@ -134,7 +134,7 @@ class CardProfileDetail extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: white,
+              color: pureWhite,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(clipRadius),
                 bottomRight: Radius.circular(clipRadius),

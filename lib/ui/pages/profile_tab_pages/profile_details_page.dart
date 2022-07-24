@@ -41,7 +41,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Your Profile Details",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),

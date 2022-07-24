@@ -28,7 +28,7 @@ class FloatingDoubleButtons extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: white,
+          color: pureWhite,
           borderRadius: BorderRadius.circular(size.width * 0.08),
           boxShadow: const [
             BoxShadow(

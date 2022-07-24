@@ -32,7 +32,7 @@ SnackBar myLoadingSnackbar({text, duration, background}) {
           text,
           style: const TextStyle(fontFamily: "TTCommons", fontSize: 18),
         ),
-        CircularProgressIndicator(color: white),
+        CircularProgressIndicator(color: pureWhite),
       ],
     ),
     duration: Duration(seconds: duration),

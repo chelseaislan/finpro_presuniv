@@ -49,7 +49,7 @@ class EmptyContent extends StatelessWidget {
           BigWideButton(
             labelText: buttonText,
             onPressedTo: onPressed,
-            textColor: white,
+            textColor: pureWhite,
             btnColor: primary1,
           ),
         ],

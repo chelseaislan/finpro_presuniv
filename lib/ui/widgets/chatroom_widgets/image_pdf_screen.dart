@@ -15,7 +15,7 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: primaryBlack,
       appBar: AppBarSideButton(
-        appBarTitle: HeaderThreeText(text: "Image Detail", color: white),
+        appBarTitle: HeaderThreeText(text: "Image Detail", color: pureWhite),
         appBarColor: primaryBlack,
       ),
       body: PinchZoom(
@@ -36,7 +36,8 @@ class PDFDetailScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: primaryBlack,
         appBar: AppBarSideButton(
-          appBarTitle: HeaderThreeText(text: "Document Detail", color: white),
+          appBarTitle:
+              HeaderThreeText(text: "Document Detail", color: pureWhite),
           appBarColor: primaryBlack,
         ),
         body: SfPdfViewer.network(docUrl));

@@ -62,7 +62,7 @@ class ProfileOverviewWidget extends StatelessWidget {
                   },
                   child: CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.16,
-                    backgroundColor: white,
+                    backgroundColor: pureWhite,
                     child: ClipOval(
                       child: SizedBox(
                         height: size.height * 0.135,
@@ -75,7 +75,7 @@ class ProfileOverviewWidget extends StatelessWidget {
                 accountType == "verified" || accountType == "married"
                     ? Icon(
                         Icons.verified_rounded,
-                        color: white,
+                        color: pureWhite,
                         size: 18,
                       )
                     : const Icon(
@@ -88,23 +88,23 @@ class ProfileOverviewWidget extends StatelessWidget {
           ),
           HeaderTwoText(
             text: name,
-            color: white,
+            color: pureWhite,
             align: TextAlign.center,
             overflow: TextOverflow.ellipsis,
           ),
           DescText(
             text: currentJob,
-            color: white,
+            color: pureWhite,
             align: TextAlign.center,
           ),
           DescText(
             text: location,
-            color: white,
+            color: pureWhite,
             align: TextAlign.center,
           ),
           DescText(
             text: taarufWith,
-            color: white,
+            color: pureWhite,
             align: TextAlign.center,
           ),
           AccountTypePill(
@@ -117,7 +117,7 @@ class ProfileOverviewWidget extends StatelessWidget {
                 ? gold
                 : accountType == "married"
                     ? gold
-                    : white,
+                    : pureWhite,
           ),
         ],
       ),

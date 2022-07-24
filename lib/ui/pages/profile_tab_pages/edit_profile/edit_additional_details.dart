@@ -257,7 +257,7 @@ class _EditAdditionalsState extends State<EditAdditionals> {
         appBar: AppBarSideButton(
           appBarTitle: HeaderThreeText(
             text: "Additional Details",
-            color: white,
+            color: pureWhite,
           ),
           appBarColor: primary1,
         ),
@@ -268,7 +268,7 @@ class _EditAdditionalsState extends State<EditAdditionals> {
               _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
             }
             if (state is ProfileLoadingState) {
-              return Center(child: CircularProgressIndicator(color: white));
+              return Center(child: CircularProgressIndicator(color: pureWhite));
             }
             if (state is ProfileLoadedState) {
               _currentUser = state.currentUser;
@@ -298,12 +298,12 @@ class _EditAdditionalsState extends State<EditAdditionals> {
                         addValues[index],
                         addItems[index],
                         addOnChanged[index],
-                        white,
+                        pureWhite,
                       );
                     },
                   ),
                   Divider(
-                    color: white,
+                    color: pureWhite,
                     height: 1,
                     thickness: 0.2,
                   ),

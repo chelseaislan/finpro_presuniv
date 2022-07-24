@@ -151,9 +151,9 @@ class _ProfilePageState extends State<ProfilePage>
                     "You can use these guides to make sure that you can find a perfect match.",
                 labelTop: "Application Tutorial",
                 labelBottom: "Taaruf Information",
-                textColorTop: white,
+                textColorTop: pureWhite,
                 btnTop: primary1,
-                textColorBottom: white,
+                textColorBottom: pureWhite,
                 btnBottom: primary1,
                 onPressedTop: () {
                   Navigator.push(
@@ -326,9 +326,9 @@ class _ProfilePageState extends State<ProfilePage>
                     "Reset any taaruf properties that you currently have? (Marriage dates etc.)",
                 labelTop: "No",
                 labelBottom: "Clear Data",
-                textColorTop: white,
+                textColorTop: pureWhite,
                 btnTop: primary1,
-                textColorBottom: white,
+                textColorBottom: pureWhite,
                 btnBottom: primary2,
                 onPressedTop: () => Navigator.pop(context),
                 onPressedBottom: () {
@@ -513,7 +513,7 @@ class _ProfilePageState extends State<ProfilePage>
                         ));
                         Navigator.pop(context);
                       },
-                      textColor: white,
+                      textColor: pureWhite,
                       btnColor: primary1,
                     ),
                     const SizedBox(height: 15),
@@ -562,9 +562,9 @@ class _ProfilePageState extends State<ProfilePage>
                     "Are you sure you want to log out, ${_currentUser.nickname}? You can log back in anytime.",
                 labelTop: "No",
                 labelBottom: "Log Out",
-                textColorTop: white,
+                textColorTop: pureWhite,
                 btnTop: primary1,
-                textColorBottom: white,
+                textColorBottom: pureWhite,
                 btnBottom: primary2,
                 onPressedTop: () => Navigator.pop(context),
                 onPressedBottom: () {
@@ -592,7 +592,7 @@ class _ProfilePageState extends State<ProfilePage>
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "My Profile",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: appBarColor,
       ),
@@ -693,16 +693,16 @@ class _ProfilePageState extends State<ProfilePage>
                                         children: [
                                           SmallText(
                                               text: "Introducing...",
-                                              color: white),
+                                              color: pureWhite),
                                           const SizedBox(height: 5),
                                           HeaderThreeText(
                                               text: "Portal Blog 🎉",
-                                              color: white),
+                                              color: pureWhite),
                                           const SizedBox(height: 5),
                                           ChatText(
                                             text:
                                                 "This contains meaningful blogs, success stories, tips and tricks, and so on. Check it out!",
-                                            color: white,
+                                            color: pureWhite,
                                           ),
                                         ],
                                       ),

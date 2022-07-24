@@ -171,7 +171,7 @@ class _MessageWidgetState extends State<MessageWidget>
             // The message widget
             child: Container(
               decoration: BoxDecoration(
-                color: white,
+                color: pureWhite,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: lightGrey3),
               ),

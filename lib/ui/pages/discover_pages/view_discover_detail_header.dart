@@ -110,7 +110,7 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Discover User Details",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -293,13 +293,13 @@ class DetailBlur extends StatelessWidget {
         SizedBox(height: size.height * 0.07),
         CircleAvatar(
             maxRadius: 90,
-            backgroundColor: white,
+            backgroundColor: pureWhite,
             child: Container(
               padding: const EdgeInsets.all(20),
               child: Image.asset("assets/images/love.png"),
             )),
         const SizedBox(height: 10),
-        HeaderOneText(text: "MusliMatch", color: white),
+        HeaderOneText(text: "MusliMatch", color: pureWhite),
       ],
     );
   }

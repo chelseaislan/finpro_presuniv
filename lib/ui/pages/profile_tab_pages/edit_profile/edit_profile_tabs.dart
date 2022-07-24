@@ -40,7 +40,7 @@ class EditProfileTabs extends StatelessWidget {
         isScrollable: true,
         indicatorColor: gold,
         labelColor: gold,
-        unselectedLabelColor: white,
+        unselectedLabelColor: pureWhite,
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorPadding: const EdgeInsets.all(5.0),
         tabs: const [

@@ -165,7 +165,7 @@ class ChatroomRepository {
             'photoUrl': null,
             'timestamp': DateTime.now(),
             'marriageDocUrl': null,
-            'voicenoteUrl': messageDetail.voicenoteUrl,
+            'voicenoteUrl': voicenoteUrl,
           });
         });
       });

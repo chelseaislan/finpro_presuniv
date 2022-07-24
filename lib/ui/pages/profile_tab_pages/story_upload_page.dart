@@ -29,7 +29,7 @@ class StoryUploadPage extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Upload a Story",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary5,
       ),
@@ -40,7 +40,7 @@ class StoryUploadPage extends StatelessWidget {
             height: size.height * 0.85,
             decoration: BoxDecoration(
               color: primaryBlack,
-              border: Border.all(color: white),
+              border: Border.all(color: pureWhite),
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
                 image: FileImage(capturedStory),
@@ -54,7 +54,7 @@ class StoryUploadPage extends StatelessWidget {
         padding: const EdgeInsets.only(right: 12.5, bottom: 25),
         child: FloatingActionButton(
           tooltip: "Upload Story",
-          backgroundColor: white,
+          backgroundColor: pureWhite,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

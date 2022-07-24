@@ -51,7 +51,7 @@ class ProfileHeaderContainer extends StatelessWidget {
                   overlay: overlay,
                   colorOpacity: 0,
                   child: Container(
-                    color: white,
+                    color: pureWhite,
                     width: size.width * 0.9,
                     height: size.width * 0.9,
                     child: CardPhotoWidget(photoLink: currentUser.photo),
@@ -73,7 +73,7 @@ class ProfileHeaderContainer extends StatelessWidget {
                       ? gold
                       : currentUser.accountType == "married"
                           ? gold
-                          : white,
+                          : pureWhite,
                 ),
               ),
             ],
@@ -93,14 +93,14 @@ class ProfileHeaderContainer extends StatelessWidget {
                     HeaderOneText(
                       text:
                           "${currentUser.nickname}, ${(DateTime.now().year - currentUser.dob.toDate().year).toString()}",
-                      color: white,
+                      color: pureWhite,
                       align: TextAlign.left,
                     ),
                     Icon(
                       Icons.verified_rounded,
                       color: currentUser.accountType == "verified" ||
                               currentUser.accountType == "married"
-                          ? white
+                          ? pureWhite
                           : Colors.transparent,
                       size: 30,
                     ),
@@ -109,12 +109,12 @@ class ProfileHeaderContainer extends StatelessWidget {
                 DescText(
                   text:
                       "${currentUser.jobPosition} at ${currentUser.currentJob}",
-                  color: white,
+                  color: pureWhite,
                   align: TextAlign.left,
                 ),
                 DescText(
                   text: "${currentUser.location}, ${currentUser.province}",
-                  color: white,
+                  color: pureWhite,
                   align: TextAlign.left,
                 ),
               ],

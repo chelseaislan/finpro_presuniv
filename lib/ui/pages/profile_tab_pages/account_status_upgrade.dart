@@ -51,7 +51,7 @@ class _AccountStatusUpgradeState extends State<AccountStatusUpgrade> {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "My Legal Documents",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -62,7 +62,7 @@ class _AccountStatusUpgradeState extends State<AccountStatusUpgrade> {
             _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
           }
           if (state is ProfileLoadingState) {
-            return Center(child: CircularProgressIndicator(color: white));
+            return Center(child: CircularProgressIndicator(color: pureWhite));
           }
           if (state is ProfileLoadedState) {
             _currentUser = state.currentUser;
@@ -315,7 +315,7 @@ class DocumentColumn extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Container(
-                color: white,
+                color: pureWhite,
                 width: size.width * 0.9,
                 height: size.width * 0.6,
                 child: CardPhotoWidget(
@@ -327,21 +327,21 @@ class DocumentColumn extends StatelessWidget {
         ),
         HeaderTwoText(
           text: text,
-          color: white,
+          color: pureWhite,
         ),
         ProfDetailText(
           text: _currentUser.name,
-          color: white,
+          color: pureWhite,
         ),
         ProfDetailText(
           text: "${_currentUser.location}, ${_currentUser.province}",
-          color: white,
+          color: pureWhite,
         ),
         const SizedBox(height: 5),
-        PaddingDivider(color: white),
+        PaddingDivider(color: pureWhite),
         ProfDetailText(
           text: status,
-          color: white,
+          color: pureWhite,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 15, bottom: 20),
@@ -354,7 +354,7 @@ class DocumentColumn extends StatelessWidget {
             textColor: _currentUser.accountType == "invalid-ktp" ||
                     _currentUser.accountType == "invalid-otherid"
                 ? secondBlack
-                : white,
+                : pureWhite,
             btnColor: _currentUser.accountType == "invalid-ktp" ||
                     _currentUser.accountType == "invalid-otherid"
                 ? gold

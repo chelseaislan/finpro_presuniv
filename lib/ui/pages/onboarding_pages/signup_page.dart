@@ -30,7 +30,7 @@ class SignUpPage extends StatelessWidget {
         appBar: AppBarSideButton(
           appBarTitle: HeaderThreeText(
             text: "Complete Your Profile",
-            color: white,
+            color: pureWhite,
           ),
           appBarColor: Colors.transparent,
         ),

@@ -129,7 +129,7 @@ class ViewSelectedDetailHeader extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Selected User Details",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),

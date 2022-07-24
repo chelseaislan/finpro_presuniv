@@ -492,7 +492,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                           labelText: headerPreset[
                                               index], // Most Perfect
                                           onPressedTo: onPressedPreset[index],
-                                          textColor: white,
+                                          textColor: pureWhite,
                                           btnColor: primary5,
                                         ),
                                       );
@@ -516,7 +516,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                       return LoginTextFieldWidget(
                                         text: txtHeaders[index],
                                         controller: txtControllers[index],
-                                        color: white,
+                                        color: pureWhite,
                                         obscureText: false,
                                         prefixIcon: txtIcons[index],
                                         textInputType: TextInputType.name,
@@ -530,7 +530,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                   LoginTextFieldWidget(
                                     text:
                                         "Describe a bit about yourself, so the others can know you better.",
-                                    color: white,
+                                    color: pureWhite,
                                     obscureText: false,
                                     textInputType: TextInputType.multiline,
                                     textAction: TextInputAction.newline,
@@ -552,7 +552,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         children: [
                                           HeaderFourText(
                                             text: "Specify your date of birth:",
-                                            color: white,
+                                            color: pureWhite,
                                           ),
                                           // display age from dob
                                           DescText(
@@ -561,7 +561,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                                     age.toString() +
                                                     " years old)"
                                                 : "Click the calendar icon.",
-                                            color: white,
+                                            color: pureWhite,
                                             align: TextAlign.left,
                                           ),
                                         ],
@@ -588,7 +588,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         child: Icon(
                                           Icons.calendar_month_outlined,
                                           size: 30,
-                                          color: white,
+                                          color: pureWhite,
                                         ),
                                       ),
                                     ],
@@ -596,7 +596,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                   const SizedBox(height: 15),
                                   HeaderFourText(
                                     text: "Choose your gender:",
-                                    color: white,
+                                    color: pureWhite,
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -609,7 +609,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                           color: secondBlack,
                                           radioColor: gender == "gentleman"
                                               ? gold
-                                              : white,
+                                              : pureWhite,
                                           onRadioTap: () {
                                             setState(() {
                                               gender = "gentleman";
@@ -627,8 +627,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         child: CustomRadio(
                                           text: "Female (F)",
                                           color: secondBlack,
-                                          radioColor:
-                                              gender == "lady" ? gold : white,
+                                          radioColor: gender == "lady"
+                                              ? gold
+                                              : pureWhite,
                                           onRadioTap: () {
                                             setState(() {
                                               gender = "lady";
@@ -671,7 +672,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                           ddValuesA[index],
                                           ddItemsA[index],
                                           ddOnChangedA[index],
-                                          white);
+                                          pureWhite);
                                     },
                                   ),
                                 ],
@@ -707,7 +708,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         ddValuesB[index],
                                         ddItemsB[index],
                                         ddOnChangedB[index],
-                                        white,
+                                        pureWhite,
                                       );
                                     },
                                   ),
@@ -744,7 +745,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         ddValuesC[index],
                                         ddItemsC[index],
                                         ddOnChangedC[index],
-                                        white,
+                                        pureWhite,
                                       );
                                     },
                                   ),
@@ -777,7 +778,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                           width: size.width,
                                           height: size.width * 0.6,
                                           decoration: BoxDecoration(
-                                            color: white,
+                                            color: pureWhite,
                                             borderRadius: BorderRadius.circular(
                                                 size.width * 0.03),
                                           ),
@@ -832,7 +833,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                           width: size.width,
                                           height: size.width * 0.6,
                                           decoration: BoxDecoration(
-                                            color: white,
+                                            color: pureWhite,
                                             borderRadius: BorderRadius.circular(
                                                 size.width * 0.03),
                                           ),
@@ -891,7 +892,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                               width: size.width * 0.43,
                                               height: size.width * 0.43,
                                               decoration: BoxDecoration(
-                                                color: white,
+                                                color: pureWhite,
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         size.width * 0.03),
@@ -990,7 +991,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                             width: size.width * 0.43,
                                             height: size.width * 0.43,
                                             decoration: BoxDecoration(
-                                              color: white,
+                                              color: pureWhite,
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       size.width * 0.03),
@@ -1018,18 +1019,18 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                     ],
                                   ),
                                   const SizedBox(height: 15),
-                                  PaddingDivider(color: white),
+                                  PaddingDivider(color: pureWhite),
                                   CheckboxListTile(
                                     title: HeaderFourText(
-                                        text: "Confirmation", color: white),
+                                        text: "Confirmation", color: pureWhite),
                                     subtitle: SmallText(
                                       text:
                                           "By proceeding, you agree to let MusliMatch save your personal data according to the current law.",
-                                      color: white,
+                                      color: pureWhite,
                                     ),
-                                    secondary:
-                                        Icon(Icons.save_outlined, color: white),
-                                    activeColor: white,
+                                    secondary: Icon(Icons.save_outlined,
+                                        color: pureWhite),
+                                    activeColor: pureWhite,
                                     checkColor: primary1,
                                     value: _checkValue,
                                     onChanged: (bool value) {
@@ -1041,7 +1042,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      PaddingDivider(color: white),
+                                      PaddingDivider(color: pureWhite),
                                       BigWideButton(
                                         labelText: "Complete Profile",
                                         onPressedTo:
@@ -1051,7 +1052,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         textColor:
                                             isCompleteButtonEnabled(state)
                                                 ? secondBlack
-                                                : white,
+                                                : pureWhite,
                                         btnColor: isCompleteButtonEnabled(state)
                                             ? Colors.amber
                                             : Colors.black54,
@@ -1073,7 +1074,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                       child: TabBar(
                         indicatorColor: gold,
                         labelColor: gold,
-                        unselectedLabelColor: white,
+                        unselectedLabelColor: pureWhite,
                         indicatorSize: TabBarIndicatorSize.tab,
                         indicatorPadding: const EdgeInsets.all(5.0),
                         tabs: const [
@@ -1346,7 +1347,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
           ),
         );
       },
-      textColor: white,
+      textColor: pureWhite,
       btnColor: primary2,
     );
   }
@@ -1369,7 +1370,7 @@ class MiniPill extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),
         decoration: BoxDecoration(
-          color: white,
+          color: pureWhite,
           borderRadius: BorderRadius.circular(size.width * 0.03),
         ),
         child: MiniText(text: "Change $text", color: secondBlack),
@@ -1416,13 +1417,13 @@ class CompleteStepHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        MiniText(text: "Step $stepNumber", color: white),
+        MiniText(text: "Step $stepNumber", color: pureWhite),
         const SizedBox(height: 15),
-        HeaderTwoText(text: header, color: white),
+        HeaderTwoText(text: header, color: pureWhite),
         const SizedBox(height: 6),
         ChatText(
           text: description,
-          color: white,
+          color: pureWhite,
         ),
         const SizedBox(height: 20),
       ],

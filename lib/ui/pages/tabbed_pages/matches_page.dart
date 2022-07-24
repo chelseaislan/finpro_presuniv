@@ -105,7 +105,7 @@ class _MatchesPageState extends State<MatchesPage> {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "All Your Matches",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -231,7 +231,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                               child: HeaderThreeText(
                                                 text:
                                                     "${user[index].data['nickname']}, ${user[index].data['age']}",
-                                                color: white,
+                                                color: pureWhite,
                                                 align: TextAlign.left,
                                               ),
                                             ),
@@ -495,12 +495,12 @@ class _MatchesPageState extends State<MatchesPage> {
                                                       Icon(
                                                         Icons
                                                             .blur_circular_outlined,
-                                                        color: white,
+                                                        color: pureWhite,
                                                         size: 40,
                                                       ),
                                                       HeaderThreeText(
                                                           text: "MusliMatch",
-                                                          color: white),
+                                                          color: pureWhite),
                                                     ],
                                                   )
                                                 : Container(),
@@ -517,7 +517,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                               child: HeaderThreeText(
                                                 text:
                                                     "${user[index].data['nickname']}, ${user[index].data['age']}",
-                                                color: white,
+                                                color: pureWhite,
                                                 align: TextAlign.left,
                                               ),
                                             ),
@@ -617,7 +617,7 @@ class MatchesHeader extends StatelessWidget {
             ),
             child: HeaderFourText(
               text: text.toUpperCase(),
-              color: white,
+              color: pureWhite,
               align: TextAlign.left,
             ),
           ),

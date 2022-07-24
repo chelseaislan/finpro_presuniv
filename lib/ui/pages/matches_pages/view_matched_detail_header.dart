@@ -129,7 +129,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Matched User Details",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -206,7 +206,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                                                     .size
                                                     .width *
                                                 0.1,
-                                            backgroundColor: white,
+                                            backgroundColor: pureWhite,
                                             child: ClipOval(
                                               child: SizedBox(
                                                 height: size.height * 0.085,
@@ -222,7 +222,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                                                     .size
                                                     .width *
                                                 0.1,
-                                            backgroundColor: white,
+                                            backgroundColor: pureWhite,
                                             child: ClipOval(
                                               child: SizedBox(
                                                 height: size.height * 0.085,
@@ -236,7 +236,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                                         ],
                                       ),
                                       CircleAvatar(
-                                        backgroundColor: white,
+                                        backgroundColor: pureWhite,
                                         child: Icon(
                                           Icons.change_circle_rounded,
                                           color: appBarColor,
@@ -249,19 +249,19 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                                   DescText(
                                     text:
                                         "Praise be, ${currentUser.nickname} and ${selectedUser.nickname}!",
-                                    color: white,
+                                    color: pureWhite,
                                     align: TextAlign.center,
                                   ),
                                   HeaderOneText(
                                     text: "It's a match!",
-                                    color: white,
+                                    color: pureWhite,
                                     align: TextAlign.center,
                                   ),
                                   const SizedBox(height: 5),
                                   ChatText(
                                     text:
                                         "Now you can head into the chatroom to know each other, sending files, and ultimately, start the taaruf process.",
-                                    color: white,
+                                    color: pureWhite,
                                     align: TextAlign.center,
                                   ),
                                   const SizedBox(height: 10),
@@ -304,9 +304,9 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                                         labelTop: "No",
                                         labelBottom:
                                             "Unmatch from ${selectedUser.nickname}",
-                                        textColorTop: white,
+                                        textColorTop: pureWhite,
                                         btnTop: primary1,
-                                        textColorBottom: white,
+                                        textColorBottom: pureWhite,
                                         btnBottom: primary2,
                                         onPressedTop: () =>
                                             Navigator.pop(context),
@@ -377,7 +377,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: primary5,
         tooltip: "Message ${selectedUser.nickname}",
-        child: Icon(Icons.chat_outlined, color: white),
+        child: Icon(Icons.chat_outlined, color: pureWhite),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         onPressed: () {
           _matchesBloc.add(

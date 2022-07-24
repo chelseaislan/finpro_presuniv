@@ -224,7 +224,7 @@ class _EditReligionDetailsState extends State<EditReligionDetails> {
         appBar: AppBarSideButton(
           appBarTitle: HeaderThreeText(
             text: "Religion Details",
-            color: white,
+            color: pureWhite,
           ),
           appBarColor: primary1,
         ),
@@ -235,7 +235,7 @@ class _EditReligionDetailsState extends State<EditReligionDetails> {
               _profileBloc.add(ProfileLoadedEvent(userId: widget.userId));
             }
             if (state is ProfileLoadingState) {
-              return Center(child: CircularProgressIndicator(color: white));
+              return Center(child: CircularProgressIndicator(color: pureWhite));
             }
             if (state is ProfileLoadedState) {
               _currentUser = state.currentUser;
@@ -264,12 +264,12 @@ class _EditReligionDetailsState extends State<EditReligionDetails> {
                         relValues[index],
                         relItems[index],
                         relOnChanged[index],
-                        white,
+                        pureWhite,
                       );
                     },
                   ),
                   Divider(
-                    color: white,
+                    color: pureWhite,
                     height: 1,
                     thickness: 0.2,
                   ),

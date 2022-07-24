@@ -45,7 +45,7 @@ class ModalPopupOneButton extends StatelessWidget {
           BigWideButton(
             labelText: "Okay",
             onPressedTo: onPressed,
-            textColor: white,
+            textColor: pureWhite,
             btnColor: primary1,
           ),
         ],

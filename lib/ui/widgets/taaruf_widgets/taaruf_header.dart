@@ -37,14 +37,14 @@ class TaarufHeader extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Container(
-                  color: white,
+                  color: pureWhite,
                   width: size.width * 0.9,
                   height: size.width * 0.6,
                   child: CardPhotoWidget(photoLink: photoLink)),
             ),
           ),
-          HeaderTwoText(text: header, color: white),
-          DescText(text: description, color: white),
+          HeaderTwoText(text: header, color: pureWhite),
+          DescText(text: description, color: pureWhite),
           const SizedBox(height: 20),
         ],
       ),

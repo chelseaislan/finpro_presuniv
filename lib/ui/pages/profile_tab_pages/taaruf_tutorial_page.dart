@@ -20,7 +20,7 @@ class TaarufTutorialPage extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Taaruf Information",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primaryBlack,
       ),
@@ -32,16 +32,10 @@ class TaarufTutorialPage extends StatelessWidget {
               height: height,
               viewportFraction: 1.0,
               enlargeCenterPage: false,
-              // autoPlay: false,
             ),
             items: imgList
                 .map(
                   (item) => Center(
-                    // child: Image.network(
-                    //   item,
-                    //   fit: BoxFit.cover,
-                    //   height: height,
-                    // ),
                     child: CardPhotoWidget(photoLink: item),
                   ),
                 )

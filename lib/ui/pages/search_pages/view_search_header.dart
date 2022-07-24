@@ -135,7 +135,7 @@ class ViewSearchHeader extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Filtered User Details",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -248,17 +248,17 @@ class ViewSearchHeader extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: primary5,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: white)),
+                      border: Border.all(color: pureWhite)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HeaderFourText(text: "Reminder", color: white),
+                      HeaderFourText(text: "Reminder", color: pureWhite),
                       const SizedBox(height: 5),
                       SmallText(
                         text:
                             "You've already liked or disliked ${_user.nickname}, or vice versa. If you like this user, wait for ${_user.nickname} to respond.",
-                        color: white,
+                        color: pureWhite,
                       ),
                     ],
                   ),

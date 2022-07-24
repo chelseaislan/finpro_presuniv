@@ -74,10 +74,10 @@ class _LoginTextFieldWidgetState extends State<LoginTextFieldWidget> {
               maxLines: widget.maxLines,
               maxLength: widget.maxLength,
               decoration: InputDecoration(
-                counterStyle: TextStyle(color: white),
+                counterStyle: TextStyle(color: pureWhite),
                 prefixIcon: widget.prefixIcon,
                 hintText: widget.text,
-                fillColor: white,
+                fillColor: pureWhite,
                 filled: true,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -100,7 +100,7 @@ class _LoginTextFieldWidgetState extends State<LoginTextFieldWidget> {
                     right: 8.0),
                 isDense: true,
                 errorStyle: TextStyle(
-                  color: white,
+                  color: pureWhite,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w500,
                   fontStyle: FontStyle.normal,
@@ -157,7 +157,7 @@ Column dropdownField(
               isDense: true,
               // 2
               prefixIcon: prefixIcon,
-              fillColor: white,
+              fillColor: pureWhite,
               filled: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),

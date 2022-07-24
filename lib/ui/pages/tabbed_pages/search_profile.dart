@@ -425,7 +425,7 @@ class _SearchProfileState extends State<SearchProfile>
                                     zNickname: _nicknameController.text),
                               );
                             },
-                            textColor: white,
+                            textColor: pureWhite,
                             btnColor: primary1,
                           ),
                         )
@@ -919,7 +919,7 @@ class _SearchProfileState extends State<SearchProfile>
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Search and Filter",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primary1,
       ),
@@ -1269,7 +1269,7 @@ class _SearchProfileState extends State<SearchProfile>
                                                               CircleAvatar(
                                                                 maxRadius: 55,
                                                                 backgroundColor:
-                                                                    white,
+                                                                    pureWhite,
                                                                 child:
                                                                     Container(
                                                                   padding:
@@ -1308,13 +1308,13 @@ class _SearchProfileState extends State<SearchProfile>
                                                           HeaderFourText(
                                                             text:
                                                                 "${user[index].data['nickname']}, ${(DateTime.now().year - user[index].data['dob'].toDate().year).toString()}",
-                                                            color: white,
+                                                            color: pureWhite,
                                                           ),
                                                           SmallText(
                                                             text: user[index]
                                                                     .data[
                                                                 'jobPosition'],
-                                                            color: white,
+                                                            color: pureWhite,
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -1323,7 +1323,7 @@ class _SearchProfileState extends State<SearchProfile>
                                                             text: user[index]
                                                                     .data[
                                                                 'currentJob'],
-                                                            color: white,
+                                                            color: pureWhite,
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -1331,7 +1331,7 @@ class _SearchProfileState extends State<SearchProfile>
                                                           SmallText(
                                                             text:
                                                                 "${user[index].data['location']}, ${user[index].data['province']}",
-                                                            color: white,
+                                                            color: pureWhite,
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -1484,7 +1484,7 @@ class _SearchProfileState extends State<SearchProfile>
                         child: TabBar(
                           indicatorColor: Colors.amber,
                           labelColor: Colors.amber,
-                          unselectedLabelColor: white,
+                          unselectedLabelColor: pureWhite,
                           indicatorSize: TabBarIndicatorSize.tab,
                           indicatorPadding: const EdgeInsets.all(5.0),
                           tabs: const [
@@ -1624,7 +1624,7 @@ class _SearchProfileState extends State<SearchProfile>
                                     children: [
                                       FloatingActionButton(
                                         tooltip: "Cancel",
-                                        backgroundColor: white,
+                                        backgroundColor: pureWhite,
                                         child: Icon(Icons.clear_outlined,
                                             color: primary1),
                                         shape: RoundedRectangleBorder(
@@ -1638,7 +1638,7 @@ class _SearchProfileState extends State<SearchProfile>
                                         backgroundColor: primary1,
                                         child: Icon(
                                           Icons.person_search_outlined,
-                                          color: white,
+                                          color: pureWhite,
                                         ),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -1669,7 +1669,7 @@ class _SearchProfileState extends State<SearchProfile>
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: white),
+          border: Border.all(color: pureWhite),
         ),
         padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -1683,7 +1683,7 @@ class _SearchProfileState extends State<SearchProfile>
                 child: ChatText(
                   text:
                       "Popular near ${_currentUser.location}, ${_currentUser.province}",
-                  color: white,
+                  color: pureWhite,
                   overflow: TextOverflow.clip,
                 ),
               ),
@@ -1692,7 +1692,7 @@ class _SearchProfileState extends State<SearchProfile>
               flex: 2,
               child: Container(
                 decoration: BoxDecoration(
-                  color: white,
+                  color: pureWhite,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
@@ -1779,7 +1779,7 @@ class _SearchProfileState extends State<SearchProfile>
               BigWideButton(
                 labelText: "Filter",
                 onPressedTo: filterOnPressed,
-                textColor: white,
+                textColor: pureWhite,
                 btnColor: primary1,
               ),
             ],
@@ -1810,12 +1810,12 @@ class SearchTips extends StatelessWidget {
         children: [
           HeaderFourText(
             text: title,
-            color: white,
+            color: pureWhite,
           ),
           const SizedBox(height: 5),
           SmallText(
             text: text,
-            color: white,
+            color: pureWhite,
           ),
         ],
       ),

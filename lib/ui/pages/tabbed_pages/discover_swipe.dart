@@ -119,7 +119,7 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
           "assets/images/header-logo.png",
           width: size.width * 0.4,
         ),
-        appBarColor: white,
+        appBarColor: pureWhite,
         appBarIcon: Icons.refresh_outlined,
         tooltip: "Refresh",
         onPressed: () {
@@ -158,7 +158,7 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
               height: size.height,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [white, lightGrey1],
+                  colors: [pureWhite, lightGrey1],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -213,7 +213,7 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
                                 child: MiniText(
                                     text:
                                         "Showing results near ${_currentUser.location}, ${_currentUser.province}",
-                                    color: white),
+                                    color: pureWhite),
                               ),
                               onTap: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -227,7 +227,7 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
                               },
                             ),
                             Swipeable(
-                              background: Container(color: white),
+                              background: Container(color: pureWhite),
                               threshold: 250,
                               onSwipeLeft: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -280,7 +280,7 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
                                           SizedBox(height: size.height * 0.15),
                                           CircleAvatar(
                                               maxRadius: 105,
-                                              backgroundColor: white,
+                                              backgroundColor: pureWhite,
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.all(20),
@@ -307,19 +307,19 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
                                       HeaderOneText(
                                         text:
                                             "${_user.nickname}, ${(DateTime.now().year - _user.dob.toDate().year).toString()}",
-                                        color: white,
+                                        color: pureWhite,
                                         align: TextAlign.left,
                                       ),
                                       ChatText(
                                         text:
                                             "${_user.jobPosition} at ${_user.currentJob}",
-                                        color: white,
+                                        color: pureWhite,
                                         align: TextAlign.left,
                                       ),
                                       ChatText(
                                         text:
                                             "${_user.location}, ${_user.province}",
-                                        color: white,
+                                        color: pureWhite,
                                         align: TextAlign.left,
                                       ),
                                       Row(

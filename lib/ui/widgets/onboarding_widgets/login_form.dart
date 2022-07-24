@@ -150,21 +150,21 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     HeaderTwoText(
                       text: "Welcome back!",
-                      color: white,
+                      color: pureWhite,
                       align: TextAlign.left,
                     ),
                     const SizedBox(height: 15),
                     DescText(
                       text:
                           "“You don't know what you're capable of until you have to do it.” - June Osborne",
-                      color: white,
+                      color: pureWhite,
                       align: TextAlign.left,
                     ),
                     Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: size.width * 0.04),
                       child: Divider(
-                        color: white,
+                        color: pureWhite,
                         height: 1,
                         thickness: 0.2,
                       ),
@@ -174,7 +174,7 @@ class _LoginFormState extends State<LoginForm> {
                       textAction: TextInputAction.next,
                       text: "Email Address",
                       controller: _emailController,
-                      color: white,
+                      color: pureWhite,
                       obscureText: false,
                       prefixIcon: const Icon(Icons.email_outlined),
                       textInputType: TextInputType.emailAddress,
@@ -188,7 +188,7 @@ class _LoginFormState extends State<LoginForm> {
                       textAction: TextInputAction.done,
                       text: "Password",
                       controller: _passwordController,
-                      color: white,
+                      color: pureWhite,
                       obscureText: true,
                       prefixIcon: const Icon(Icons.vpn_key_outlined),
                       textInputType: TextInputType.visiblePassword,
@@ -200,7 +200,7 @@ class _LoginFormState extends State<LoginForm> {
                       maxLines: 1,
                     ),
                     Divider(
-                      color: white,
+                      color: pureWhite,
                       height: 1,
                       thickness: 0.2,
                     ),
@@ -214,8 +214,9 @@ class _LoginFormState extends State<LoginForm> {
                           onPressedTo: isLoginButtonEnabled(state)
                               ? _onFormSubmitted
                               : null,
-                          textColor:
-                              isLoginButtonEnabled(state) ? secondBlack : white,
+                          textColor: isLoginButtonEnabled(state)
+                              ? secondBlack
+                              : pureWhite,
                           btnColor: isLoginButtonEnabled(state)
                               ? Colors.amber
                               : Colors.black54,
@@ -223,7 +224,7 @@ class _LoginFormState extends State<LoginForm> {
                         const SizedBox(height: 15),
                         BigTextButton(
                           labelText: "Create a new account",
-                          labelColor: white,
+                          labelColor: pureWhite,
                           onPressedTo: () {
                             Navigator.push(
                               context,

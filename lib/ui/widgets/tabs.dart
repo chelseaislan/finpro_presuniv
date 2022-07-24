@@ -43,29 +43,29 @@ class HomeTabs extends StatelessWidget {
         isScrollable: false,
         indicatorColor: Colors.amber,
         labelColor: Colors.amber,
-        unselectedLabelColor: white,
+        unselectedLabelColor: pureWhite,
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorPadding: const EdgeInsets.all(5.0),
         tabs: [
           Tab(
             icon: const Icon(Icons.charging_station_outlined),
-            child: MiniText(text: "For You", color: white),
+            child: MiniText(text: "For You", color: pureWhite),
           ),
           Tab(
             icon: const Icon(Icons.manage_search_outlined),
-            child: MiniText(text: "Filter", color: white),
+            child: MiniText(text: "Filter", color: pureWhite),
           ),
           Tab(
             icon: const Icon(Icons.stars_outlined),
-            child: MiniText(text: "Matches", color: white),
+            child: MiniText(text: "Matches", color: pureWhite),
           ),
           Tab(
             icon: const Icon(Icons.chat_outlined),
-            child: MiniText(text: "Chats", color: white),
+            child: MiniText(text: "Chats", color: pureWhite),
           ),
           Tab(
             icon: const Icon(Icons.person_outline_outlined),
-            child: MiniText(text: "Profile", color: white),
+            child: MiniText(text: "Profile", color: pureWhite),
           ),
         ],
       ),

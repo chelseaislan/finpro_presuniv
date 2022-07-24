@@ -33,7 +33,7 @@ class AppTutorialPage extends StatelessWidget {
       appBar: AppBarSideButton(
         appBarTitle: HeaderThreeText(
           text: "Application Tutorial",
-          color: white,
+          color: pureWhite,
         ),
         appBarColor: primaryBlack,
       ),
@@ -45,16 +45,10 @@ class AppTutorialPage extends StatelessWidget {
               height: height,
               viewportFraction: 1.0,
               enlargeCenterPage: false,
-              // autoPlay: false,
             ),
             items: imgList
                 .map(
                   (item) => Center(
-                    // child: Image.network(
-                    //   item,
-                    //   fit: BoxFit.cover,
-                    //   height: height,
-                    // ),
                     child: CardPhotoWidget(photoLink: item),
                   ),
                 )

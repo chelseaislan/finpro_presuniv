@@ -23,14 +23,14 @@ class TaarufButtons extends StatelessWidget {
         BigWideButton(
           labelText: "Go Home",
           onPressedTo: onPressedTop,
-          textColor: white,
+          textColor: pureWhite,
           btnColor: primary1,
         ),
         const SizedBox(height: 10),
         BigWideButton(
           labelText: "Cancel Taaruf",
           onPressedTo: onPressedBottom,
-          textColor: white,
+          textColor: pureWhite,
           btnColor: primary2,
         ),
         const SizedBox(height: 20),
