@@ -250,7 +250,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                                   AudioPlayerState.PLAYING
                                               ? "Audio paused."
                                               : "Playing audio...",
-                                          duration: 2,
+                                          duration: 1,
                                           background: primaryBlack,
                                         ),
                                       );
