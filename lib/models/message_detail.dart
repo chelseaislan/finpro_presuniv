@@ -10,8 +10,9 @@ class MessageDetail {
       selectedUserId,
       text,
       photoUrl,
-      marriageDocUrl;
-  File photo, marriageDoc;
+      marriageDocUrl,
+      voicenoteUrl; // new
+  File photo, marriageDoc, voicenote; // new
   Timestamp timestamp;
   MessageDetail({
     this.senderNickname,
@@ -20,8 +21,10 @@ class MessageDetail {
     this.text,
     this.photoUrl,
     this.marriageDocUrl,
+    this.voicenoteUrl, // new
     this.photo,
     this.marriageDoc,
+    this.voicenote, // new
     this.timestamp,
   });
 }

@@ -9,7 +9,9 @@ class MessageModel {
       lastMessagePhoto,
       lastMessage,
       lastMessageCV,
-      marriageDocUrl;
+      marriageDocUrl,
+      lastMessageVoicenote, // new
+      voicenote; // new
   Timestamp timestamp;
   MessageModel({
     this.nickname,
@@ -19,5 +21,7 @@ class MessageModel {
     this.timestamp,
     this.lastMessageCV,
     this.marriageDocUrl,
+    this.lastMessageVoicenote, // new
+    this.voicenote, // new
   });
 }

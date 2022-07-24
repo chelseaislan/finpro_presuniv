@@ -103,6 +103,7 @@ class MessageRepository {
         _messageDetail.photoUrl = messageDetail['photoUrl'];
         _messageDetail.timestamp = messageDetail['timestamp'];
         _messageDetail.marriageDocUrl = messageDetail['marriageDocUrl'];
+        _messageDetail.voicenoteUrl = messageDetail['voicenoteUrl']; // new
       });
     });
     return _messageDetail;

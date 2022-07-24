@@ -9,6 +9,7 @@ import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/message_detail.dart';
 import 'package:finpro_max/repositories/chatroom_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ChatroomWidget extends StatefulWidget {
@@ -115,7 +116,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                 ),
                         ],
                       )
-                    // if the message is a PDF (CV)
+                    // if the message is a PDF (marriageDoc)
                     : _messageDetail.marriageDocUrl != null
                         ? Wrap(
                             crossAxisAlignment:
@@ -209,81 +210,167 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                     ),
                             ],
                           )
-                        // if the message is a photo
-                        : Wrap(
-                            crossAxisAlignment:
-                                // dock to left for receiver, right for sender
-                                _messageDetail.senderId == widget.currentUserId
-                                    ? WrapCrossAlignment.end
-                                    : WrapCrossAlignment.start,
-                            direction: Axis.vertical,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(size.height * 0.01),
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      maxWidth: size.width * 0.7,
-                                      maxHeight: size.width * 0.8),
-                                  child: GestureDetector(
+                        // if the message is a voicenote
+                        : _messageDetail.voicenoteUrl != null
+                            ? Wrap(
+                                crossAxisAlignment:
+                                    // dock to left for receiver, right for sender
+                                    _messageDetail.senderId ==
+                                            widget.currentUserId
+                                        ? WrapCrossAlignment.end
+                                        : WrapCrossAlignment.start,
+                                direction: Axis.vertical,
+                                children: [
+                                  GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation1,
-                                                  animation2) =>
-                                              DetailScreen(
-                                            photoLink: _messageDetail.photoUrl,
-                                          ),
-                                          transitionDuration: Duration.zero,
-                                          reverseTransitionDuration:
-                                              Duration.zero,
-                                        ),
-                                      );
+                                      Fluttertoast.showToast(
+                                          msg: "Coming soon!");
                                     },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: _messageDetail.senderId ==
-                                                  widget.currentUserId
-                                              ? primary3
-                                              : white,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            size.height * 0.02),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            size.height * 0.02),
-                                        child: CardPhotoWidget(
-                                          photoLink: _messageDetail.photoUrl,
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.all(size.height * 0.01),
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                            maxWidth: size.width * 0.7),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: _messageDetail.senderId ==
+                                                    widget.currentUserId
+                                                ? primary3
+                                                : white,
+                                            borderRadius: BorderRadius.circular(
+                                              size.width * 0.03,
+                                            ),
+                                          ),
+                                          // padding for chat bubbles
+                                          padding: EdgeInsets.fromLTRB(
+                                            size.height * 0.016,
+                                            size.height * 0.016,
+                                            size.height * 0.016,
+                                            size.height * 0.011,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Icon(
+                                                Icons.play_circle_outlined,
+                                                color: thirdBlack,
+                                                size: size.height * 0.05,
+                                              ),
+                                              const SizedBox(height: 5),
+                                              HeaderFourText(
+                                                text: "Tap to play audio",
+                                                color: secondBlack,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              _messageDetail.senderId == widget.currentUserId
-                                  ? Padding(
-                                      padding: EdgeInsets.only(
-                                          right: size.width * 0.02),
-                                      child: TimeAgoWidget(
-                                        size: size,
-                                        messageDetail: _messageDetail,
-                                      ),
-                                    )
-                                  : Container(),
-                              _messageDetail.senderId == widget.currentUserId
-                                  ? Container()
-                                  : Padding(
-                                      padding: EdgeInsets.only(
-                                          left: size.width * 0.02),
-                                      child: TimeAgoWidget(
-                                        size: size,
-                                        messageDetail: _messageDetail,
+                                  _messageDetail.senderId ==
+                                          widget.currentUserId
+                                      ? Padding(
+                                          padding: EdgeInsets.only(
+                                              right: size.width * 0.02),
+                                          child: TimeAgoWidget(
+                                            size: size,
+                                            messageDetail: _messageDetail,
+                                          ),
+                                        )
+                                      : Container(),
+                                  _messageDetail.senderId ==
+                                          widget.currentUserId
+                                      ? Container()
+                                      : Padding(
+                                          padding: EdgeInsets.only(
+                                              left: size.width * 0.02),
+                                          child: TimeAgoWidget(
+                                            size: size,
+                                            messageDetail: _messageDetail,
+                                          ),
+                                        ),
+                                ],
+                              )
+                            // if the message is a photo
+                            : Wrap(
+                                crossAxisAlignment:
+                                    // dock to left for receiver, right for sender
+                                    _messageDetail.senderId ==
+                                            widget.currentUserId
+                                        ? WrapCrossAlignment.end
+                                        : WrapCrossAlignment.start,
+                                direction: Axis.vertical,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(size.height * 0.01),
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          maxWidth: size.width * 0.7,
+                                          maxHeight: size.width * 0.8),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  DetailScreen(
+                                                photoLink:
+                                                    _messageDetail.photoUrl,
+                                              ),
+                                              transitionDuration: Duration.zero,
+                                              reverseTransitionDuration:
+                                                  Duration.zero,
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: _messageDetail.senderId ==
+                                                      widget.currentUserId
+                                                  ? primary3
+                                                  : white,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                size.height * 0.02),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                size.height * 0.02),
+                                            child: CardPhotoWidget(
+                                              photoLink:
+                                                  _messageDetail.photoUrl,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                            ],
-                          ),
+                                  ),
+                                  _messageDetail.senderId ==
+                                          widget.currentUserId
+                                      ? Padding(
+                                          padding: EdgeInsets.only(
+                                              right: size.width * 0.02),
+                                          child: TimeAgoWidget(
+                                            size: size,
+                                            messageDetail: _messageDetail,
+                                          ),
+                                        )
+                                      : Container(),
+                                  _messageDetail.senderId ==
+                                          widget.currentUserId
+                                      ? Container()
+                                      : Padding(
+                                          padding: EdgeInsets.only(
+                                              left: size.width * 0.02),
+                                          child: TimeAgoWidget(
+                                            size: size,
+                                            messageDetail: _messageDetail,
+                                          ),
+                                        ),
+                                ],
+                              ),
               ],
             ),
           );

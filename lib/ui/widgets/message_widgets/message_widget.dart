@@ -66,6 +66,7 @@ class _MessageWidgetState extends State<MessageWidget>
         lastMessagePhoto: null,
         timestamp: null,
         lastMessageCV: null,
+        lastMessageVoicenote: null, // new
       );
     } else {
       return MessageModel(
@@ -75,6 +76,7 @@ class _MessageWidgetState extends State<MessageWidget>
         lastMessagePhoto: messageDetail.photoUrl,
         timestamp: messageDetail.timestamp,
         lastMessageCV: messageDetail.marriageDocUrl,
+        lastMessageVoicenote: messageDetail.voicenoteUrl, // new
       );
     }
   }
@@ -218,43 +220,31 @@ class _MessageWidgetState extends State<MessageWidget>
                                     ),
                                   )
                                 : messageModel.lastMessagePhoto != null
-                                    ? Row(
-                                        children: [
-                                          Icon(
-                                            Icons.photo_outlined,
-                                            color: secondBlack,
-                                            size: size.height * 0.02,
-                                          ),
-                                          SizedBox(width: size.width * 0.01),
-                                          ChatText(
-                                            text: "Uploaded photo",
-                                            color: secondBlack,
-                                            align: TextAlign.left,
-                                          ),
-                                        ],
+                                    ? lastMessageFiles(
+                                        size: size,
+                                        iconData: Icons.photo_outlined,
+                                        text: "Uploaded Photo",
                                       )
                                     : messageModel.lastMessageCV != null
-                                        ? Row(
-                                            children: [
-                                              Icon(
+                                        ? lastMessageFiles(
+                                            size: size,
+                                            iconData:
                                                 Icons.library_books_outlined,
-                                                color: secondBlack,
-                                                size: size.height * 0.02,
-                                              ),
-                                              SizedBox(
-                                                  width: size.width * 0.01),
-                                              ChatText(
-                                                text: "Uploaded document",
+                                            text: "Uploaded Document",
+                                          )
+                                        : messageModel.lastMessageVoicenote !=
+                                                null
+                                            ? lastMessageFiles(
+                                                size: size,
+                                                iconData: Icons
+                                                    .record_voice_over_outlined,
+                                                text: "Uploaded Voicenote",
+                                              )
+                                            : ChatText(
+                                                text: "Start chatting now!",
                                                 color: secondBlack,
                                                 align: TextAlign.left,
                                               ),
-                                            ],
-                                          )
-                                        : ChatText(
-                                            text: "Start chatting now!",
-                                            color: secondBlack,
-                                            align: TextAlign.left,
-                                          ),
                             const SizedBox(height: 3),
                             messageModel.timestamp != null
                                 ? MiniText(
@@ -280,6 +270,24 @@ class _MessageWidgetState extends State<MessageWidget>
           );
         }
       },
+    );
+  }
+
+  Row lastMessageFiles({Size size, IconData iconData, String text}) {
+    return Row(
+      children: [
+        Icon(
+          iconData,
+          color: secondBlack,
+          size: size.height * 0.02,
+        ),
+        SizedBox(width: size.width * 0.01),
+        ChatText(
+          text: text,
+          color: secondBlack,
+          align: TextAlign.left,
+        ),
+      ],
     );
   }
 }

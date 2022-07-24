@@ -9,6 +9,7 @@ import 'package:finpro_max/bloc/chatroom/chatroom_bloc.dart';
 import 'package:finpro_max/bloc/chatroom/chatroom_event.dart';
 import 'package:finpro_max/bloc/chatroom/chatroom_state.dart';
 import 'package:finpro_max/custom_widgets/buttons/appbar_sidebutton.dart';
+import 'package:finpro_max/custom_widgets/buttons/big_wide_button.dart';
 import 'package:finpro_max/custom_widgets/modal_popup.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
@@ -21,6 +22,7 @@ import 'package:finpro_max/ui/widgets/card_swipe_widgets/card_photo.dart';
 import 'package:finpro_max/ui/widgets/chatroom_widgets/chatroom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ChatroomPage extends StatefulWidget {
   final User currentUser, selectedUser;
@@ -34,7 +36,7 @@ class ChatroomPage extends StatefulWidget {
 // 40/41 - completing the chatroom page
 class _ChatroomPageState extends State<ChatroomPage>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController _animationController, _vnController;
   final ChatroomRepository _chatroomRepository = ChatroomRepository();
   ChatroomBloc _chatroomBloc;
   final TextEditingController _messageController = TextEditingController();
@@ -53,9 +55,10 @@ class _ChatroomPageState extends State<ChatroomPage>
         });
       },
     );
-
     _animationController = BottomSheet.createAnimationController(this);
     _animationController.duration = const Duration(seconds: 0);
+    _vnController = BottomSheet.createAnimationController(this);
+    _vnController.duration = const Duration(seconds: 0);
   }
 
   // dispose the text controller after sending a text msg
@@ -63,6 +66,7 @@ class _ChatroomPageState extends State<ChatroomPage>
   void dispose() {
     _messageController.dispose();
     _animationController.dispose();
+    _vnController.dispose();
     super.dispose();
   }
 
@@ -77,6 +81,7 @@ class _ChatroomPageState extends State<ChatroomPage>
           selectedUserId: widget.selectedUser.uid,
           photo: null,
           marriageDoc: null,
+          voicenote: null,
         ),
       ),
     );
@@ -319,6 +324,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                                                       selectedUserId: widget
                                                           .selectedUser.uid,
                                                       photo: file,
+                                                      voicenote: null,
                                                     ),
                                                   ),
                                                 );
@@ -332,7 +338,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                                           iconData: Icons.note_add_outlined,
                                           title: "Upload a document",
                                           subtitle:
-                                              "It can be your marriage CV for ${widget.currentUser.nickname} to view, or any other PDF documents.",
+                                              "It can be your marriage CV for ${widget.selectedUser.nickname} to view, or any other PDF documents.",
                                           onTap: () async {
                                             try {
                                               // File marriageDoc =
@@ -374,6 +380,7 @@ class _ChatroomPageState extends State<ChatroomPage>
                                                       selectedUserId: widget
                                                           .selectedUser.uid,
                                                       photo: null,
+                                                      voicenote: null,
                                                     ),
                                                   ),
                                                 );
@@ -386,9 +393,101 @@ class _ChatroomPageState extends State<ChatroomPage>
                                         ChatroomButtons(
                                           iconData:
                                               Icons.record_voice_over_outlined,
-                                          title: "New feature?",
-                                          subtitle: "What will it be...?",
-                                          onTap: () {},
+                                          title: "Send voicenote",
+                                          subtitle:
+                                              "Record your own voice so that it can be heard by ${widget.selectedUser.nickname}!",
+                                          onTap: () {
+                                            showModalBottomSheet(
+                                              transitionAnimationController:
+                                                  _vnController,
+                                              context: context,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    topRight:
+                                                        Radius.circular(10)),
+                                              ),
+                                              isScrollControlled: true,
+                                              builder: (context) {
+                                                return SingleChildScrollView(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
+                                                        20, 23, 20, 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .stretch,
+                                                      children: [
+                                                        HeaderThreeText(
+                                                          text:
+                                                              "Tap the microphone to record.",
+                                                          color: secondBlack,
+                                                          align:
+                                                              TextAlign.center,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 15),
+                                                        CircleAvatar(
+                                                          maxRadius: 50,
+                                                          backgroundColor:
+                                                              primaryBlack,
+                                                          child: Icon(
+                                                            Icons.mic_outlined,
+                                                            color: white,
+                                                            size: 40,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical: 20),
+                                                          child: DescText(
+                                                            text:
+                                                                "If you are done, you can tap the mic once again and then upload it.",
+                                                            color: secondBlack,
+                                                            align: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                        BigWideButton(
+                                                          labelText:
+                                                              "Upload Voicenote",
+                                                          onPressedTo: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            Navigator.pop(
+                                                                context);
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "Coming soon!");
+                                                          },
+                                                          textColor: white,
+                                                          btnColor: primary1,
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 15),
+                                                        BigWideButton(
+                                                          labelText: "Cancel",
+                                                          onPressedTo: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          textColor: white,
+                                                          btnColor: primary2,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
