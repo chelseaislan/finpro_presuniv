@@ -80,7 +80,7 @@ class ViewSearchHeader extends StatelessWidget {
       _user.quranLevel,
     ];
 
-    final List yourReligionContents = [
+    final List uReligionContents = [
       _currentUser.sholat,
       _currentUser.sSunnah,
       _currentUser.fasting,
@@ -117,7 +117,7 @@ class ViewSearchHeader extends StatelessWidget {
       _user.target,
     ];
 
-    final List yourPersonalContents = [
+    final List uPersonalContents = [
       _currentUser.education,
       _currentUser.marriageStatus,
       _currentUser.haveKids,
@@ -183,7 +183,7 @@ class ViewSearchHeader extends StatelessWidget {
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                        height: size.height * 1.43,
+                        height: size.height * 1.53,
                         child: TabBarView(
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
@@ -198,7 +198,7 @@ class ViewSearchHeader extends StatelessWidget {
                                   rTotal: rTotal,
                                   pTotal: pTotal,
                                 ),
-                                ProfileDetailListView(
+                                ProfileListView(
                                   headers: aboutHeaders,
                                   contents: aboutContents,
                                   color: secondBlack,
@@ -211,6 +211,7 @@ class ViewSearchHeader extends StatelessWidget {
                                 ProfileDetailListView(
                                   headers: religionHeaders,
                                   contents: religionContents,
+                                  cuContents: uReligionContents,
                                   color: secondBlack,
                                 ),
                                 const SizedBox(height: 20),
@@ -228,6 +229,7 @@ class ViewSearchHeader extends StatelessWidget {
                             ProfileDetailListView(
                               headers: personalHeaders,
                               contents: personalContents,
+                              cuContents: uPersonalContents,
                               color: secondBlack,
                             ),
                           ],

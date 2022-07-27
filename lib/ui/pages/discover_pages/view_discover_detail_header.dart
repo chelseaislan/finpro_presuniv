@@ -78,6 +78,15 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
       _user.quranLevel,
     ];
 
+    final List uReligionContents = [
+      _currentUser.sholat,
+      _currentUser.sSunnah,
+      _currentUser.fasting,
+      _currentUser.fSunnah,
+      _currentUser.pilgrimage,
+      _currentUser.quranLevel,
+    ];
+
     final List personalHeaders = [
       "Latest Education",
       "Current Marriage Status",
@@ -104,6 +113,20 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
       _user.smoke,
       _user.tattoo,
       _user.target,
+    ];
+
+    final List uPersonalContents = [
+      _currentUser.education,
+      _currentUser.marriageStatus,
+      _currentUser.haveKids,
+      _currentUser.childPreference,
+      _currentUser.salaryRange,
+      _currentUser.financials,
+      _currentUser.personality,
+      _currentUser.pets,
+      _currentUser.smoke,
+      _currentUser.tattoo,
+      _currentUser.target,
     ];
 
     return Scaffold(
@@ -149,16 +172,14 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
                           tabs: [
                             Tab(text: "About ${_user.nickname}"),
                             Tab(text: "${_user.nickname}'s Religion Details"),
-                            // const Tab(text: "YOUR Religion Details"),
                             Tab(text: "${_user.nickname}'s Personal Details"),
-                            // const Tab(text: "YOUR Personal Details"),
                           ],
                         ),
                       ),
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                        height: size.height * 1.42,
+                        height: size.height * 1.53,
                         child: TabBarView(
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
@@ -173,7 +194,7 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
                                   rTotal: rTotal,
                                   pTotal: pTotal,
                                 ),
-                                ProfileDetailListView(
+                                ProfileListView(
                                   headers: aboutHeaders,
                                   contents: aboutContents,
                                   color: secondBlack,
@@ -186,6 +207,7 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
                                 ProfileDetailListView(
                                   headers: religionHeaders,
                                   contents: religionContents,
+                                  cuContents: uReligionContents,
                                   color: secondBlack,
                                 ),
                                 const SizedBox(height: 20),
@@ -199,24 +221,13 @@ class ViewDiscoverDetailHeader extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            // Tab 3
-                            // ProfileDetailListView(
-                            //   headers: religionHeaders,
-                            //   contents: yourReligionContents,
-                            //   color: secondBlack,
-                            // ),
                             // Tab 4
                             ProfileDetailListView(
                               headers: personalHeaders,
                               contents: personalContents,
+                              cuContents: uPersonalContents,
                               color: secondBlack,
                             ),
-                            // Tab 5
-                            // ProfileDetailListView(
-                            //   headers: personalHeaders,
-                            //   contents: yourPersonalContents,
-                            //   color: secondBlack,
-                            // ),
                           ],
                         ),
                       ),

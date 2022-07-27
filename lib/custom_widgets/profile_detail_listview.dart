@@ -7,6 +7,57 @@ class ProfileDetailListView extends StatelessWidget {
     Key key,
     @required this.headers,
     @required this.contents,
+    @required this.cuContents,
+    @required this.color,
+  }) : super(key: key);
+
+  final List headers;
+  final List contents;
+  final List cuContents;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: headers.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 7),
+            child: ListTile(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  HeaderFourText(text: headers[index], color: color),
+                ],
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 2),
+                  DescText(text: contents[index], color: color),
+                  const SizedBox(height: 2),
+                  SmallText(text: "You: ${cuContents[index]}", color: color),
+                  const SizedBox(height: 5),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ProfileListView extends StatelessWidget {
+  const ProfileListView({
+    Key key,
+    @required this.headers,
+    @required this.contents,
     @required this.color,
   }) : super(key: key);
 

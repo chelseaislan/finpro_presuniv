@@ -573,7 +573,7 @@ class _DiscoverSwipeState extends State<DiscoverSwipe> {
                       } else {
                         return EmptyContent(
                           size: size,
-                          asset: "assets/images/discover-tab.png",
+                          asset: "assets/images/swipe.png",
                           header: "Uh-oh...",
                           description:
                               "Looks like there is no one around. Please come back later.",

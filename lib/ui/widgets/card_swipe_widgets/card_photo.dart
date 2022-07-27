@@ -1,6 +1,7 @@
 // @dart=2.9
 // 24/41
 import 'package:extended_image/extended_image.dart';
+import 'package:finpro_max/custom_widgets/buttons/big_wide_button.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
 import 'package:finpro_max/models/colors.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,11 @@ class CardPhotoWidget extends StatelessWidget {
             return null;
             break;
           case LoadState.failed:
-            return GestureDetector(
-              child: Center(
-                  child: DescText(text: "Reload Image", color: pureWhite)),
-              onTap: () => state.reLoadImage(),
+            return BigWideButton(
+              btnColor: primary1,
+              labelText: "Reload Image",
+              textColor: pureWhite,
+              onPressedTo: () => state.reLoadImage(),
             );
             break;
         }

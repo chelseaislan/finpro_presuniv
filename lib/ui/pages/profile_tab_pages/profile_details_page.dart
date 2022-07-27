@@ -233,7 +233,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                   // Tab 1
                                   Column(
                                     children: [
-                                      ProfileDetailListView(
+                                      ProfileListView(
                                         headers: aboutHeaders,
                                         contents: aboutContents,
                                         color: secondBlack,
@@ -243,7 +243,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                   // Tab 2
                                   Column(
                                     children: [
-                                      ProfileDetailListView(
+                                      ProfileListView(
                                         headers: religionHeaders,
                                         contents: religionContents,
                                         color: secondBlack,
@@ -260,7 +260,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                     ],
                                   ),
                                   // Tab 3
-                                  ProfileDetailListView(
+                                  ProfileListView(
                                     headers: personalHeaders,
                                     contents: personalContents,
                                     color: secondBlack,

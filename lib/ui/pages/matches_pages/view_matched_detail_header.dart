@@ -74,7 +74,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
       selectedUser.quranLevel,
     ];
 
-    final List yourReligionContents = [
+    final List uReligionContents = [
       currentUser.sholat,
       currentUser.sSunnah,
       currentUser.fasting,
@@ -111,7 +111,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
       selectedUser.target,
     ];
 
-    final List yourPersonalContents = [
+    final List uPersonalContents = [
       currentUser.education,
       currentUser.marriageStatus,
       currentUser.haveKids,
@@ -176,7 +176,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                   Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                    height: size.height * 1.36,
+                    height: size.height * 1.53,
                     child: TabBarView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
@@ -274,7 +274,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            ProfileDetailListView(
+                            ProfileListView(
                               headers: aboutHeaders,
                               contents: aboutContents,
                               color: secondBlack,
@@ -346,6 +346,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                             ProfileDetailListView(
                               headers: religionHeaders,
                               contents: religionContents,
+                              cuContents: uReligionContents,
                               color: secondBlack,
                             ),
                             const SizedBox(height: 20),
@@ -363,6 +364,7 @@ class ViewMatchedDetailHeader extends StatelessWidget {
                         ProfileDetailListView(
                           headers: personalHeaders,
                           contents: personalContents,
+                          cuContents: uPersonalContents,
                           color: secondBlack,
                         ),
                       ],
