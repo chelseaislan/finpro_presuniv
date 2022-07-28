@@ -388,15 +388,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
 
     // comment all the presets
     final List headerPreset = [
-      "Use preset A", // Yvonne, Putin, Will Smith
-      "Use preset B", // Dasha, Waterford, Donald
-      "Use preset C", // Adele, Ronaldo, Obama
-      "Use preset D", // Offred, Musk, Fred MU
-      "Use preset E", // Kate Middleton, M Salah, De Gea
-      "Use preset F", // Kate Bush, Neymar, Maguire
-      "Use preset G", // Lana, Jesus, Volodymyr
-      "Use preset H", // Olivia, Mbappe, BoJo
-      // "Use preset I", // Astrid
+      "Use preset A", // Jabo-Yvonne, Putin, Will Smith, Jabar-Sasha Song, Eriksen, BidenBike
+      "Use preset B", // Jabo-Dasha, Waterford, Donald, Jabar-Astrid S, Erik10Hag, Haaland
+      "Use preset C", // Jabo-Adele, Ronaldo, Obama, Jabar-Kendall, RaheemSterling, ZinedineZidane
+      "Use preset D", // Jabo-Offred, Musk, Fred MU, Jabar-ChelseaIslan, Lewa, Zidane Iqbal
+      "Use preset E", // Jabo-Kate Middleton, M Salah, De Gea, Jabar-Taylor, Mou, ChrisEvans
+      "Use preset F", // Jabo-Kate Bush, Neymar, Maguire, Jabar-Britney, Fabrizio, Son HeungMin
+      "Use preset G", // Jabo-Lana, Jesus, Volodymyr, Jabar-Selena Gomez, ChrisMartin, AlanWalker
+      "Use preset H", // Jabo-Olivia, Mbappe, BoJo, Jabar-Dua Lipa, HarryStyles, Pogba
     ];
 
     final List onPressedPreset = [
