@@ -90,7 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           );
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-          // Navigator.of(context).pop();
+          Navigator.pop(context);
         }
       },
       child: BlocBuilder<SignUpBloc, SignUpState>(

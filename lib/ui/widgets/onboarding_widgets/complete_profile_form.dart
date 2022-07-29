@@ -388,14 +388,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
 
     // comment all the presets
     final List headerPreset = [
-      "Use preset A", // Jabo-Yvonne, Putin, Will Smith, Jabar-Sasha Song, Eriksen, BidenBike
-      "Use preset B", // Jabo-Dasha, Waterford, Donald, Jabar-Astrid S, Erik10Hag, Haaland
-      "Use preset C", // Jabo-Adele, Ronaldo, Obama, Jabar-Kendall, RaheemSterling, ZinedineZidane
-      "Use preset D", // Jabo-Offred, Musk, Fred MU, Jabar-ChelseaIslan, Lewa, Zidane Iqbal
-      "Use preset E", // Jabo-Kate Middleton, M Salah, De Gea, Jabar-Taylor, Mou, ChrisEvans
-      "Use preset F", // Jabo-Kate Bush, Neymar, Maguire, Jabar-Britney, Fabrizio, Son HeungMin
+      "Use preset A", // Jabo-Yvonne, Putin, Will Smith, Jabar-Sasha Song, Eriksen, Pogba
+      "Use preset B", // Jabo-Dasha, Waterford, Donald, Jabar-Astrid S, Erik10Hag, Ronaldo Ori
+      "Use preset C", // Jabo-Adele, Ronaldo, Obama, Jabar-KatyPerry, RaheemSterling, Haaland
+      "Use preset D", // Jabo-Offred, Musk, Fred MU, Jabar-ChelseaIslan, Lewa, Ronaldinho
+      "Use preset E", // Jabo-Kate Middleton, M Salah, De Gea, Jabar-Taylor, Jesse, Rick Astley
+      "Use preset F", // Jabo-Kate Bush, Neymar, Maguire, Jabar-Avril, Fabrizio, Son HeungMin
       "Use preset G", // Jabo-Lana, Jesus, Volodymyr, Jabar-Selena Gomez, ChrisMartin, AlanWalker
-      "Use preset H", // Jabo-Olivia, Mbappe, BoJo, Jabar-Dua Lipa, HarryStyles, Pogba
+      "Use preset H", // Jabo-Olivia, Mbappe, BoJo, Jabar-Dua Lipa, HarryPotter, BidenBike
     ];
 
     final List onPressedPreset = [
@@ -426,7 +426,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
           ScaffoldMessenger.of(context).showSnackBar(
             myLoadingSnackbar(
               text: "Completing profile...",
-              duration: 40,
+              duration: 32,
               background: primaryBlack,
             ),
           );
@@ -435,8 +435,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
           debugPrint("Success!");
           ScaffoldMessenger.of(context).showSnackBar(
             mySnackbar(
-              text: "Profile has been completed!",
-              duration: 3,
+              text:
+                  "Complete profile successful!\n\nNow you can wait until your account is verified by us.",
+              duration: 6,
               background: primaryBlack,
             ),
           );
@@ -771,6 +772,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
+                                      PaddingDivider(color: pureWhite),
+                                      ChatText(
+                                        text:
+                                            "Capture your own KTP card (not a scan) so it will be easier for us to verify you.",
+                                        color: pureWhite,
+                                      ),
+                                      const SizedBox(height: 20),
                                       // KTP Container
                                       GestureDetector(
                                         child: Container(
@@ -826,6 +834,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         },
                                       ),
                                       const SizedBox(height: 15),
+                                      PaddingDivider(color: pureWhite),
+                                      ChatText(
+                                        text:
+                                            "For additional measure, please capture a supporting document, whether it is your employee ID card, student ID card, business card and so on.",
+                                        color: pureWhite,
+                                      ),
+                                      const SizedBox(height: 20),
                                       // Other Docs
                                       GestureDetector(
                                         child: Container(
@@ -882,6 +897,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                         },
                                       ),
                                       const SizedBox(height: 15),
+                                      PaddingDivider(color: pureWhite),
+                                      ChatText(
+                                        text:
+                                            "Please upload your best shot to be your avatar, and you can choose to blur it for privacy or not.",
+                                        color: pureWhite,
+                                      ),
+                                      const SizedBox(height: 20),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -1041,7 +1063,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      PaddingDivider(color: pureWhite),
+                                      const SizedBox(height: 15),
                                       BigWideButton(
                                         labelText: "Complete Profile",
                                         onPressedTo:
