@@ -22,7 +22,7 @@ class MessageRepository {
         .snapshots();
   }
 
-  // Delete message and unmatch user
+  // Delete message
   Future deleteChat({currentUserId, selectedUserId}) async {
     await _firestore
         .collection('users')
@@ -30,12 +30,12 @@ class MessageRepository {
         .collection('chats')
         .document(selectedUserId)
         .delete();
-    await _firestore
-        .collection('users')
-        .document(selectedUserId)
-        .collection('chats')
-        .document(currentUserId)
-        .delete();
+    // await _firestore
+    //     .collection('users')
+    //     .document(selectedUserId)
+    //     .collection('chats')
+    //     .document(currentUserId)
+    //     .delete();
   }
 
   // 6+3+9
