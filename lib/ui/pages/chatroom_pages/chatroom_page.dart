@@ -181,7 +181,7 @@ class _ChatroomPageState extends State<ChatroomPage>
             ScaffoldMessenger.of(context).showSnackBar(
               myLoadingSnackbar(
                 text: "Uploading picture...",
-                duration: 15,
+                duration: 10,
                 background: primaryBlack,
               ),
             );
@@ -215,7 +215,7 @@ class _ChatroomPageState extends State<ChatroomPage>
             ScaffoldMessenger.of(context).showSnackBar(
               myLoadingSnackbar(
                 text: "Uploading document...",
-                duration: 15,
+                duration: 10,
                 background: primaryBlack,
               ),
             );

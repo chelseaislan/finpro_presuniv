@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlannerPage extends StatelessWidget {
+  final String province;
   final db = Firestore.instance;
+  PlannerPage({this.province});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,7 +37,7 @@ class PlannerPage extends StatelessWidget {
               ),
             ),
           ),
-          LoadPlanners(db: db, size: size, province: "Jabodetabek"),
+          LoadPlanners(db: db, size: size, selectedProvince: province),
         ],
       ),
     );
@@ -46,19 +49,19 @@ class LoadPlanners extends StatelessWidget {
     Key key,
     @required this.db,
     @required this.size,
-    @required this.province,
+    @required this.selectedProvince,
   }) : super(key: key);
 
   final Firestore db;
   final Size size;
-  final String province;
+  final String selectedProvince;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: db
           .collection('directories')
-          .where('province', isEqualTo: province)
+          .where('province', isEqualTo: selectedProvince)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -211,14 +214,14 @@ class LoadPlanners extends StatelessWidget {
             asset: "assets/images/discover-tab.png",
             header: "Is it empty?",
             description:
-                "Don't worry, we'll keep adding more wedding planner directories to you. Stay tuned!",
+                "Don't worry, we'll keep adding more planner directories to you in $selectedProvince region.\nStay tuned!",
             buttonText: "Refresh",
             onPressed: () {
               Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      PlannerPage(),
+                      PlannerPage(province: selectedProvince),
                   transitionDuration: Duration.zero,
                   reverseTransitionDuration: Duration.zero,
                 ),

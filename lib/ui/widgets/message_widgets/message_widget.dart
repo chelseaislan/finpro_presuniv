@@ -4,6 +4,7 @@
 import 'package:finpro_max/custom_widgets/buttons/text_button.dart';
 import 'package:finpro_max/custom_widgets/my_snackbar.dart';
 import 'package:finpro_max/ui/pages/chatroom_pages/chatroom_page.dart';
+import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finpro_max/custom_widgets/text_styles.dart';
@@ -146,16 +147,31 @@ class _MessageWidgetState extends State<MessageWidget>
                           builder: (BuildContext context) => AlertDialog(
                             title: const Text("Confirmation"),
                             content: Text(
-                                "Delete all the messages with ${user.nickname}? This cannot be undone!"),
+                                "Delete all the messages with ${user.nickname}? This action cannot be undone!"),
                             actions: <Widget>[
                               TextButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
                                 child: const Text("Cancel"),
                               ),
                               TextButton(
                                 onPressed: () async {
                                   await deleteChat();
-                                  Navigator.pop(context);
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) =>
+                                              HomeTabs(
+                                                  userId: widget.userId,
+                                                  selectedPage: 3),
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                    ((route) => false),
+                                  );
                                 },
                                 child: const Text("Delete Chat"),
                               ),

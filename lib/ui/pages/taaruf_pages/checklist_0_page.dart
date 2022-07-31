@@ -66,9 +66,9 @@ class _ChecklistZeroState extends State<ChecklistZero>
     final List subtitles = [
       "Both of you will decide the date to visit the one of your parents.",
       "Both of you will decide the date to visit the remaining parents.",
-      "You gotta do the special prayer if your selected match is the one who will become your spouse.",
-      "The male bride and his family should visit the female bride and her family, to express the intentions.",
-      "The best day of both of your lives.",
+      "You gotta do the special prayer if your selected match is the one who will become your spouse. (Istikharah)",
+      "In taaruf, this term is called Khitbah.\nThe male bride and his family should visit the female bride and her family, to express the intentions.",
+      "Also known as 'akad nikah'. Decide the most appropriate date so both of you can prepare for the best.",
       "Things that you can do after being married with the guidance of this application.",
     ];
 

@@ -103,7 +103,7 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                   size.height * 0.016,
                                   size.height * 0.016,
                                   size.height * 0.016,
-                                  size.height * 0.011,
+                                  size.height * 0.014,
                                 ),
                                 child: ChatText(
                                   text: _messageDetail.text,

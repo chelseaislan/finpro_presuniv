@@ -683,7 +683,8 @@ class _ProfilePageState extends State<ProfilePage>
                                         image: "assets/images/upgrayedd.png",
                                         description:
                                             "You can use these guides to make sure that you can find a perfect match.",
-                                        label1: "Wedding Planner Directories",
+                                        label1:
+                                            "Wedding Planners in ${_currentUser.province}",
                                         label2: "MusliMatch Blog",
                                         label3: "Application Tutorial",
                                         label4: "Taaruf Information",
@@ -701,7 +702,9 @@ class _ProfilePageState extends State<ProfilePage>
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  PlannerPage(),
+                                                  PlannerPage(
+                                                      province: _currentUser
+                                                          .province),
                                               transitionDuration: Duration.zero,
                                               reverseTransitionDuration:
                                                   Duration.zero,
