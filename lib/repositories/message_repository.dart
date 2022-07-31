@@ -30,6 +30,12 @@ class MessageRepository {
         .collection('chats')
         .document(selectedUserId)
         .delete();
+    await _firestore
+        .collection('users')
+        .document(selectedUserId)
+        .collection('chats')
+        .document(currentUserId)
+        .delete();
   }
 
   // 6+3+9

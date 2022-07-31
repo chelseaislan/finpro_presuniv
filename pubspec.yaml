@@ -61,6 +61,7 @@ dependencies:
   swipeable: 1.1.0
   syncfusion_flutter_pdfviewer: 18.4.49-beta
   timeago: 2.0.30
+  url_launcher: 5.7.10
   uuid: 2.2.2
 
 dev_dependencies:

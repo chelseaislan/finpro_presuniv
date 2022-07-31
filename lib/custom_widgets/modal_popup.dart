@@ -119,3 +119,98 @@ class ModalPopupTwoButton extends StatelessWidget {
     );
   }
 }
+
+class ModalPopupFourButton extends StatelessWidget {
+  const ModalPopupFourButton({
+    Key key,
+    @required this.size,
+    @required this.title,
+    @required this.image,
+    @required this.description,
+    @required this.label1,
+    @required this.label2,
+    @required this.label3,
+    @required this.label4,
+    @required this.onPressed1,
+    @required this.onPressed2,
+    @required this.onPressed3,
+    @required this.onPressed4,
+    @required this.textColor1,
+    @required this.btn1,
+    @required this.textColor2,
+    @required this.btn2,
+    @required this.textColor3,
+    @required this.btn3,
+    @required this.textColor4,
+    @required this.btn4,
+  }) : super(key: key);
+
+  final Size size;
+  final String title, image, description, label1, label2, label3, label4;
+  final Function() onPressed1, onPressed2, onPressed3, onPressed4;
+  final Color textColor1,
+      btn1,
+      textColor2,
+      btn2,
+      textColor3,
+      btn3,
+      textColor4,
+      btn4;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 23, 20, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          HeaderThreeText(
+            text: title,
+            color: secondBlack,
+            align: TextAlign.center,
+          ),
+          Image.asset(
+            image,
+            width: size.width * 0.8,
+            height: size.width * 0.6,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: DescText(
+              text: description,
+              color: secondBlack,
+              align: TextAlign.center,
+            ),
+          ),
+          BigWideButton(
+            labelText: label1,
+            onPressedTo: onPressed1,
+            textColor: textColor1,
+            btnColor: btn1,
+          ),
+          const SizedBox(height: 10),
+          BigWideButton(
+            labelText: label2,
+            onPressedTo: onPressed2,
+            textColor: textColor2,
+            btnColor: btn2,
+          ),
+          const SizedBox(height: 10),
+          BigWideButton(
+            labelText: label3,
+            onPressedTo: onPressed3,
+            textColor: textColor3,
+            btnColor: btn3,
+          ),
+          const SizedBox(height: 10),
+          BigWideButton(
+            labelText: label4,
+            onPressedTo: onPressed4,
+            textColor: textColor4,
+            btnColor: btn4,
+          ),
+        ],
+      ),
+    );
+  }
+}
