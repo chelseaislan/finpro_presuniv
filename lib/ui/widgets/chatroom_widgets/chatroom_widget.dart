@@ -90,14 +90,14 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                   BoxConstraints(maxWidth: size.width * 0.7),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: _messageDetail.senderId ==
-                                          widget.currentUserId
-                                      ? primary3
-                                      : pureWhite,
-                                  borderRadius: BorderRadius.circular(
-                                    size.width * 0.03,
-                                  ),
-                                ),
+                                    color: _messageDetail.senderId ==
+                                            widget.currentUserId
+                                        ? primary3
+                                        : pureWhite,
+                                    borderRadius: BorderRadius.circular(
+                                      size.width * 0.03,
+                                    ),
+                                    border: Border.all(color: thirdBlack)),
                                 // padding for chat bubbles
                                 padding: EdgeInsets.fromLTRB(
                                   size.height * 0.016,
@@ -175,14 +175,15 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                         maxWidth: size.width * 0.7),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: _messageDetail.senderId ==
-                                                widget.currentUserId
-                                            ? primary3
-                                            : pureWhite,
-                                        borderRadius: BorderRadius.circular(
-                                          size.width * 0.03,
-                                        ),
-                                      ),
+                                          color: _messageDetail.senderId ==
+                                                  widget.currentUserId
+                                              ? primary3
+                                              : pureWhite,
+                                          borderRadius: BorderRadius.circular(
+                                            size.width * 0.03,
+                                          ),
+                                          border:
+                                              Border.all(color: thirdBlack)),
                                       // padding for chat bubbles
                                       padding: EdgeInsets.fromLTRB(
                                         size.height * 0.016,
@@ -267,14 +268,16 @@ class _ChatroomWidgetState extends State<ChatroomWidget> {
                                             maxWidth: size.width * 0.7),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: _messageDetail.senderId ==
-                                                    widget.currentUserId
-                                                ? primary3
-                                                : pureWhite,
-                                            borderRadius: BorderRadius.circular(
-                                              size.width * 0.03,
-                                            ),
-                                          ),
+                                              color: _messageDetail.senderId ==
+                                                      widget.currentUserId
+                                                  ? primary3
+                                                  : pureWhite,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                size.width * 0.03,
+                                              ),
+                                              border: Border.all(
+                                                  color: thirdBlack)),
                                           // padding for chat bubbles
                                           padding: EdgeInsets.fromLTRB(
                                             size.height * 0.016,
@@ -439,15 +442,16 @@ class TimeAgoWidget extends StatelessWidget {
         horizontal: 10,
         vertical: 5,
       ),
+      margin: const EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
         color: thirdBlack,
         borderRadius: BorderRadius.circular(
-          size.width * 0.03,
+          size.width * 0.02,
         ),
       ),
       child: MiniText(
         text:
-            "${_messageDetail.senderNickname} - ${timeago.format(_messageDetail.timestamp.toDate())}",
+            "▴ ${_messageDetail.senderNickname} - ${timeago.format(_messageDetail.timestamp.toDate())}",
         color: pureWhite,
         align: TextAlign.center,
       ),

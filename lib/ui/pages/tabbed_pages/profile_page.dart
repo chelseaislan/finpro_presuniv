@@ -25,6 +25,7 @@ import 'package:finpro_max/ui/pages/profile_tab_pages/planner_directory.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/profile_details_page.dart';
 import 'package:finpro_max/ui/pages/profile_tab_pages/taaruf_tutorial_page.dart';
 import 'package:finpro_max/ui/pages/tabbed_pages/blog_page.dart';
+import 'package:finpro_max/ui/widgets/chatroom_widgets/image_pdf_screen.dart';
 import 'package:finpro_max/ui/widgets/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -725,12 +726,23 @@ class _ProfilePageState extends State<ProfilePage>
                                           );
                                         },
                                         onPressed3: () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            myLoadingSnackbar(
+                                              text: "Opening document...",
+                                              duration: 5,
+                                              background: primaryBlack,
+                                            ),
+                                          );
                                           Navigator.push(
                                             context,
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  AppTutorialPage(),
+                                                  const PDFDetailScreen(
+                                                docUrl:
+                                                    "https://firebasestorage.googleapis.com/v0/b/finpro-max.appspot.com/o/appGuide%2F01-Intro.pdf?alt=media&token=1f9e96b8-64ac-4bfc-a7a1-e7e239d09fcc",
+                                              ),
                                               transitionDuration: Duration.zero,
                                               reverseTransitionDuration:
                                                   Duration.zero,
@@ -738,12 +750,22 @@ class _ProfilePageState extends State<ProfilePage>
                                           );
                                         },
                                         onPressed4: () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            myLoadingSnackbar(
+                                              text: "Opening document...",
+                                              duration: 5,
+                                              background: primaryBlack,
+                                            ),
+                                          );
                                           Navigator.push(
                                             context,
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  TaarufTutorialPage(),
+                                                  const PDFDetailScreen(
+                                                      docUrl:
+                                                          "https://firebasestorage.googleapis.com/v0/b/finpro-max.appspot.com/o/taarufGuide%2F1.pdf?alt=media&token=cc05f402-9526-4bdb-8a7b-bfb8b5457862"),
                                               transitionDuration: Duration.zero,
                                               reverseTransitionDuration:
                                                   Duration.zero,

@@ -383,9 +383,13 @@ class _ChatroomPageState extends State<ChatroomPage>
         appBarColor: primary1,
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/chat-bg.jpg"),
+            image: AssetImage(
+              widget.currentUser.gender == "gentleman"
+                  ? "assets/images/chat-bg-m.jpg"
+                  : "assets/images/chat-bg-f.jpg",
+            ),
             fit: BoxFit.cover,
           ),
         ),
